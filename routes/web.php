@@ -58,10 +58,10 @@ Route::prefix('/events')->name('events.')->group(function() {
     Route::post('/edit', [EventController::class,'update']);
 
     //Gere un evenement specifique
-    Route::prefix('/{event:slug}')->name('one.')->group(function() {
+    Route::prefix('/{evenement:slug}')->name('one.')->group(function() {
 
         Route::get('/', [EventController::class,'show'] )->where([
-            'event' => '[a-z0-9\-]+'
+            'evenement' => '[a-z0-9\-]+'
         ])->name('show');
 
         //Affiche un creneau
