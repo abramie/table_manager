@@ -40,7 +40,7 @@ class CreneauController extends Controller
         //dd($request);
         $creneau = Creneau::create($request->validated());
         $evenement->creneaus()->save($creneau);
-        
+
         return redirect()->route('events.one.tablesindex', ['evenement' => $evenement,'creneau' => $creneau->id])
             ->with('success', "Le creneau a bien été ajouté");
     }
