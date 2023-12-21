@@ -11,10 +11,11 @@ class Creneau extends Model
     use HasFactory;
     protected $table = 'creneaux';
     protected $fillable = [
-        'nom'
+        'nom',
+        'duree'
     ];
 
-    public function event(): BelongsTo {
+    public function evenement(): BelongsTo {
         return $this->belongsTo(Evenement::class);
     }
 }

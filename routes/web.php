@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\CreneauController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\TableController;
+use App\Models\Creneau;
+use App\Models\Evenement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -52,53 +56,37 @@ Route::prefix('/events')->name('events.')->group(function() {
     Route::get('/add', [EventController::class,'add'])->name('add');
     //Pour le retour de formulaire
     Route::post('/add', [EventController::class,'store']);
-    //Page d'edition d'un evennement (formulaire)
-    Route::get('/edit', [EventController::class,'edit'])->name('edit');
-    //Pour le retour de formulaire
-    Route::post('/edit', [EventController::class,'update']);
+
 
     //Gere un evenement specifique
-    Route::prefix('/{evenement:slug}')->name('one.')->group(function() {
+    Route::prefix('/{evenement:slug}')->name('one.')->where([
+        'evenement' => '[a-z0-9\-]+'
+    ])->group(function() {
 
-        Route::get('/', [EventController::class,'show'] )->where([
-            'evenement' => '[a-z0-9\-]+'
-        ])->name('show');
+        Route::get('/', [EventController::class,'show'] )->name('show');
 
-        //Affiche un creneau
-        Route::get('/creneau-{id_creneau}', function (string $slug, string $id,string $id_creneau,  Request $request) {
-            return [
-                "page" => "creneau",
-                "id_creneau" => $id_creneau,
-                "name" => $request->input('name', 'non-stipuler')
-            ];
-        })->where([
-            'id_creneau' => '[0-9]+'
-        ])->name('tablesindex');
+        //Page d'edition d'un evennement (formulaire)
+        Route::get('/edit', [EventController::class,'edit'])->name('edit');
+        Route::post('/edit', [EventController::class,'update']);
+        //Ajout creneau
+        Route::get('/add', [CreneauController::class,'add'])->name('add');
+        Route::post('/add', [CreneauController::class,'store']);
 
-        //Affiche une table specifique du creneau
-        Route::get('creneau-{id_creneau}/table-{nom_table}', function (string $slug, string $id,string $id_creneau, string $nom_table, Request $request) {
-            return [
-                "page" => "table",
-                "nom_table" => $nom_table,
-                "id_creneau" => $id_creneau,
-                "name" => $request->input('name', 'non-stipuler')
-            ];
-        })->where([
-            'id_creneau' => '[0-9]+'
-        ])->name('tables.show');
+        Route::prefix('/creneau-{creneau:id}')->where(['creneau' => '[0-9]+'])->group(function() {
+            //Affiche un creneau
+            Route::get('/', [CreneauController::class, 'index'])->name('tablesindex');//->withoutScopedBindings();
+            //Edit creneau
+            Route::get('/edit', [CreneauController::class,'todo'])->name('add');
+            //Affiche une table specifique du creneau
+            Route::get('/table-{nom_table}',[TableController::class, 'show'] )->name('tables.show');
 
-        Route::get('creneau-{id_creneau}/add-table', function (string $slug, string $id,string $id_creneau, Request $request) {
-            return [
-                "page" => "ajout de table",
-                "id_creneau" => $id_creneau,
-                "name" => $request->input('name', 'non-stipuler')
-            ];
-        })->where([
-            'id' => '[0-9]+',
-            'slug' => '[a-z0-9\-]+'
-        ])->name('tables.ajout');
+            Route::get('/add-table',[TableController::class, 'add'] )->name('tables.add');
+        });
     });
 });
+
+Route::get('/add', [CreneauController::class,'add'])->name('add');
+Route::post('/add', [CreneauController::class,'store']);
 
 /*
  * Pages relatives aux jeux

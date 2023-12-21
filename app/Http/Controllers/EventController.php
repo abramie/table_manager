@@ -19,22 +19,26 @@ class EventController extends Controller
     }
 
     public function add(){
-        $event = new Evenement();
-        return "formulaire ajout d'evenement";
+        $evenement = new Evenement();
+        $evenement->nom_evenement = "le nom de l'evenement";
+        //return "formulaire ajout d'evenement";
         return view('evenement.create', [
-            'event' => $event
+            'evenement' => $evenement
         ]);
     }
 
-    public function edit(Evenement $event){
-        return "formulaire edit d'evenement";
+    public function edit(Evenement $evenement){
+        //return "formulaire edit d'evenement";
+
         return view('evenement.edit', [
-            'event' => $event
+            'evenement' => $evenement
         ]);
     }
 
     public function show(Evenement $evenement, Request $request){
-        return $evenement;
+        return view('evenement.show', [
+            'evenement' => $evenement
+        ]);;
     }
 
     /*
@@ -42,15 +46,18 @@ class EventController extends Controller
      */
     public function store(FormEventRequest $request){
         $events = Evenement::create($request->validated());
-        return redirect()->route('events.show', ['slug' => $events->slug])
+
+        return redirect()->route('events.one.show', ['evenement' => $events->slug])
             ->with('success', "L'evenement a bien été ajouté");
     }
 
     /*
      * Mise à jour des données d'un event
      */
-    public function update(Evenement $event, FormEventRequest $request){
-        $event->update($request->validated());
-        return redirect()->route('events.show', ['slug' => $event->slug]);
+    public function update(Evenement $evenement, FormEventRequest $request){
+//dd("test");
+        $evenement->update($request->validated());
+        return redirect()->route('events.one.show', ['evenement' => $evenement->slug])
+            ->with('success', "L'evenement a bien été editer");
     }
 }

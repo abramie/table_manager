@@ -5,7 +5,12 @@
 
 @section('content')
     <h1>Index event</h1>
+@if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
 
+@endif
     @foreach($evenements as $evenement)
         <evenement>
             <h2>{{$evenement->nom_evenement}}</h2>
