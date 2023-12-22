@@ -5,6 +5,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\TableController;
 use App\Models\Creneau;
 use App\Models\Evenement;
+use App\Models\Table;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,12 +28,8 @@ Route::get('/', function () {
  * Pages relatives aux actions admins
  */
 Route::prefix('/admin')->name('admin.')->group(function() {
-    Route::get('/', function () {
-        return [
-            "link" => \route('page.show',['slug' => 'article', 'id' => 13])
-        ];
-    })->name('index');;
 
+    Route::view('/', 'admin.index')->name('index');
     Route::get('/{slug}-{id}', function (string $slug, string $id, Request $request) {
         return [
             "slug"=> $slug,
@@ -72,21 +69,30 @@ Route::prefix('/events')->name('events.')->group(function() {
         Route::get('/add', [CreneauController::class,'add'])->name('add');
         Route::post('/add', [CreneauController::class,'store']);
 
-        Route::prefix('/creneau-{creneau:id}')->where(['creneau' => '[0-9]+'])->group(function() {
+        Route::prefix('/creneau-{creneau:id}')->where(['creneau' => '[0-9]+'])->name('creneau.')->group(function() {
             //Affiche un creneau
             Route::get('/', [CreneauController::class, 'index'])->name('tablesindex');//->withoutScopedBindings();
             //Edit creneau
-            Route::get('/edit', [CreneauController::class,'todo'])->name('add');
-            //Affiche une table specifique du creneau
-            Route::get('/table-{nom_table}',[TableController::class, 'show'] )->name('tables.show');
+            Route::get('/edit', [CreneauController::class,'todo'])->name('edit');
+
+
+
+            //Formulaires
 
             Route::get('/add-table',[TableController::class, 'add'] )->name('tables.add');
+            Route::post('/add-table',[TableController::class, 'store'] );
+
+            Route::prefix('/table-{table}')->where(['table' => '[0-9]+'])->name('table.')->group(function() {
+            //Affiche une table specifique du creneau
+                Route::get('/edit',[TableController::class, 'edit'] )->name('edit');
+                Route::post('/edit',[TableController::class, 'update'] );
+                Route::get('/',[TableController::class, 'show'] )->name('show');
+                Route::get('/inscription',[TableController::class, 'todo'] )->name('inscription');
+            });
         });
     });
 });
 
-Route::get('/add', [CreneauController::class,'add'])->name('add');
-Route::post('/add', [CreneauController::class,'store']);
 
 /*
  * Pages relatives aux jeux

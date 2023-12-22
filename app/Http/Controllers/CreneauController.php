@@ -15,6 +15,12 @@ class CreneauController extends Controller
 
     public function index (Evenement $evenement, Creneau $creneau,  Request $request) {
         //return "test";
+
+        return view('creneau.index', [
+            'creneau' => $creneau,
+            'tables' => $creneau->tables()->paginate(2),
+            'evenement' => $evenement
+        ]);
         return [
             "page" => "creneau",
             "id_creneau" => $creneau->id,
@@ -41,7 +47,7 @@ class CreneauController extends Controller
         $creneau = Creneau::create($request->validated());
         $evenement->creneaus()->save($creneau);
 
-        return redirect()->route('events.one.tablesindex', ['evenement' => $evenement,'creneau' => $creneau->id])
+        return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau->id])
             ->with('success', "Le creneau a bien été ajouté");
     }
 
@@ -58,7 +64,7 @@ class CreneauController extends Controller
      */
     public function update(Evenement $evenement,Creneau $creneau,FormCreneauRequest $request){
         $creneau->update($request->validated());
-        return redirect()->route('events.one.tablesindex', ['evenement' => $evenement,'creneau' => $creneau->id])
+        return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau->id])
             ->with('success', "Le creneau a bien été modifier");
     }
 

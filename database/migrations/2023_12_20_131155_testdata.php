@@ -14,29 +14,159 @@ return new class extends Migration
         //
         DB::table('evenements')->insert(
             array(
-                'nom_evenement' => 'event test 1',
-                'slug' => 'test-1',
+                'nom_evenement' => 'Soirée crepe',
+                'slug' => 'crepe-2024',
             )
         );
         DB::table('evenements')->insert(
             array(
-                'nom_evenement' => 'event test 2',
-                'slug' => 'test-2',
+                'nom_evenement' => 'Sous l\'oeil de melusine',
+                'slug' => 'som-24',
+            )
+        );
+
+        DB::table('evenements')->insert(
+            array(
+                'nom_evenement' => 'Soirée barbecue',
+                'slug' => 'barbecue-24',
             )
         );
 
         DB::table('creneaux')->insert(
             array(
-                'nom' => 'premier creneau',
-                'duree' => '2',
+                'nom' => 'Soirée',
+                'duree' => '5',
                 'evenement_id' => 1,
             )
         );
         DB::table('creneaux')->insert(
             array(
-                'nom' => 'second creneau',
-                'duree' => '2',
-                'evenement_id' => 1,
+                'nom' => 'creneau du matin',
+                'duree' => '3',
+                'evenement_id' => 2,
+            )
+        );
+
+        DB::table('creneaux')->insert(
+            array(
+                'nom' => 'creneau de l\'aprem',
+                'duree' => '5',
+                'evenement_id' => 2,
+            )
+        );
+
+        DB::table('creneaux')->insert(
+            array(
+                'nom' => 'creneau du soir',
+                'duree' => '5',
+                'evenement_id' => 2,
+            )
+        );
+
+        DB::table('creneaux')->insert(
+            array(
+                'nom' => 'creneau de nuit',
+                'duree' => '5',
+                'evenement_id' => 2,
+            )
+        );
+
+        DB::table('creneaux')->insert(
+            array(
+                'nom' => 'Soirée',
+                'duree' => '5',
+                'evenement_id' => 3,
+            )
+        );
+
+        DB::table('tables')->insert(
+            array(
+                'nom' => 'Le nom du scenario de pathfinder',
+                'duree' => '4',
+                'creneau_id' => 2,
+                'tw' => 'fun',
+                'nb_joueur_min' => 2,
+                'nb_joueur_max'=> 4,
+                'mj_name' => 'abramie',
+                'description' => "une partie de pathfinder"
+            )
+        );
+
+        DB::table('tables')->insert(
+            array(
+                'nom' => 'Vous etes malade et recherché et tous le monde vous deteste',
+                'duree' => '4',
+                'creneau_id' => 2,
+                'tw' => 'racisme, dystopie',
+                'nb_joueur_min' => 2,
+                'nb_joueur_max'=> 4,
+                'mj_name' => 'MadDiaboliste',
+                'description' => "une partie tranquille d'extra humain"
+            )
+        );
+
+        DB::table('tables')->insert(
+            array(
+                'nom' => 'Sponsorisé par coca-cola',
+                'duree' => '4',
+                'creneau_id' => 2,
+                'tw' => 'fun',
+                'nb_joueur_min' => 2,
+                'nb_joueur_max'=> 4,
+                'mj_name' => 'Gorille',
+                'description' => "Cette partie de Marvel TV vous est apporté par coca-colatm"
+            )
+        );
+        DB::table('tables')->insert(
+            array(
+                'nom' => 'Vous etes malade et recherché et tous le monde vous deteste',
+                'duree' => '4',
+                'creneau_id' => 3,
+                'tw' => 'racisme, dystopie',
+                'nb_joueur_min' => 2,
+                'nb_joueur_max'=> 4,
+                'mj_name' => 'MadDiaboliste',
+                'description' => "une partie tranquille d'extra humain"
+            )
+        );
+
+        DB::table('tables')->insert(
+            array(
+                'nom' => 'un syndicat scélérat ',
+                'duree' => '4',
+                'creneau_id' => 3,
+                'tw' => 'fun',
+                'nb_joueur_min' => 3,
+                'nb_joueur_max'=> 5,
+                'mj_name' => 'Pikamox',
+                'description' => "Partie de disney Vilains Victorious"
+            )
+        );
+
+
+        DB::table('tables')->insert(
+            array(
+                'nom' => 'L\'attaque des crepes ',
+                'duree' => '4',
+                'creneau_id' => 1,
+                'tw' => 'fun',
+                'nb_joueur_min' => 3,
+                'nb_joueur_max'=> 5,
+                'mj_name' => 'Pikamox',
+                'description' => "Oh non des crepes"
+            )
+        );
+
+        DB::table('tables')->insert(
+            array(
+                'nom' => 'L\'attaque des saucisses ',
+                'duree' => '4',
+                'creneau_id' => 6,
+                'tw' => 'fun',
+                'nb_joueur_min' => 3,
+                'nb_joueur_max'=> 5,
+                'mj_name' => 'Pikamox',
+                'description' => "Oh non des saucisses !"
             )
         );
     }

@@ -13,10 +13,11 @@ class Table extends Model
     protected $fillable = [
         'nom',
         'duree',
-        'Description',
+        'description',
         'tw',
         'nb_joueur_min',
-        'nb_joueur_max'
+        'nb_joueur_max',
+        'mj_name'
     ];
 
     public function creneaus(): BelongsTo {

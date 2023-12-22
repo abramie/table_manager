@@ -11,15 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
+        //Ajout many to many avec la table d'inscription des joueurs.
         Schema::create('tables', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('nom')->unique();
-            $table->longText('Description');
-            $table->longText('tw');
-            $table->float('duree');
-            $table->int('nb_joueur_min');
-            $table->int('nb_joueur_max');
+            $table->string('nom');
+            $table->longText('description');
+            $table->longText('tw')->nullable();
+            $table->float('duree')->default('4');
+            $table->double('nb_joueur_min')->default('2');
+            $table->double('nb_joueur_max')->default('4');
+
 
             $table->string('mj_name')->comment("A remplacer par une clef etrangere quand user done");
         });
