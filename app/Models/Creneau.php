@@ -13,7 +13,9 @@ class Creneau extends Model
     protected $table = 'creneaux';
     protected $fillable = [
         'nom',
-        'duree'
+        'duree',
+        'max_tables',
+        'nb_inscription_online_max'
     ];
 
     public function evenement(): BelongsTo {

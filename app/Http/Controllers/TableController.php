@@ -26,7 +26,10 @@ class TableController extends Controller
         $table->nom = "le nom de la table";
         //return "formulaire ajout d'evenement";
         return view('table.create', [
-            'table' => $table
+            'table' => $table,
+            'evenement' => $evenement,
+            'creneau' => $creneau,
+            'creneaux' => Creneau::get()
         ]);
     }
 

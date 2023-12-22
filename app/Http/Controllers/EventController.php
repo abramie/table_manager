@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\FormEventRequest;
+use App\Models\Creneau;
 use App\Models\Evenement;
+use App\Models\Settings;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Contracts\Pagination\Paginator;
@@ -21,17 +23,26 @@ class EventController extends Controller
     public function add(){
         $evenement = new Evenement();
         $evenement->nom_evenement = "le nom de l'evenement";
+        $settings = Settings::whereIn('name',  ['max_tables','nb_inscription_online_max' ])->get();
+        //dd($settings);
+        //$max_tables = $settings->firstWhere('value', 'like','8');
+
+        $evenement->max_tables = $settings->firstWhere('name','max_tables')->value;
+        $evenement->nb_inscription_online_max = $settings->firstWhere('name', 'nb_inscription_online_max')->value;
+
         //return "formulaire ajout d'evenement";
         return view('evenement.create', [
-            'evenement' => $evenement
+            'evenement' => $evenement,
+            'settings' => $settings
         ]);
     }
 
     public function edit(Evenement $evenement){
         //return "formulaire edit d'evenement";
-
+        $settings = Settings::whereIn('name',  ['max_tables','nb_inscription_online_max' ])->get();
         return view('evenement.edit', [
-            'evenement' => $evenement
+            'evenement' => $evenement,
+            'settings' => $settings
         ]);
     }
 

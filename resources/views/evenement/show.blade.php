@@ -5,7 +5,8 @@
 
 @section('content')
     <h1>{{$evenement->nom_evenement}}</h1>
-
+    <button class="btn btn-xs btn-info pull-right" type="button" onclick="window.location='{{ route("events.one.edit",['evenement'=> $evenement]) }}'">
+        Edit </button>
     <table class="table">
         <thead>
         <tr>

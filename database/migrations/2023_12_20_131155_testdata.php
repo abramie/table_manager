@@ -37,6 +37,8 @@ return new class extends Migration
                 'nom' => 'Soirée',
                 'duree' => '5',
                 'evenement_id' => 1,
+                'max_tables' => 8,
+                'nb_inscription_online_max' => -1
             )
         );
         DB::table('creneaux')->insert(
@@ -44,6 +46,8 @@ return new class extends Migration
                 'nom' => 'creneau du matin',
                 'duree' => '3',
                 'evenement_id' => 2,
+                'max_tables' => 8,
+                'nb_inscription_online_max' => -1
             )
         );
 
@@ -52,6 +56,8 @@ return new class extends Migration
                 'nom' => 'creneau de l\'aprem',
                 'duree' => '5',
                 'evenement_id' => 2,
+                'max_tables' => 8,
+                'nb_inscription_online_max' => -1
             )
         );
 
@@ -60,6 +66,8 @@ return new class extends Migration
                 'nom' => 'creneau du soir',
                 'duree' => '5',
                 'evenement_id' => 2,
+                'max_tables' => 8,
+                'nb_inscription_online_max' => -1
             )
         );
 
@@ -68,6 +76,8 @@ return new class extends Migration
                 'nom' => 'creneau de nuit',
                 'duree' => '5',
                 'evenement_id' => 2,
+                'max_tables' => 8,
+                'nb_inscription_online_max' => -1
             )
         );
 
@@ -76,6 +86,8 @@ return new class extends Migration
                 'nom' => 'Soirée',
                 'duree' => '5',
                 'evenement_id' => 3,
+                'max_tables' => 8,
+                'nb_inscription_online_max' => -1
             )
         );
 

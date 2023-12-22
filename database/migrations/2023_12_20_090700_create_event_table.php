@@ -15,6 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('nom_evenement');
             $table->string('slug')->unique();
+            $table->double('max_tables')->default(8);
+            $table->double('nb_inscription_online_max')->default(-1)->comment("Le nombre maximum d'inscription
+            sur une table via le logiciel autorisé. -1 pour pas de limite");
+
             //Ajout relationel creneaux
             //$table->dateTime('date');
             $table->timestamps();

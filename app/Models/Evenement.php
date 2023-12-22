@@ -12,7 +12,9 @@ class Evenement extends Model
 
     protected $fillable = [
         'nom_evenement',
-        'slug'
+        'slug',
+        'max_tables',
+        'nb_inscription_online_max'
     ];
 
     public function creneaus() : HasMany{

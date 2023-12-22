@@ -69,6 +69,40 @@
         @enderror
     </div>
 
+    <div class="form-group">
+        <label for="jeu">jeu</label>
+        <select class="form-control" id="jeu" name="jeu">
+            {{-- @foreach($jeux as $jeu)
+                 <option @selected(old('jeu') == $jeu->id) value="{{$jeu->id}}> {{$jeu->name}}</option>
+             @endforeach
+             --}}
+            <option value="-1">Option test</option>
+        </select>
+        <script>
+            function ouverture_page_ajout_table(){
+
+                var win = window.open('{{ route("events.one.add",['evenement'=> $evenement,'creneau' =>$creneau])}}', '_blank');
+                if (win) {
+                    //Browser has allowed it to be opened
+                    win.focus();
+                } else {
+                    //Browser has blocked it
+                    alert('Please allow popups for this website');
+                }
+            }
+        </script>
+
+        <button class="btn btn-xs btn-info pull-right" type="button" onclick='window.location.reload()'>
+            Refresh </button>
+        <button class="btn btn-xs btn-info pull-right" type="button" onclick='ouverture_page_ajout_table()'>
+            Ajouter un jeu (todo) </button>
+        @error("mj_name")
+        <div class="invalid-feedback">
+            {{ $message }}
+        </div>
+        @enderror
+    </div>
+
     <button class="btn btn-primary">
 
         @if($table->id)

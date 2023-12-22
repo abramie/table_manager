@@ -6,6 +6,7 @@ use App\Http\Requests\FormCreneauRequest;
 use App\Http\Requests\FormEventRequest;
 use App\Models\Creneau;
 use App\Models\Evenement;
+use App\Models\Settings;
 use Illuminate\Http\Request;
 
 class CreneauController extends Controller
@@ -32,10 +33,14 @@ class CreneauController extends Controller
     public function add(Evenement $evenement){
         $creneau = new Creneau();
         $creneau->nom = "le nom du creneau";
-        $creneau->evenement_id = $evenement->id;
+        $creneau->max_tables = $evenement->max_tables;
+        $creneau->nb_inscription_online_max = $evenement->nb_inscription_online_max;
+        $settings = Settings::whereIn('name',  ['max_tables','nb_inscription_online_max' ])->get();
         //return "formulaire ajout d'evenement";
         return view('creneau.create', [
-            'creneau' => $creneau
+            'creneau' => $creneau,
+            'evenement' => $evenement,
+            'settings' => $settings
         ]);
     }
 
@@ -54,8 +59,10 @@ class CreneauController extends Controller
 
     public function edit(Creneau $creneau){
 
+        $settings = Settings::whereIn('name',  ['max_tables','nb_inscription_online_max' ])->get();
         return view('creneau.edit', [
-            'creneau' => $creneau
+            'creneau' => $creneau,
+            'settings' => $settings
         ]);
     }
 

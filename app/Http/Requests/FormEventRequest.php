@@ -27,7 +27,9 @@ class FormEventRequest extends FormRequest
         return [
             //
             'nom_evenement' => ['required', 'min:4'],
-            'slug' => ['required', 'regex:/^[a-z0-9\-]+$/', Rule::unique('evenements')->ignore($this->evenement)]
+            'slug' => ['required', 'regex:/^[a-z0-9\-]+$/', Rule::unique('evenements')->ignore($this->evenement)],
+            'max_tables' => ['regex:/^[0-9]+$/' ],
+            'nb_inscription_online_max' => ['regex:/^[0-9]+$/' ],
 
         ];
     }
@@ -38,7 +40,9 @@ class FormEventRequest extends FormRequest
 
         //Produit un slug valide en cas d'absence.
         $this->merge([
-            'slug' => $this->input('slug') ?: Str::slug($this->input('nom_evenement'))
+            'slug' => $this->input('slug') ?: Str::slug($this->input('nom_evenement')),
+            'max_tables' => floatval($this->max_tables),
+            'nb_inscription_online_max' => floatval($this->nb_inscription_online_max)
         ]);
 
     }

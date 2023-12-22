@@ -25,7 +25,9 @@ class FormCreneauRequest extends FormRequest
         return [
             //
             'nom' => ['required', 'min:4', Rule::unique('creneaux')->ignore($this->creneau)],
-            'duree' => ['regex:/^[0-9]+$/' ]
+            'duree' => ['regex:/^[0-9]+$/' ],
+            'max_tables' => ['regex:/^[0-9]+$/' ],
+            'nb_inscription_online_max' => ['regex:/^[0-9]+$/' ],
             //Ajout verification clef etrangere que l'event existe bien ?
         ];
     }
@@ -33,7 +35,9 @@ class FormCreneauRequest extends FormRequest
     {
         //dd($this->route());
         $this->merge([
-            'duree' => floatval($this->duree)
+            'duree' => floatval($this->duree),
+            'max_tables' => floatval($this->max_tables),
+            'nb_inscription_online_max' => floatval($this->nb_inscription_online_max)
         ]);
     }
 
