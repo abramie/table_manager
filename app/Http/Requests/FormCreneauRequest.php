@@ -24,10 +24,10 @@ class FormCreneauRequest extends FormRequest
     {
         return [
             //
-            'nom' => ['required', 'min:4', Rule::unique('creneaux')->ignore($this->creneau)],
+            'nom' => ['required', 'min:4'],
             'duree' => ['regex:/^[0-9]+$/' ],
             'max_tables' => ['regex:/^[0-9]+$/' ],
-            'nb_inscription_online_max' => ['regex:/^[0-9]+$/' ],
+            'nb_inscription_online_max' => ['regex:/^[0-9]+$/' ]
             //Ajout verification clef etrangere que l'event existe bien ?
         ];
     }

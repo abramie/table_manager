@@ -31,6 +31,7 @@ class FormTableRequest extends FormRequest
             'description' => ['required', 'min:4'],
             'mj_name' => ['required', 'min:3']
 
+
             //Ajout verification clef etrangere que l'event existe bien ?
         ];
     }

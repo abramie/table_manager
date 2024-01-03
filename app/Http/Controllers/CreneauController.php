@@ -57,7 +57,7 @@ class CreneauController extends Controller
     }
 
 
-    public function edit(Creneau $creneau){
+    public function edit(Evenement $evenement,Creneau $creneau){
 
         $settings = Settings::whereIn('name',  ['max_tables','nb_inscription_online_max' ])->get();
         return view('creneau.edit', [
@@ -73,6 +73,12 @@ class CreneauController extends Controller
         $creneau->update($request->validated());
         return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau->id])
             ->with('success', "Le creneau a bien été modifier");
+    }
+
+    public function delete(Evenement $evenement,Creneau $creneau){
+        $creneau->delete();
+        return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau->id])
+            ->with('success', "Le creneau a bien été supprimé");
     }
 
     public function todo (Evenement $evenement, Creneau $creneau, Request $request){

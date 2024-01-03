@@ -4,7 +4,12 @@
 
 
 @section('content')
-
+    @if(true || admin)
+        <td><button class="btn btn-xs btn-warning " type="button" onclick="window.location='{{ route("events.one.creneau.edit",['evenement'=> $evenement, 'creneau' => $creneau]) }}'">
+                Edit </button></td>
+        <td><button class="btn btn-xs btn-warning " type="button" onclick="window.location='{{ route("events.one.creneau.delete",['evenement'=> $evenement, 'creneau' => $creneau]) }}'">
+                Delete </button></td>
+    @endif
     <h1>Index tables</h1>
 
     @if($evenement->creneaus()->count()>1)

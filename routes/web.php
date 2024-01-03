@@ -73,8 +73,9 @@ Route::prefix('/events')->name('events.')->group(function() {
             //Affiche un creneau
             Route::get('/', [CreneauController::class, 'index'])->name('tablesindex');//->withoutScopedBindings();
             //Edit creneau
-            Route::get('/edit', [CreneauController::class,'todo'])->name('edit');
-
+            Route::get('/edit', [CreneauController::class,'edit'])->name('edit');
+            Route::post('/edit', [CreneauController::class,'update'])->name('edit');
+            Route::get('/delete', [CreneauController::class,'delete'])->name('delete');
 
 
             //Formulaires

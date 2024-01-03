@@ -2,7 +2,7 @@
     @csrf
 
     <div class="form-group">
-        <label for="nom">Nom de l'événément</label>
+        <label for="nom">Nom du creneau</label>
         <input type="text" class="form-control @error("nom") is-invalid @enderror" id="nom" name="nom" value="{{ old('nom', $creneau->nom) }}">
         @error("nom")
         <div class="invalid-feedback">

@@ -5,7 +5,7 @@
 
 @section('content')
     <h1>{{$evenement->nom_evenement}}</h1>
-    <button class="btn btn-xs btn-info pull-right" type="button" onclick="window.location='{{ route("events.one.edit",['evenement'=> $evenement]) }}'">
+    <button class="btn btn-xs btn-warning pull-right" type="button" onclick="window.location='{{ route("events.one.edit",['evenement'=> $evenement]) }}'">
         Edit </button>
     <table class="table">
         <thead>
@@ -20,8 +20,15 @@
         </tr>
         @foreach($evenement->creneaus()->get() as $creneau)
             <tr>
-                <td><a href="{{route('events.one.creneau.tablesindex', ['evenement' => $evenement->slug, 'creneau' => $creneau->id])}}"> {{$creneau->nom}} </a></td>
+                <td><a href="{{route('events.one.creneau.tablesindex', ['evenement' => $evenement, 'creneau' => $creneau->id])}}"> {{$creneau->nom}} </a></td>
                 <td>{{$creneau->duree}}</td>
+
+                @if(true || admin)
+                    <td><button class="btn btn-xs btn-warning " type="button" onclick="window.location='{{ route("events.one.creneau.edit",['evenement'=> $evenement, 'creneau' => $creneau]) }}'">
+                            Edit </button></td>
+                    <td><button class="btn btn-xs btn-warning " type="button" onclick="window.location='{{ route("events.one.creneau.delete",['evenement'=> $evenement, 'creneau' => $creneau]) }}'">
+                            Delete </button></td>
+                @endif
             </tr>
         @endforeach
         </tbody>

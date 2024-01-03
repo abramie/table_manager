@@ -47,6 +47,10 @@
         </ul>
     </div>
 </nav>
+<a  href="{{ url()->previous() }}">
+    <i class="fa fa-arrow-circle-o-left"></i>
+    <span>Back</span>
+</a>
 
 <body>
 

@@ -29,7 +29,7 @@ return new class extends Migration
         DB::table('settings')->insert(
             array(
                 'name' => 'nb_inscription_online_max',
-                'value' => '-1',
+                'value' => '15',
                 'description' => "Le nombre maximum d'inscription
             sur une table via le logiciel autorisé. -1 pour pas de limite"
             )
