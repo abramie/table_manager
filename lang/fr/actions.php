@@ -88,7 +88,7 @@ return [
     'subscribe'       => 'S\'abonner',
     'switch'          => 'Changer',
     'switch_to_role'  => 'Passer au rôle',
-    'tag'             => 'Étiqueter',
+    'form.blade.php'             => 'Étiqueter',
     'tags'            => 'Mots clés',
     'target_link'     => [
         'blank'  => 'Ouvrir dans une nouvelle fenêtre',

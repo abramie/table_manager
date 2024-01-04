@@ -3,6 +3,7 @@
 use App\Http\Controllers\CreneauController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\TableController;
+use App\Http\Controllers\TagsController;
 use App\Models\Creneau;
 use App\Models\Evenement;
 use App\Models\Table;
@@ -95,6 +96,11 @@ Route::prefix('/events')->name('events.')->group(function() {
 });
 
 
+
+Route::prefix('/tags')->name('tags.')->group(function(){
+    Route::get('/add', [TagsController::class,'add'])->name('add');
+    Route::post('/add', [TagsController::class,'store']);
+});
 /*
  * Pages relatives aux jeux
  */

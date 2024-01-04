@@ -49,7 +49,7 @@
 
     <div class="form-group">
         <label for="tag">Tags</label>
-        <select class="form-control @error("tag") is-invalid @enderror" id="tag" name="tags[]" multiple>
+        <select class="form-control @error("tags") is-invalid @enderror" id="tag" name="tags[]" multiple>
             @php
                 $tag_id = $table->tags()->pluck('id');
             @endphp
@@ -57,12 +57,24 @@
                 <option @selected($tag_id->contains($tag->id)) value="{{$tag->id}}">{{$tag->nom}}</option>
             @endforeach
         </select>
-        @error("tag")
+        @error("tags")
         <div class="invalid-feedback">
             {{ $message }}
         </div>
         @enderror
+
+        <a  href="{{ route('tags.add') }}">
+            <i class="fa fa-arrow-circle-o-left"></i>
+
+            <span>Ajout de tag</span>
+        </a>
+
+        <button class="btn btn-primary" type="submit" name="action" value="add_tag">
+
+            Ajout de tag
+        </button>
     </div>
+
 
     <div class="form-group">
         <label for="nb_joueur_min">nb_joueur_min</label>
@@ -138,7 +150,7 @@
         </button>
     </div>
 
-    <button class="btn btn-primary">
+    <button class="btn btn-primary" type="submit" name="action" value="save">
 
         @if($table->id)
             Modifier

@@ -1,6 +1,6 @@
 @extends('base')
 
-@section('title', 'Ajouter un creneau')
+@section('title', 'Ajouter une table')
 
 @section('content')
     @include('table.form')

@@ -88,7 +88,7 @@ return [
     'subscribe'       => 'Subscribe',
     'switch'          => 'Switch',
     'switch_to_role'  => 'Switch To Role',
-    'tag'             => 'Tag',
+    'form.blade.php'             => 'Tag',
     'tags'            => 'Tags',
     'target_link'     => [
         'blank'  => 'Open in a new window',

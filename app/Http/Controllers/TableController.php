@@ -62,6 +62,17 @@ class TableController extends Controller
 
     public function edit(Evenement $evenement,Creneau $creneau,Table $table){
         $descriptions = Description::whereIn('name',  ['trigger_warnings' ])->get();
+        if(session()->has('saved_table_input') ){
+            $flash = ['old'=> [0 => "_old_input"]];
+            session(['_old_input' =>session("saved_table_input"), '_flash' => $flash] );
+            //dd(session());
+            //Ajout suppression de la valeur de session
+        }
+        $links =  [];
+        $currentLink = request()->path(); // Getting current URI like 'category/books/'
+        array_unshift($links, $currentLink); // Putting it in the beginning of links array
+        session(['links' => $links]); // Saving links array to the session
+
         return view('table.edit', [
             'table' => $table,
             'evenement' => $evenement,
@@ -79,6 +90,9 @@ class TableController extends Controller
     public function update(Evenement $evenement,Creneau $creneau,Table $table,FormTableRequest $request){
 
 
+        if($request->get('action') == 'add_tag'){
+            return redirect()->route('tags.add')->withInput();
+        }
         $table->update($request->validated());
         $table->triggerwarnings()->sync($request->validated('triggerwarnings'));
         $table->tags()->sync($request->validated('tags'));
