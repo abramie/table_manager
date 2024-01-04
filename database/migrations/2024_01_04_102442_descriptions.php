@@ -11,34 +11,33 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('settings', function (Blueprint $table) {
+        //
+
+        Schema::create('descriptions', function (Blueprint $table) {
             $table->timestamps();
             $table->string('name')->primary();
-            $table->string('value');
             $table->longText('description')->nullable();
         });
 
-        DB::table('settings')->insert(
+        DB::table('descriptions')->insert(
             array(
                 'name' => 'max_tables',
-                'value' => '8',
-                'description' => "Valeur pas default du nombre de table maximum pour un creneau, peut etre remplacer TODO"
+                'description' => "le nombre maximum de tables possibles pour un creneau"
             )
         );
 
-        DB::table('settings')->insert(
+        DB::table('descriptions')->insert(
             array(
                 'name' => 'nb_inscription_online_max',
-                'value' => '15',
-                'description' => "Valeur pas default du nombre d'inscription en ligne maximum pour une table, peut etre remplacer TODO"
+                'description' => "Le nombre maximum d'inscription
+            sur une table via le logiciel autorisé. -1 pour pas de limite"
             )
         );
 
-        DB::table('settings')->insert(
+        DB::table('descriptions')->insert(
             array(
                 'name' => 'trigger_warnings',
-                'value' => 'true',
-                'description' => "Definit si les champs trigger warnings sont gerer sur le site. true/false TODO"
+                'description' => "Des avertissements sur le contenu d'une table"
             )
         );
     }
@@ -48,6 +47,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('settings');
+        //
     }
 };

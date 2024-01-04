@@ -25,6 +25,10 @@ return new class extends Migration
 
             $table->string('mj_name')->comment("A remplacer par une clef etrangere quand user done");
         });
+
+
+
+
     }
 
     /**

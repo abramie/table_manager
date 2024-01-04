@@ -21,7 +21,7 @@
                     <a href="{{route('events.one.show', ['evenement' => $evenement->slug])}}"  >Liste des creneaux</a>
 
                 @endif
-                    @if(true)
+                    @if(true || admin)
 
                         <button class="btn btn-xs btn-warning pull-right" type="button" onclick="window.location='{{ route("events.one.edit",['evenement'=> $evenement]) }}'">
                             Edit </button>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\FormCreneauRequest;
 use App\Http\Requests\FormEventRequest;
 use App\Models\Creneau;
+use App\Models\Description;
 use App\Models\Evenement;
 use App\Models\Settings;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class CreneauController extends Controller
 
         return view('creneau.index', [
             'creneau' => $creneau,
-            'tables' => $creneau->tables()->paginate(2),
+            'tables' => $creneau->tables()->with('tags', 'triggerwarnings')->paginate(2),
             'evenement' => $evenement
         ]);
         return [
@@ -35,12 +36,12 @@ class CreneauController extends Controller
         $creneau->nom = "le nom du creneau";
         $creneau->max_tables = $evenement->max_tables;
         $creneau->nb_inscription_online_max = $evenement->nb_inscription_online_max;
-        $settings = Settings::whereIn('name',  ['max_tables','nb_inscription_online_max' ])->get();
+        $descriptions = Description::whereIn('name',  ['max_tables','nb_inscription_online_max' ])->get();
         //return "formulaire ajout d'evenement";
         return view('creneau.create', [
             'creneau' => $creneau,
             'evenement' => $evenement,
-            'settings' => $settings
+            'descriptions' => $descriptions,
         ]);
     }
 
@@ -59,10 +60,10 @@ class CreneauController extends Controller
 
     public function edit(Evenement $evenement,Creneau $creneau){
 
-        $settings = Settings::whereIn('name',  ['max_tables','nb_inscription_online_max' ])->get();
+        $descriptions = Description::whereIn('name',  ['max_tables','nb_inscription_online_max' ])->get();
         return view('creneau.edit', [
             'creneau' => $creneau,
-            'settings' => $settings
+            'descriptions' => $descriptions,
         ]);
     }
 
@@ -77,7 +78,7 @@ class CreneauController extends Controller
 
     public function delete(Evenement $evenement,Creneau $creneau){
         $creneau->delete();
-        return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau->id])
+        return redirect()->route('events.one.show', ['evenement' => $evenement])
             ->with('success', "Le creneau a bien été supprimé");
     }
 

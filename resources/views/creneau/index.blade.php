@@ -22,10 +22,26 @@
     @foreach($tables as $table)
         <evenement>
             <h2>{{$table->nom}}</h2>
+            @if(!$table->tags->isEmpty())
+                Tags :
+                @foreach($table->tags as $tag )
+                    <span class="badge bg-secondary">{{$tag->nom}}</span>
+                @endforeach
+
+            @endif
+
+            @if(!$table->triggerwarnings->isEmpty())
+                TW :
+                @foreach($table->triggerwarnings as $tw )
+                    <span class="badge bg-secondary">{{$tw->nom}}</span>
+                @endforeach
+
+            @endif
+
         </evenement>
 
         <p>
-            <a href="{{route('events.one.creneau.table.show', ['evenement' => $evenement->slug, 'creneau' => $creneau, 'table' => $table])}}"  >{{$table->nom}}</a>
+            <button class="btn btn-xs btn-link" onclick="window.location='{{route('events.one.creneau.table.show', ['evenement' => $evenement->slug, 'creneau' => $creneau, 'table' => $table])}}'"  >Voir la table</button>
         </p>
     @endforeach
     @if(true)

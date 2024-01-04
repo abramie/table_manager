@@ -4,8 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+/**
+ * @property int|mixed $nb_joueur_min
+ * @property mixed|string $nom
+ * @property int|mixed $nb_joueur_max
+ * @property float|mixed $duree
+ */
 class Table extends Model
 {
     use HasFactory;
@@ -22,5 +30,16 @@ class Table extends Model
 
     public function creneaus(): BelongsTo {
         return $this->belongsTo(Creneau::class);
+    }
+
+
+    public function triggerwarnings(): BelongsToMany
+    {
+        return $this->belongsToMany(Triggerwarning::class);
+    }
+
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(Tag::class);
     }
 }
