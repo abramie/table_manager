@@ -46,6 +46,23 @@
             </li>
         </ul>
     </div>
+    <div class="navbar-nav ms-auto mb-2 mb-lg-0">
+        @auth()
+       <a href="{{route("profile.edit")}}"> {{\Illuminate\Support\Facades\Auth::user()->name}}</a>
+
+            <form action="{{route('logout')}}" method="post">
+
+                @csrf
+                <button class="nav-link">Se deconnecter</button>
+            </form>
+        @endauth
+        @guest()
+                <a href="{{route('login')}}">Se connecter </a>
+        @endguest
+
+
+    </div>
+
 </nav>
 <a  href="{{ url()->previous() }}">
     <i class="fa fa-arrow-circle-o-left"></i>
