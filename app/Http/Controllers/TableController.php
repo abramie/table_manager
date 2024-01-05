@@ -63,9 +63,8 @@ class TableController extends Controller
     public function edit(Evenement $evenement,Creneau $creneau,Table $table){
         $descriptions = Description::whereIn('name',  ['trigger_warnings' ])->get();
         if(session()->has('saved_table_input') ){
-            $flash = ['old'=> [0 => "_old_input"]];
-            session(['_old_input' =>session("saved_table_input"), '_flash' => $flash] );
-            //dd(session());
+            session()->flash('_old_input', session("saved_table_input"));
+            session()->forget('saved_table_input');
             //Ajout suppression de la valeur de session
         }
         $links =  [];
@@ -92,6 +91,9 @@ class TableController extends Controller
 
         if($request->get('action') == 'add_tag'){
             return redirect()->route('tags.add')->withInput();
+        }
+        if($request->get('action') == 'add_tw'){
+            return redirect()->route('tw.add')->withInput();
         }
         $table->update($request->validated());
         $table->triggerwarnings()->sync($request->validated('triggerwarnings'));

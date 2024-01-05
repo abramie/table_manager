@@ -45,6 +45,10 @@
             {{ $message }}
         </div>
         @enderror
+        <button class="btn btn-primary" type="submit" name="action" value="add_tw">
+
+            Ajout de tw
+        </button>
     </div>
 
     <div class="form-group">
@@ -62,13 +66,6 @@
             {{ $message }}
         </div>
         @enderror
-
-        <a  href="{{ route('tags.add') }}">
-            <i class="fa fa-arrow-circle-o-left"></i>
-
-            <span>Ajout de tag</span>
-        </a>
-
         <button class="btn btn-primary" type="submit" name="action" value="add_tag">
 
             Ajout de tag
