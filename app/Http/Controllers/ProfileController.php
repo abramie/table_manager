@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FormUpdateRoleRequest;
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -56,5 +58,17 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function update_role(User $user, FormUpdateRoleRequest $request){
+        if(Auth::user()->can('manage_roles') || $user == Auth::user()){
+            $user->syncRoles($request->validated());
+            return Redirect::route('admin.users');
+        }else{
+            return Redirect::route('admin.users');
+        }
+        dd("test");
+
+
     }
 }

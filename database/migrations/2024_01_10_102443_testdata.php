@@ -1,7 +1,9 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -218,6 +220,28 @@ return new class extends Migration
             );
         }
 
+
+        $jeremy = User::create([
+            'name' => "jeremy",
+            'email' => "jeremyrou@hotmail.fr",
+            'password' => Hash::make("test"),
+        ]);
+
+        $admin = User::create([
+            'name' => "admin",
+            'email' => "admin@som.fr",
+            'password' => Hash::make("admin"),
+        ]);
+
+        $modo = User::create([
+            'name' => "modo",
+            'email' => "modo@som.fr",
+            'password' => Hash::make("modo"),
+        ]);
+
+        $jeremy->assignRole('joueur','mj');
+        $admin->assignRole('joueur','mj', 'admin');
+        $modo->assignRole('joueur','mj', 'modo');
 
 
 

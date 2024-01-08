@@ -32,8 +32,8 @@ class FormTableRequest extends FormRequest
             'nb_joueur_max' => ['regex:/^[0-9]+$/' ],
             'description' => ['required', 'min:4'],
             'mj_name' => ['required', 'min:3'],
-            'tags' => ['array', 'exists:tags,id', 'required'],
-            'triggerwarnings' => ['array', 'exists:triggerwarnings,id', 'required'],
+            'tags' => ['array', 'exists:tags,id'],
+            'triggerwarnings' => ['array', 'exists:triggerwarnings,id'],
 
 
             //Ajout verification clef etrangere que l'event existe bien ?

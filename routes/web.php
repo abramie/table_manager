@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::post('/profile/user-{user:name}/change_role', [ProfileController::class, 'update_role'])->name('profile.change_role');
 });
 
 Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
@@ -39,7 +40,7 @@ Route::get('/register', [RegisteredUserController::class, 'create'])->name('regi
 /*
  * Pages relatives aux actions admins
  */
-Route::prefix('/admin')->name('admin.')->group(function () {
+Route::prefix('/admin')->name('admin.')->middleware('auth')->middleware('role:admin')->group(function () {
 
     Route::view('/', 'admin.index')->name('index');
     Route::get('/{slug}-{id}', function (string $slug, string $id, Request $request) {
@@ -52,6 +53,9 @@ Route::prefix('/admin')->name('admin.')->group(function () {
         'id' => '[0-9]+',
         'slug' => '[a-z0-9\-]+'
     ])->name('show');
+    Route::view('/users', 'admin.users')->name('users');
+
+
 });
 
 /*
@@ -62,9 +66,9 @@ Route::prefix('/events')->name('events.')->group(function () {
     Route::get('/', [EventController::class, 'index'])->name('index');;
 
     //Page d'ajout d'un evennement (formulaire)
-    Route::get('/add', [EventController::class, 'add'])->name('add');
+    Route::get('/add', [EventController::class, 'add'])->name('add')->middleware('auth')->middleware('permission:ajout_events');
     //Pour le retour de formulaire
-    Route::post('/add', [EventController::class, 'store']);
+    Route::post('/add', [EventController::class, 'store'])->middleware('auth')->middleware('permission:ajout_events');
 
 
     //Gere un evenement specifique
@@ -75,32 +79,32 @@ Route::prefix('/events')->name('events.')->group(function () {
         Route::get('/', [EventController::class, 'show'])->name('show');
 
         //Page d'edition d'un evennement (formulaire)
-        Route::get('/edit', [EventController::class, 'edit'])->name('edit');
-        Route::post('/edit', [EventController::class, 'update']);
+        Route::get('/edit', [EventController::class, 'edit'])->name('edit')->middleware('auth')->middleware('permission:ajout_events');
+        Route::post('/edit', [EventController::class, 'update'])->middleware('auth')->middleware('permission:ajout_events');
         //Ajout creneau
-        Route::get('/add', [CreneauController::class, 'add'])->name('add');
-        Route::post('/add', [CreneauController::class, 'store']);
+        Route::get('/add', [CreneauController::class, 'add'])->name('add')->middleware('auth')->middleware('permission:ajout_events');
+        Route::post('/add', [CreneauController::class, 'store'])->middleware('auth')->middleware('permission:ajout_events');
 
         Route::prefix('/creneau-{creneau:id}')->where(['creneau' => '[0-9]+'])->name('creneau.')->group(function () {
             //Affiche un creneau
             Route::get('/', [CreneauController::class, 'index'])->name('tablesindex');//->withoutScopedBindings();
             //Edit creneau
-            Route::get('/edit', [CreneauController::class, 'edit'])->name('edit');
-            Route::post('/edit', [CreneauController::class, 'update'])->name('edit');
-            Route::get('/delete', [CreneauController::class, 'delete'])->name('delete');
+            Route::get('/edit', [CreneauController::class, 'edit'])->name('edit')->middleware('auth')->middleware('permission:ajout_events');
+            Route::post('/edit', [CreneauController::class, 'update'])->name('edit')->middleware('auth')->middleware('permission:ajout_events');
+            Route::get('/delete', [CreneauController::class, 'delete'])->name('delete')->middleware('auth')->middleware('permission:ajout_events');
 
 
             //Formulaires
 
-            Route::get('/add-table', [TableController::class, 'add'])->name('tables.add');
-            Route::post('/add-table', [TableController::class, 'store']);
+            Route::get('/add-table', [TableController::class, 'add'])->name('tables.add')->middleware('auth')->middleware('permission:ajout_tables');
+            Route::post('/add-table', [TableController::class, 'store'])->middleware('auth')->middleware('permission:ajout_tables');;
 
             Route::prefix('/table-{table}')->where(['table' => '[0-9]+'])->name('table.')->group(function () {
                 //Affiche une table specifique du creneau
-                Route::get('/edit', [TableController::class, 'edit'])->name('edit');
-                Route::post('/edit', [TableController::class, 'update']);
+                Route::get('/edit', [TableController::class, 'edit'])->name('edit')->middleware('auth')->middleware('permission:manage_tables_all');
+                Route::post('/edit', [TableController::class, 'update'])->middleware('auth')->middleware('permission:manage_tables_all');
                 Route::get('/', [TableController::class, 'show'])->name('show');
-                Route::get('/inscription', [TableController::class, 'todo'])->name('inscription');
+                Route::get('/inscription', [TableController::class, 'todo'])->name('inscription')->middleware('auth');
             });
         });
     });
@@ -108,13 +112,13 @@ Route::prefix('/events')->name('events.')->group(function () {
 
 
 Route::prefix('/tags')->name('tags.')->group(function () {
-    Route::get('/add', [TagsController::class, 'add'])->name('add');
-    Route::post('/add', [TagsController::class, 'store']);
+    Route::get('/add', [TagsController::class, 'add'])->name('add')->middleware('auth')->middleware('permission:ajout_tags');
+    Route::post('/add', [TagsController::class, 'store'])->middleware('auth')->middleware('permission:ajout_tags');
 });
 
 Route::prefix('/triggerwarning')->name('tw.')->group(function () {
-    Route::get('/add', [TriggerwarningController::class, 'add'])->name('add');
-    Route::post('/add', [TriggerwarningController::class, 'store']);
+    Route::get('/add', [TriggerwarningController::class, 'add'])->name('add')->middleware('auth')->middleware('permission:ajout_tws');
+    Route::post('/add', [TriggerwarningController::class, 'store'])->middleware('auth')->middleware('permission:ajout_tws');
 });
 /*
  * Pages relatives aux jeux

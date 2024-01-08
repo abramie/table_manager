@@ -1,9 +1,9 @@
-@extends('base')
+@extends('admin.base')
 
 @section('title', 'Liste des tables')
 
 
-@section('content')
+@section('content-admin')
 
     <h1>Options admin</h1>
 

@@ -38,9 +38,11 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{route("events.one.show", ['evenement'=> \App\Models\Evenement::all()->where('slug','=', "som-24")[1]])}}">Som-24</a>
             </li>
+            @role('admin')
             <li class="nav-item">
                 <a class="nav-link" href="{{route("admin.index")}}">Admin</a>
             </li>
+            @endrole
             <li class="nav-item">
                 <a class="nav-link disabled" href="#">Disabled</a>
             </li>

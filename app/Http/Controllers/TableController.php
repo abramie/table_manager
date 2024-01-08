@@ -51,6 +51,10 @@ class TableController extends Controller
      * Sauvegarde un Creneau depuis un formulaire
      */
     public function store(Evenement $evenement,Creneau $creneau, FormTableRequest $request){
+        if($request->get('action') != 'save'){
+            return $this->redirect_action($request);
+        }
+
         $table = Table::create($request->validated());
         $creneau->tables()->save($table);
         $table->triggerwarnings()->sync($request->validated('triggerwarnings'));
@@ -88,13 +92,11 @@ class TableController extends Controller
      */
     public function update(Evenement $evenement,Creneau $creneau,Table $table,FormTableRequest $request){
 
+        if($request->get('action') != 'save'){
+            return $this->redirect_action($request);
+        }
 
-        if($request->get('action') == 'add_tag'){
-            return redirect()->route('tags.add')->withInput();
-        }
-        if($request->get('action') == 'add_tw'){
-            return redirect()->route('tw.add')->withInput();
-        }
+
         $table->update($request->validated());
         $table->triggerwarnings()->sync($request->validated('triggerwarnings'));
         $table->tags()->sync($request->validated('tags'));
@@ -102,6 +104,18 @@ class TableController extends Controller
             ->with('success', "Le table a bien été modifier");
     }
 
+    private function redirect_action(FormTableRequest $request){
+        if($request->get('action') == 'add_tag'){
+            return redirect()->route('tags.add')->withInput();
+        }
+        if($request->get('action') == 'add_tw'){
+            return redirect()->route('tw.add')->withInput();
+        }
+    }
+
+    public function inscription_table(){
+
+    }
     public function todo (Evenement $evenement, Creneau $creneau, Table $table, Request $request){
         return view('todo', [
             'evenement' => $evenement,
