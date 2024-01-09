@@ -33,6 +33,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::post('/profile/user-{user:name}/change_role', [ProfileController::class, 'update_role'])->name('profile.change_role');
+
+    Route::post('/toggleMJ', [ProfileController::class, 'toggleMJ'])->name('profile.toggle-mj');
+    Route::view('/profile/optionMJ', 'profile.mj')->name("profile.mj");
 });
 
 Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');

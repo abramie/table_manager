@@ -71,4 +71,14 @@ class ProfileController extends Controller
 
 
     }
+
+    public function toggleMJ(){
+        $user = Auth::user();
+        if($user->hasRole('mj')){
+            $user->removeRole('mj');
+        }else{
+            $user->assignRole('mj');;
+        }
+        return back();
+    }
 }

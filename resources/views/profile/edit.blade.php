@@ -1,10 +1,10 @@
 
-@extends('base')
+@extends('profile.base')
 
 @section('title', 'Edition profile')
 
 
-@section('content')
+@section('content-profile')
     <h1>Profile</h1>
 
 

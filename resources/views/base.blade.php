@@ -59,6 +59,7 @@
             </form>
         @endauth
         @guest()
+                <a href="{{route('register')}}">Créer son compte </a>
                 <a href="{{route('login')}}">Se connecter </a>
         @endguest
 
