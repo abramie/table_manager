@@ -2,8 +2,11 @@
 
 namespace App\Http\Requests;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
+
 
 class FormTableRequest extends FormRequest
 {
@@ -44,13 +47,23 @@ class FormTableRequest extends FormRequest
     }
     protected function prepareForValidation(): void
     {
+        if( $this->mj_name && \Auth::user()->can('manage_tables_all') ){
+            $mj = User::get()->where('name', $this->mj_name)->first();
+            if($mj == null){
+              throw ValidationException::withMessages([
+                  'mj_name' => "Le Mj n'existe pas",
 
+              ]);
+            }
+        }else{
+            $mj = \Auth::user();
+        }
         $this->merge([
             'duree' => floatval($this->duree),
             'nb_joueur_min' => floatval($this->nb_joueur_min),
             'nb_joueur_max' => floatval($this->nb_joueur_max),
             'max_duree' => floatval($this->route('creneau')->duree),
-            'mj' => \Auth::user()->id
+            'mj' => $mj->id
         ]);
 
         //Probablement ajouter la partie qui permet de decider l'heure de depart d'une table :)

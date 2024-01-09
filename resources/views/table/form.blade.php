@@ -4,7 +4,25 @@
     <button class="btn btn-xs btn-info pull-left" type="button" onclick="window.location='{{ url()->previous() }}'">
         Retour
     </button>
+    @can('manage_tables_all')
+        <div class="form-group">
+            <label for="mj_name">Le nom du MJ</label>
+            <select class="form-select" @error("mj_name") is-invalid @enderror id="mj_name" name="mj_name">
 
+                @foreach(App\Models\User::role('mj')->get() as $mj)
+                    <option value="{{$mj->name}}" @selected(old('mj_name',Auth::user()->name )== $mj->name) >{{$mj->name}}</option>
+                @endforeach
+            </select>
+
+
+            @error("mj_name")
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+            @enderror
+
+        </div>
+    @endcan
     <div class="form-group">
         <label for="title">Titre</label>
         <input type="text" class="form-control @error("nom") is-invalid @enderror" id="nom" name="nom"
@@ -99,17 +117,6 @@
         <input type="number" class="form-control @error("duree") is-invalid @enderror" id="duree" name="duree"
                value="{{ old('duree', $table->duree) }}">
         @error("duree")
-        <div class="invalid-feedback">
-            {{ $message }}
-        </div>
-        @enderror
-    </div>
-
-    <div class="form-group">
-        <label for="mj_name">mj_name</label>
-        <input type="text" class="form-control @error("mj_name") is-invalid @enderror" id="mj_name" name="mj_name"
-               value="{{ old('mj_name', $table->mj_name) }}">
-        @error("mj_name")
         <div class="invalid-feedback">
             {{ $message }}
         </div>
