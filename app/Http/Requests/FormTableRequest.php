@@ -23,7 +23,7 @@ class FormTableRequest extends FormRequest
     public function rules(): array
     {
 
-
+    //dd($this->request);
         return [
             //
             'nom' => ['required', 'min:4'],
@@ -31,9 +31,9 @@ class FormTableRequest extends FormRequest
             'nb_joueur_min' => ['regex:/^[0-9]+$/' ],
             'nb_joueur_max' => ['regex:/^[0-9]+$/' ],
             'description' => ['required', 'min:4'],
-            'mj_name' => ['required', 'min:3'],
             'tags' => ['array', 'exists:tags,id'],
             'triggerwarnings' => ['array', 'exists:triggerwarnings,id'],
+            'mj' => ['required']
 
 
             //Ajout verification clef etrangere que l'event existe bien ?
@@ -50,6 +50,7 @@ class FormTableRequest extends FormRequest
             'nb_joueur_min' => floatval($this->nb_joueur_min),
             'nb_joueur_max' => floatval($this->nb_joueur_max),
             'max_duree' => floatval($this->route('creneau')->duree),
+            'mj' => \Auth::user()->id
         ]);
 
         //Probablement ajouter la partie qui permet de decider l'heure de depart d'une table :)

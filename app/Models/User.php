@@ -4,6 +4,8 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -43,4 +45,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Les tables où l'utilisateur est MJ
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function tables() :HasMany{
+        return $this->hasMany(Table::class,'mj');
+    }
+
+    public function inscriptions() : BelongsToMany{
+        return $this->BelongToMany(Table::class, 'inscrits');
+    }
 }

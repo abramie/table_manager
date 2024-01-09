@@ -15,6 +15,36 @@ return new class extends Migration
     {
 
         if (DB::table('evenements')->count() == 0){
+
+
+            $jeremy = User::create([
+                'name' => "jeremy",
+                'email' => "jeremyrou@hotmail.fr",
+                'password' => Hash::make("test"),
+            ]);
+            $mad = User::create([
+                'name' => "mad",
+                'email' => "mad@som.fr",
+                'password' => Hash::make("mad"),
+            ]);
+
+            $admin = User::create([
+                'name' => "admin",
+                'email' => "admin@som.fr",
+                'password' => Hash::make("admin"),
+            ]);
+
+            $modo = User::create([
+                'name' => "modo",
+                'email' => "modo@som.fr",
+                'password' => Hash::make("modo"),
+            ]);
+
+            $jeremy->assignRole('joueur','mj');
+            $mad->assignRole('joueur','mj');
+            $admin->assignRole('joueur','mj', 'admin');
+            $modo->assignRole('joueur','mj', 'modo');
+
             DB::table('evenements')->insert(
                 array(
                     'nom_evenement' => 'Soirée crepe',
@@ -102,7 +132,7 @@ return new class extends Migration
                     'tw' => 'fun',
                     'nb_joueur_min' => 2,
                     'nb_joueur_max'=> 4,
-                    'mj_name' => 'abramie',
+                    'mj' => 1,
                     'description' => "une partie de pathfinder"
                 )
             );
@@ -115,7 +145,7 @@ return new class extends Migration
                     'tw' => 'racisme, dystopie',
                     'nb_joueur_min' => 2,
                     'nb_joueur_max'=> 4,
-                    'mj_name' => 'MadDiaboliste',
+                    'mj' => 2,
                     'description' => "une partie tranquille d'extra humain"
                 )
             );
@@ -128,7 +158,7 @@ return new class extends Migration
                     'tw' => 'fun',
                     'nb_joueur_min' => 2,
                     'nb_joueur_max'=> 4,
-                    'mj_name' => 'Gorille',
+                    'mj' => 2,
                     'description' => "Cette partie de Marvel TV vous est apporté par coca-colatm"
                 )
             );
@@ -140,7 +170,7 @@ return new class extends Migration
                     'tw' => 'racisme, dystopie',
                     'nb_joueur_min' => 2,
                     'nb_joueur_max'=> 4,
-                    'mj_name' => 'MadDiaboliste',
+                    'mj' => 2,
                     'description' => "une partie tranquille d'extra humain"
                 )
             );
@@ -153,7 +183,7 @@ return new class extends Migration
                     'tw' => 'fun',
                     'nb_joueur_min' => 3,
                     'nb_joueur_max'=> 5,
-                    'mj_name' => 'Pikamox',
+                    'mj' => 2,
                     'description' => "Partie de disney Vilains Victorious"
                 )
             );
@@ -167,7 +197,7 @@ return new class extends Migration
                     'tw' => 'fun',
                     'nb_joueur_min' => 3,
                     'nb_joueur_max'=> 5,
-                    'mj_name' => 'Pikamox',
+                    'mj' => 2,
                     'description' => "Oh non des crepes"
                 )
             );
@@ -180,7 +210,7 @@ return new class extends Migration
                     'tw' => 'fun',
                     'nb_joueur_min' => 3,
                     'nb_joueur_max'=> 5,
-                    'mj_name' => 'Pikamox',
+                    'mj' => 2,
                     'description' => "Oh non des saucisses !"
                 )
             );
@@ -221,27 +251,6 @@ return new class extends Migration
         }
 
 
-        $jeremy = User::create([
-            'name' => "jeremy",
-            'email' => "jeremyrou@hotmail.fr",
-            'password' => Hash::make("test"),
-        ]);
-
-        $admin = User::create([
-            'name' => "admin",
-            'email' => "admin@som.fr",
-            'password' => Hash::make("admin"),
-        ]);
-
-        $modo = User::create([
-            'name' => "modo",
-            'email' => "modo@som.fr",
-            'password' => Hash::make("modo"),
-        ]);
-
-        $jeremy->assignRole('joueur','mj');
-        $admin->assignRole('joueur','mj', 'admin');
-        $modo->assignRole('joueur','mj', 'modo');
 
 
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\FormTableRequest;
+use App\Http\Requests\InscriptionTableRequest;
 use App\Models\Creneau;
 use App\Models\Description;
 use App\Models\Evenement;
@@ -11,6 +12,7 @@ use App\Models\Table;
 use App\Models\Tag;
 use App\Models\Triggerwarning;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TableController extends Controller
 {
@@ -58,6 +60,7 @@ class TableController extends Controller
         $table = Table::create($request->validated());
         $creneau->tables()->save($table);
         $table->triggerwarnings()->sync($request->validated('triggerwarnings'));
+
         $table->tags()->sync($request->validated('tags'));
         return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau->id])
             ->with('success', "La table a bien été ajouté");
@@ -100,8 +103,9 @@ class TableController extends Controller
         $table->update($request->validated());
         $table->triggerwarnings()->sync($request->validated('triggerwarnings'));
         $table->tags()->sync($request->validated('tags'));
-        return redirect()->route('events.one.creneau.table.show', ['evenement' => $evenement,'creneau' => $creneau->id,'table'=> $table])
+        return redirect()->route('events.one.creneau.table.show', ['evenement' => $evenement,'creneau' => $creneau,'table'=> $table])
             ->with('success', "Le table a bien été modifier");
+        //return redirect()->route('events.one.creneau.table.show', ['evenement' => $evenement,'creneau' => $creneau->id,'table'=> $table])->with('success', "Le table a bien été modifier");
     }
 
     private function redirect_action(FormTableRequest $request){
@@ -113,7 +117,32 @@ class TableController extends Controller
         }
     }
 
-    public function inscription_table(){
+    public function inscription_table(Evenement $evenement,Creneau $creneau,Table $table, InscriptionTableRequest $request){
+        //Do the attach
+        if($table->users->contains(Auth::user())){
+            return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau])
+                ->with('echec', "Vous etes deja inscrit sur la table ");
+        }
+        elseif($table->users->count() < $table->nb_joueur_max){
+            $table->users()->attach(Auth::user());
+            return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau])
+                ->with('success', "Inscription validée sur la table \"".$table->nom);
+        }else{
+            return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau])
+                ->with('echec', "La table n'a plus de place ");
+        }
+
+
+    }
+    public function desinscription_table(Evenement $evenement,Creneau $creneau,Table $table, InscriptionTableRequest $request){
+        //Do the attach
+
+        $table->users()->detach(Auth::user());
+
+        return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau])
+            ->with('succes', "Vous vous etes bien desinscrit de la table : ".$table->nom);
+
+
 
     }
     public function todo (Evenement $evenement, Creneau $creneau, Table $table, Request $request){

@@ -27,10 +27,7 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\Evenement::class)->nullable()->constrained()->cascadeOnDelete();
         });
 
-        Schema::create('user_table',function (Blueprint $table) {
-            $table->foreignIdFor(\App\Models\User::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(\App\Models\Table::class)->constrained()->cascadeOnDelete();
-        });
+
 
 
 

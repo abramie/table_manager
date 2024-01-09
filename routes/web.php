@@ -104,7 +104,9 @@ Route::prefix('/events')->name('events.')->group(function () {
                 Route::get('/edit', [TableController::class, 'edit'])->name('edit')->middleware('auth')->middleware('permission:manage_tables_all');
                 Route::post('/edit', [TableController::class, 'update'])->middleware('auth')->middleware('permission:manage_tables_all');
                 Route::get('/', [TableController::class, 'show'])->name('show');
-                Route::get('/inscription', [TableController::class, 'todo'])->name('inscription')->middleware('auth');
+                Route::post('/inscription', [TableController::class, 'inscription_table'])->name('inscription')->middleware('auth');
+                Route::post('/desinscription', [TableController::class, 'desinscription_table'])->name('desinscription')->middleware('auth');
+
             });
         });
     });

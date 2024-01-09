@@ -23,9 +23,15 @@ return new class extends Migration
             $table->double('nb_joueur_max')->default('4');
 
 
-            $table->string('mj_name')->comment("A remplacer par une clef etrangere quand user done");
+            $table->foreignId('mj')->constrained(table: 'users')->cascadeOnDelete();
         });
 
+
+
+            Schema::create('inscrits',function (Blueprint $table) {
+                $table->foreignIdFor(\App\Models\User::class)->constrained()->cascadeOnDelete();
+                $table->foreignIdFor(\App\Models\Table::class)->constrained()->cascadeOnDelete();
+            });
 
 
 

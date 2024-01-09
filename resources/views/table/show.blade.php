@@ -19,7 +19,12 @@
     </div>
 
     <div>
-        Nombre de place  : {{ $table->nb_joueur_max }}
+        <span>Inscrits : {{$table->nb_inscrits()}}/{{$table->nb_joueur_max}}</span>
+        <ul class="list-group list-group-flush">
+        @foreach($table->users as $user)
+            <li class="list-group-item">{{$user->name}}</li>
+        @endforeach
+        </ul>
     </div>
 
 

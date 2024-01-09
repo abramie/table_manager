@@ -80,6 +80,13 @@
         </div>
 
     @endif
+
+    @if(session('echec'))
+        <div class=".alert alert-danger">
+            {{ session('echec') }}
+        </div>
+
+    @endif
 </div>
 
 <div class="container">

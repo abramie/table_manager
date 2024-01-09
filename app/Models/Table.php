@@ -25,13 +25,22 @@ class Table extends Model
         'tw',
         'nb_joueur_min',
         'nb_joueur_max',
-        'mj_name'
+        'mj'
     ];
 
     public function creneaus(): BelongsTo {
         return $this->belongsTo(Creneau::class);
     }
+    public function mjs(): BelongsTo{
+        return $this->belongsTo(User::class, 'mj');
+    }
 
+    public function users() : BelongsToMany{
+        return $this->belongsToMany(User::class, 'inscrits');
+    }
+    public function nb_inscrits() : int {
+        return $this->users->count();
+    }
 
     public function triggerwarnings(): BelongsToMany
     {
