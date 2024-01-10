@@ -19,13 +19,19 @@
         </p>
     @endif
 
+
+    <ul class="list-group list-group-flush">
+        @foreach($creneau->tables()->with('users')->get()->pluck('users')->flatten() as $user)
+            <li class="list-group-item">{{$user->name}}</li>
+        @endforeach
+    </ul>
     @foreach($tables as $table)
         @php
             $isSansTable = $table->sans_table == 1;
          @endphp
         <evenement>
             <h2><a href="{{route('events.one.creneau.table.show', ['evenement' => $evenement->slug, 'creneau' => $creneau, 'table' => $table])}}">{{$table->nom}}</a></h2>
-            @if($isSansTable)
+            @if(!$isSansTable)
                 <span>MJ : {{$table->mjs->name}}</span>
                 @if(!$table->tags->isEmpty())
                     Tags :
@@ -53,24 +59,26 @@
                 {{substr($table->description, 0,1000) . "..." }}
             @endif
         </p>
-        @if($table->users->contains(Auth::user()))
-            <form action="{{route('events.one.creneau.table.desinscription',['evenement'=> $evenement, 'creneau' => $creneau, 'table'=> $table ])}}" method="post">
-                @csrf
-                <div class="input-group mb-3">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary btn-danger" type="submit">Desinscription</button>
+        @if($table->mjs->id != Auth::user()->id)
+            @if($table->users->contains(Auth::user()))
+                <form action="{{route('events.one.creneau.table.desinscription',['evenement'=> $evenement, 'creneau' => $creneau, 'table'=> $table ])}}" method="post">
+                    @csrf
+                    <div class="input-group mb-3">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary btn-danger" type="submit">Desinscription</button>
+                        </div>
                     </div>
-                </div>
-            </form>
-        @else
-            <form action="{{route('events.one.creneau.table.inscription',['evenement'=> $evenement, 'creneau' => $creneau, 'table'=> $table ])}}" method="post">
-                @csrf
-                <div class="input-group mb-3">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary btn-light" type="submit">Inscription à la table</button>
+                </form>
+            @else
+                <form action="{{route('events.one.creneau.table.inscription',['evenement'=> $evenement, 'creneau' => $creneau, 'table'=> $table ])}}" method="post">
+                    @csrf
+                    <div class="input-group mb-3">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary btn-light" type="submit">Inscription à la table</button>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            @endif
         @endif
 
 

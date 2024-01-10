@@ -11,6 +11,7 @@ use App\Models\Settings;
 use App\Models\Table;
 use App\Models\Tag;
 use App\Models\Triggerwarning;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -119,12 +120,24 @@ class TableController extends Controller
 
     public function inscription_table(Evenement $evenement,Creneau $creneau,Table $table, InscriptionTableRequest $request){
         //Do the attach
-        if($table->users->contains(Auth::user())){
+
+        //dd($table->users);
+        //Verifie dans le creneau de la table si l'utilisateur est inscrit sur une des tables existante, à l'exception de la table "sans table"
+        if(($table->sans_table && $table->users->contains(Auth::user()))
+            || $creneau->tables()->with('users')->where("sans_table", "=","0")->get()->pluck('users')->flatten()->contains('id',Auth::user()->id)){
             return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau])
-                ->with('echec', "Vous etes deja inscrit sur la table ");
+                ->with('echec', "Vous etes deja inscrit sur une table ");
+        }elseif($table->sans_table){
+            $table->users()->attach(Auth::user());
+            return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau])
+                ->with('success', "Inscription en \"".$table->nom);
+        }elseif($table->mjs == Auth::user()){
+            return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau])
+                ->with('echec', "Tu ne peut pas t'inscrire sur ta propre table, comment tu es arrivé là ??? ");
         }
         elseif($table->users->count() < $table->nb_joueur_max){
             $table->users()->attach(Auth::user());
+            $creneau->tables()->where("sans_table", "=","1")->get()->first()->users()->detach(Auth::user());
             return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau])
                 ->with('success', "Inscription validée sur la table \"".$table->nom);
         }else{
