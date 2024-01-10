@@ -8,6 +8,7 @@ use App\Models\Creneau;
 use App\Models\Description;
 use App\Models\Evenement;
 use App\Models\Settings;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class CreneauController extends Controller
@@ -20,14 +21,9 @@ class CreneauController extends Controller
 
         return view('creneau.index', [
             'creneau' => $creneau,
-            'tables' => $creneau->tables()->with('tags', 'triggerwarnings')->paginate(2),
+            'tables' => $creneau->tables()->with('tags', 'triggerwarnings')->orderByDesc("sans_table")->paginate(2),
             'evenement' => $evenement
         ]);
-        return [
-            "page" => "creneau",
-            "id_creneau" => $creneau->id,
-            "name" => $creneau->nom
-        ];
     }
 
 
@@ -50,7 +46,13 @@ class CreneauController extends Controller
      */
     public function store(Evenement $evenement,FormCreneauRequest $request){
         //dd($request);
-        $creneau = Creneau::create($request->validated());
+        $validated = $request->validated();
+        $creneau = Creneau::create($validated);
+        if($validated["sans_table"]){
+            $this->add_sans_table($creneau);
+        }else{
+            $this->remove_sans_table($creneau);
+        }
         $evenement->creneaus()->save($creneau);
 
         return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau->id])
@@ -60,7 +62,8 @@ class CreneauController extends Controller
 
     public function edit(Evenement $evenement,Creneau $creneau){
 
-        $descriptions = Description::whereIn('name',  ['max_tables','nb_inscription_online_max' ])->get();
+        $descriptions = Description::whereIn('name',  ['max_tables','nb_inscription_online_max','sans_table_toggle' ])->get();
+
         return view('creneau.edit', [
             'creneau' => $creneau,
             'descriptions' => $descriptions,
@@ -71,9 +74,36 @@ class CreneauController extends Controller
      * Sauvegarde un Creneau depuis un formulaire
      */
     public function update(Evenement $evenement,Creneau $creneau,FormCreneauRequest $request){
-        $creneau->update($request->validated());
+        $validated = $request->validated();
+
+        if($validated["sans_table"] != $creneau->sans_table){
+            if($validated["sans_table"]){
+                $this->add_sans_table($creneau,$request->input()['sans_table_name']);
+            }else{
+                $this->remove_sans_table($creneau);
+            }
+        }
+        $creneau->update($validated);
+
+
         return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau->id])
             ->with('success', "Le creneau a bien été modifier");
+    }
+
+    private function add_sans_table(Creneau $creneau, $nom = "sans-tables", $description ="S'inscrire ici pour annoncer sa venue, sans s'attacher à une table"){
+        $creneau->tables()->create([
+            "nom" => $nom,
+            "description" => $description,
+            "duree" => $creneau->duree,
+            "nb_joueur_mini" => 0,
+            "nb_joueur_max" => 50,
+            "mj" => User::first()->id,
+            "sans_table" => 1,
+        ]);
+
+    }
+    private function remove_sans_table(Creneau $creneau){
+        $creneau->tables()->where("sans_table", "=","1")->delete();
     }
 
     public function delete(Evenement $evenement,Creneau $creneau){

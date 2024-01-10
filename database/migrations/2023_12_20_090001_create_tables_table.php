@@ -21,7 +21,7 @@ return new class extends Migration
             $table->float('duree')->default('4');
             $table->double('nb_joueur_min')->default('2');
             $table->double('nb_joueur_max')->default('4');
-
+            $table->boolean('sans_table')->default('0');
 
             $table->foreignId('mj')->constrained(table: 'users')->cascadeOnDelete();
         });

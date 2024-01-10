@@ -15,7 +15,8 @@ class Creneau extends Model
         'nom',
         'duree',
         'max_tables',
-        'nb_inscription_online_max'
+        'nb_inscription_online_max',
+        'sans_table'
     ];
 
     public function evenement(): BelongsTo {

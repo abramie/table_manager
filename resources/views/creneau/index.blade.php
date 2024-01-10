@@ -20,26 +20,30 @@
     @endif
 
     @foreach($tables as $table)
+        @php
+            $isSansTable = $table->sans_table == 1;
+         @endphp
         <evenement>
             <h2><a href="{{route('events.one.creneau.table.show', ['evenement' => $evenement->slug, 'creneau' => $creneau, 'table' => $table])}}">{{$table->nom}}</a></h2>
+            @if($isSansTable)
+                <span>MJ : {{$table->mjs->name}}</span>
+                @if(!$table->tags->isEmpty())
+                    Tags :
+                    @foreach($table->tags as $tag )
+                        <span class="badge bg-secondary">{{$tag->nom}}</span>
+                    @endforeach
 
-            <span>MJ : {{$table->mjs->name}}</span>
-            @if(!$table->tags->isEmpty())
-                Tags :
-                @foreach($table->tags as $tag )
-                    <span class="badge bg-secondary">{{$tag->nom}}</span>
-                @endforeach
+                @endif
 
+                @if(!$table->triggerwarnings->isEmpty())
+                    TW :
+                    @foreach($table->triggerwarnings as $tw )
+                        <span class="badge bg-secondary">{{$tw->nom}}</span>
+                    @endforeach
+
+                @endif
             @endif
-
-            @if(!$table->triggerwarnings->isEmpty())
-                TW :
-                @foreach($table->triggerwarnings as $tw )
-                    <span class="badge bg-secondary">{{$tw->nom}}</span>
-                @endforeach
-
-            @endif
-            <span>Inscrits : {{$table->nb_inscrits()}}/{{$table->nb_joueur_max}}</span>
+            <span>Inscrits : {{$table->nb_inscrits()}} @if($isSansTable)/{{$table->nb_joueur_max}}@endif</span>
 
         </evenement>
         <p>

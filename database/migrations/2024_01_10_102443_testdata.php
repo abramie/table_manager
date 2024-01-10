@@ -16,18 +16,6 @@ return new class extends Migration
 
         if (DB::table('evenements')->count() == 0){
 
-
-            $jeremy = User::create([
-                'name' => "jeremy",
-                'email' => "jeremyrou@hotmail.fr",
-                'password' => Hash::make("test"),
-            ]);
-            $mad = User::create([
-                'name' => "mad",
-                'email' => "mad@som.fr",
-                'password' => Hash::make("mad"),
-            ]);
-
             $admin = User::create([
                 'name' => "admin",
                 'email' => "admin@som.fr",
@@ -39,6 +27,18 @@ return new class extends Migration
                 'email' => "modo@som.fr",
                 'password' => Hash::make("modo"),
             ]);
+            $jeremy = User::create([
+                'name' => "jeremy",
+                'email' => "jeremyrou@hotmail.fr",
+                'password' => Hash::make("test"),
+            ]);
+            $mad = User::create([
+                'name' => "mad",
+                'email' => "mad@som.fr",
+                'password' => Hash::make("mad"),
+            ]);
+
+
 
             $jeremy->assignRole('joueur','mj');
             $mad->assignRole('joueur','mj');

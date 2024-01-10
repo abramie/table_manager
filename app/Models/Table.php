@@ -25,7 +25,8 @@ class Table extends Model
         'tw',
         'nb_joueur_min',
         'nb_joueur_max',
-        'mj'
+        'mj',
+        'sans_table'
     ];
 
     public function creneaus(): BelongsTo {

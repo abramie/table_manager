@@ -27,17 +27,19 @@ class FormCreneauRequest extends FormRequest
             'nom' => ['required', 'min:4'],
             'duree' => ['regex:/^[0-9]+$/' ],
             'max_tables' => ['regex:/^[0-9]+$/' ],
-            'nb_inscription_online_max' => ['regex:/^[0-9]+$/' ]
+            'nb_inscription_online_max' => ['regex:/^[0-9]+$/' ],
+            'sans_table' => ['required']
             //Ajout verification clef etrangere que l'event existe bien ?
         ];
     }
     protected function prepareForValidation(): void
     {
-        //dd($this->route());
+        //dd($this->request);
         $this->merge([
             'duree' => floatval($this->duree),
             'max_tables' => floatval($this->max_tables),
-            'nb_inscription_online_max' => floatval($this->nb_inscription_online_max)
+            'nb_inscription_online_max' => floatval($this->nb_inscription_online_max),
+            'sans_table' => (bool)$this->sans_table,
         ]);
     }
 

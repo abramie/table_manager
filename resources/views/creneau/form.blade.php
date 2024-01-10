@@ -46,6 +46,30 @@
         </div>
         @enderror
     </div>
+
+
+    <div class="form-group" data-toggle="tooltip" rel="tooltip" data-placement="top"
+         title="{{$descriptions->firstWhere('name','sans_table_toggle')?->description}}">
+        <label for="sans_table">sans_table</label>
+        <input type="checkbox" class="form-check-input" @checked(old('sans_table', $creneau->sans_table)) @error("sans_table") is-invalid @enderror
+               id="sans_table" name="sans_table" value="1">
+        {{old('sans_table', $creneau->sans_table)}}
+
+        @error("sans_table")
+        <div class="invalid-feedback">
+            {{ $message }}
+        </div>
+        @enderror
+        @if(!old('sans_table', $creneau->sans_table))
+        <label for="sans_table_name">Nom de la table "Sans tables" </label>
+        <input type="text" class="form-check-input" id="sans_table_name" name="sans_table_name" value="Sans tables" >
+        @error("sans_table_name")
+        <div class="invalid-feedback">
+            {{ $message }}
+        </div>
+        @enderror
+        @endif
+    </div>
     <button class="btn btn-primary">
 
         @if($creneau->id)

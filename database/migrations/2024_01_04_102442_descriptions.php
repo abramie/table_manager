@@ -40,6 +40,13 @@ return new class extends Migration
                 'description' => "Des avertissements sur le contenu d'une table"
             )
         );
+
+        DB::table('descriptions')->insert(
+            array(
+                'name' => 'sans_table_toggle',
+                'description' => "Ajoute une table special permettant aux joueurs d'annoncer leur presence sur le creneau sans s'inscrire à une table precise"
+            )
+        );
     }
 
     /**
