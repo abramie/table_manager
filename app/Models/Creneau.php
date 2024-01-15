@@ -16,9 +16,18 @@ class Creneau extends Model
         'duree',
         'max_tables',
         'nb_inscription_online_max',
-        'sans_table'
+        'sans_table',
+        'debut_creneau'
     ];
 
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'debut_creneau' => 'datetime:Y-m-d',
+    ];
     public function evenement(): BelongsTo {
         return $this->belongsTo(Evenement::class);
     }

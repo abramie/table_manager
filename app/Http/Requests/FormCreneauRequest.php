@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -28,7 +29,8 @@ class FormCreneauRequest extends FormRequest
             'duree' => ['regex:/^[0-9]+$/' ],
             'max_tables' => ['regex:/^[0-9]+$/' ],
             'nb_inscription_online_max' => ['regex:/^[0-9]+$/' ],
-            'sans_table' => ['required']
+            'sans_table' => ['required'],
+            'debut_creneau' => ['required', 'date', 'after_or_equal:debut_event']
             //Ajout verification clef etrangere que l'event existe bien ?
         ];
     }
@@ -40,7 +42,16 @@ class FormCreneauRequest extends FormRequest
             'max_tables' => floatval($this->max_tables),
             'nb_inscription_online_max' => floatval($this->nb_inscription_online_max),
             'sans_table' => (bool)$this->sans_table,
+            'debut_event' => $this->route('evenement')->date_debut,
+            'debut_creneau' => Carbon::create($this->debut_creneau),
         ]);
+    }
+
+    public function messages(): array
+    {
+        return [
+
+        ];
     }
 
 }

@@ -22,6 +22,8 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         \Illuminate\Pagination\Paginator::useBootstrapFive();
+        \App::setLocale('fr');
+        \Carbon\Carbon::setLocale('fr');
 
     }
 }

@@ -13,6 +13,9 @@
         <button class="btn btn-xs btn-info pull-right" type="button" onclick="window.location='{{ route("events.one.creneau.table.edit",['evenement'=> $evenement,'creneau' =>$creneau, 'table'=>$table]) }}'">
             Edit </button>
     </p>
+    <div>
+        Horaires : {{$table->debut_table->toTimeString()}} -> {{$table->debut_table->addHour($table->duree)->toTimeString()}};
+    </div>
     <div >
         <h2>Description de la table</h2>
         {{$table->description}}

@@ -18,7 +18,9 @@
                 {{$evenement->nom_evenement}}</button>
         </p>
     @endif
-
+    <div>
+        Horaires : {{$creneau->debut_creneau->toTimeString()}} -> {{$creneau->debut_creneau->addHour($creneau->duree)->toTimeString()}};
+    </div>
 
     <ul class="list-group list-group-flush">
         @foreach($creneau->tables()->with('users')->get()->pluck('users')->flatten() as $user)

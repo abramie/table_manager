@@ -70,6 +70,20 @@
         @enderror
         @endif
     </div>
+    <div class="form-group">
+        <div class="input-group date">
+            <label for="debut_creneau">Debut du creneau</label>
+            <input type="datetime-local" class="form-control @error("debut_creneau")is-invalid @enderror" id="debut_creneau" name="debut_creneau" value="{{old('debut_creneau', $creneau->debut_creneau)}}">
+            @error("debut_creneau")
+            <div id="debut_creneauFeedback" class="invalid-feedback">
+                {{ $message }}
+            </div>
+            @enderror
+        </div>
+    </div>
+
+
+
     <button class="btn btn-primary">
 
         @if($creneau->id)

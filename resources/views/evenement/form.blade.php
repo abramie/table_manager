@@ -1,11 +1,6 @@
 <form action="" method="post" class="vstack gap-2">
     @csrf
 
-    <script>
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip()
-        })
-    </script>
     <div class="form-group">
         <label for="title">Titre</label>
         <input type="text" class="form-control @error("nom_evenement") is-invalid @enderror" id="nom_evenement" name="nom_evenement" value="{{ old('nom_evenement', $evenement->nom_evenement) }}">
@@ -46,6 +41,14 @@
         </div>
         @enderror
     </div>
+
+    <div class="form-group">
+        <div class="input-group date">
+            <label for="date_debut">Date de debut de l'evenement</label>
+            <input type="datetime-local" class="form-control" id="date_debut" name="date_debut"value="{{old('date_debut', $evenement->date_debut)}}">
+
+        </div>
+    </div>
     <button class="btn btn-primary">
 
         @if($evenement->id)
@@ -55,3 +58,9 @@
         @endif
     </button>
 </form>
+
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    });
+</script>

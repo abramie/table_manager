@@ -49,12 +49,14 @@ return new class extends Migration
                 array(
                     'nom_evenement' => 'Soirée crepe',
                     'slug' => 'crepe-2024',
+                    'date_debut' => \Carbon\Carbon::create(2024,01,19,21)
                 )
             );
             DB::table('evenements')->insert(
                 array(
                     'nom_evenement' => 'Sous l\'oeil de melusine',
                     'slug' => 'som-24',
+                    'date_debut' => \Carbon\Carbon::create(2024,05,11,10),
                 )
             );
 
@@ -62,6 +64,7 @@ return new class extends Migration
                 array(
                     'nom_evenement' => 'Soirée barbecue',
                     'slug' => 'barbecue-24',
+                    'date_debut' => \Carbon\Carbon::create(2024,06,19,21)
                 )
             );
 
@@ -71,7 +74,8 @@ return new class extends Migration
                     'duree' => '5',
                     'evenement_id' => 1,
                     'max_tables' => 8,
-                    'nb_inscription_online_max' => -1
+                    'nb_inscription_online_max' => -1,
+                    'debut_creneau' => \Carbon\Carbon::create(2024,01,19,21)
                 )
             );
             DB::table('creneaux')->insert(
@@ -80,7 +84,8 @@ return new class extends Migration
                     'duree' => '3',
                     'evenement_id' => 2,
                     'max_tables' => 8,
-                    'nb_inscription_online_max' => -1
+                    'nb_inscription_online_max' => -1,
+                    'debut_creneau' => \Carbon\Carbon::create(2024,05,11,10),
                 )
             );
 
@@ -90,7 +95,8 @@ return new class extends Migration
                     'duree' => '5',
                     'evenement_id' => 2,
                     'max_tables' => 8,
-                    'nb_inscription_online_max' => -1
+                    'nb_inscription_online_max' => -1,
+                    'debut_creneau' => \Carbon\Carbon::create(2024,05,11,14),
                 )
             );
 
@@ -100,7 +106,8 @@ return new class extends Migration
                     'duree' => '5',
                     'evenement_id' => 2,
                     'max_tables' => 8,
-                    'nb_inscription_online_max' => -1
+                    'nb_inscription_online_max' => -1,
+                    'debut_creneau' => \Carbon\Carbon::create(2024,05,11,21),
                 )
             );
 
@@ -110,7 +117,8 @@ return new class extends Migration
                     'duree' => '5',
                     'evenement_id' => 2,
                     'max_tables' => 8,
-                    'nb_inscription_online_max' => -1
+                    'nb_inscription_online_max' => -1,
+                    'debut_creneau' => \Carbon\Carbon::create(2024,05,12,03),
                 )
             );
 
@@ -120,7 +128,8 @@ return new class extends Migration
                     'duree' => '5',
                     'evenement_id' => 3,
                     'max_tables' => 8,
-                    'nb_inscription_online_max' => -1
+                    'nb_inscription_online_max' => -1,
+                    'debut_creneau' => \Carbon\Carbon::create(2024,06,19,21)
                 )
             );
 
@@ -133,7 +142,8 @@ return new class extends Migration
                     'nb_joueur_min' => 2,
                     'nb_joueur_max'=> 4,
                     'mj' => 1,
-                    'description' => "une partie de pathfinder"
+                    'description' => "une partie de pathfinder",
+                    'debut_table' => \Carbon\Carbon::create(2024,05,11,10)
                 )
             );
 
@@ -146,7 +156,8 @@ return new class extends Migration
                     'nb_joueur_min' => 2,
                     'nb_joueur_max'=> 4,
                     'mj' => 2,
-                    'description' => "une partie tranquille d'extra humain"
+                    'description' => "une partie tranquille d'extra humain",
+                    'debut_table' => \Carbon\Carbon::create(2024,05,11,10)
                 )
             );
 
@@ -159,7 +170,8 @@ return new class extends Migration
                     'nb_joueur_min' => 2,
                     'nb_joueur_max'=> 4,
                     'mj' => 2,
-                    'description' => "Cette partie de Marvel TV vous est apporté par coca-colatm"
+                    'description' => "Cette partie de Marvel TV vous est apporté par coca-colatm",
+                    'debut_table' => \Carbon\Carbon::create(2024,05,11,10)
                 )
             );
             DB::table('tables')->insert(
@@ -171,7 +183,8 @@ return new class extends Migration
                     'nb_joueur_min' => 2,
                     'nb_joueur_max'=> 4,
                     'mj' => 2,
-                    'description' => "une partie tranquille d'extra humain"
+                    'description' => "une partie tranquille d'extra humain",
+                    'debut_table' => \Carbon\Carbon::create(2024,05,11,14),
                 )
             );
 
@@ -184,7 +197,8 @@ return new class extends Migration
                     'nb_joueur_min' => 3,
                     'nb_joueur_max'=> 5,
                     'mj' => 2,
-                    'description' => "Partie de disney Vilains Victorious"
+                    'description' => "Partie de disney Vilains Victorious",
+                    'debut_table' => \Carbon\Carbon::create(2024,05,11,14),
                 )
             );
 
@@ -198,7 +212,8 @@ return new class extends Migration
                     'nb_joueur_min' => 3,
                     'nb_joueur_max'=> 5,
                     'mj' => 2,
-                    'description' => "Oh non des crepes"
+                    'description' => "Oh non des crepes",
+                    'debut_table' => \Carbon\Carbon::create(2024,01,19,21)
                 )
             );
 
@@ -211,7 +226,8 @@ return new class extends Migration
                     'nb_joueur_min' => 3,
                     'nb_joueur_max'=> 5,
                     'mj' => 2,
-                    'description' => "Oh non des saucisses !"
+                    'description' => "Oh non des saucisses !",
+                    'debut_table' => \Carbon\Carbon::create(2024,06,19,21)
                 )
             );
             DB::table('triggerwarnings')->insert(

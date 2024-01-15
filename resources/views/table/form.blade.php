@@ -4,17 +4,20 @@
     <button class="btn btn-xs btn-info pull-left" type="button" onclick="window.location='{{ url()->previous() }}'">
         Retour
     </button>
+    @error('erreur_temps')
+        <div class=".alert alert-danger">
+            {{ $message }}
+        </div>
+    @enderror
     @can('manage_tables_all')
         <div class="form-group">
             <label for="mj_name">Le nom du MJ</label>
-            <select class="form-select" @error("mj_name") is-invalid @enderror id="mj_name" name="mj_name">
+            <select class=" form-control form-select" @error("mj_name") is-invalid @enderror id="mj_name" name="mj_name">
 
                 @foreach(App\Models\User::role('mj')->get() as $mj)
                     <option value="{{$mj->name}}" @selected(old('mj_name',Auth::user()->name )== $mj->name) >{{$mj->name}}</option>
                 @endforeach
             </select>
-
-
             @error("mj_name")
             <div class="invalid-feedback">
                 {{ $message }}
@@ -112,6 +115,19 @@
         </div>
         @enderror
     </div>
+
+    <div class="form-group">
+        <div class="input-group date">
+            <label for="debut_table">Debut de la table</label>
+            <input type="time" class="form-control @error("debut_table")is-invalid @enderror" id="debut_table" name="debut_table" value="{{old('debut_table', $table->debut_table->toTimeString())}}">
+            @error("debut_table")
+                <div id="debut_tableFeedback" class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
+        </div>
+    </div>
+
     <div class="form-group">
         <label for="duree">duree</label>
         <input type="number" class="form-control @error("duree") is-invalid @enderror" id="duree" name="duree"
@@ -153,6 +169,8 @@
             Ajouter un jeu (todo)
         </button>
     </div>
+
+
 
     <button class="btn btn-primary" type="submit" name="action" value="save">
 

@@ -32,6 +32,7 @@ class CreneauController extends Controller
         $creneau->nom = "le nom du creneau";
         $creneau->max_tables = $evenement->max_tables;
         $creneau->nb_inscription_online_max = $evenement->nb_inscription_online_max;
+        $creneau->debut_creneau = $evenement->date_debut;
         $descriptions = Description::whereIn('name',  ['max_tables','nb_inscription_online_max' ])->get();
         //return "formulaire ajout d'evenement";
         return view('creneau.create', [

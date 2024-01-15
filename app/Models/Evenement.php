@@ -14,9 +14,23 @@ class Evenement extends Model
         'nom_evenement',
         'slug',
         'max_tables',
-        'nb_inscription_online_max'
+        'nb_inscription_online_max',
+        'date_debut'
     ];
 
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'date_debut' => 'datetime:Y-m-d',
+    ];
+
+    public function showDate(){
+        return $this->date_debut->toDayDateTimeString();
+    }
     public function creneaus() : HasMany{
         return $this->hasMany(Creneau::class);
     }

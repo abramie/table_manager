@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
@@ -36,7 +37,8 @@ class FormTableRequest extends FormRequest
             'description' => ['required', 'min:4'],
             'tags' => ['array', 'exists:tags,id'],
             'triggerwarnings' => ['array', 'exists:triggerwarnings,id'],
-            'mj' => ['required']
+            'mj' => ['required'],
+            'debut_table' => ['required', 'date', 'after_or_equal:debut_creneau']
 
 
             //Ajout verification clef etrangere que l'event existe bien ?
@@ -55,16 +57,30 @@ class FormTableRequest extends FormRequest
 
               ]);
             }
-        }else{
+        }else {
             $mj = \Auth::user();
         }
+        $creneau = $this->route('creneau');
+
+        //$date = $creneau->debut_creneau->
         $this->merge([
             'duree' => floatval($this->duree),
             'nb_joueur_min' => floatval($this->nb_joueur_min),
             'nb_joueur_max' => floatval($this->nb_joueur_max),
-            'max_duree' => floatval($this->route('creneau')->duree),
-            'mj' => $mj->id
+            'max_duree' => floatval($creneau->duree),
+            'mj' => $mj->id,
+            'debut_creneau' => $creneau->debut_creneau,
+            'debut_table' => $creneau->debut_creneau->setTimeFromTimeString($this->debut_table),
         ]);
+        //Combien de temps après le debut du creneau la table doit commencer
+        $diffHour = $this->debut_table->diffInHours($this->route('creneau')->debut_creneau);
+        //dd($diffHour);
+        if($diffHour+$this->duree > $creneau->duree){
+            throw ValidationException::withMessages([
+                'erreur_temps' => "La partie ne peut pas exceder l'heure de fin du creneau, reduiser la durée de celle ci",
+
+            ]);
+        }
 
         //Probablement ajouter la partie qui permet de decider l'heure de depart d'une table :)
     }

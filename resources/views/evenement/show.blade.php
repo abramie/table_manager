@@ -18,12 +18,21 @@
         <tbody>
         <tr>
             <th scope="col">Nom creneau</th>
+            <th scope="col">Début</th>
             <th scope="col">durée</th>
         </tr>
         @foreach($evenement->creneaus()->get() as $creneau)
+            @php $date_creneau = $creneau->debut_creneau;
+                $date = $evenement->date_debut;
+                $date->setTimezone('UTC');
+                $date_creneau->setTimezone('UTC');
+ @endphp
             <tr>
                 <td><a href="{{route('events.one.creneau.tablesindex', ['evenement' => $evenement, 'creneau' => $creneau->id])}}"> {{$creneau->nom}} </a></td>
-                <td>{{$creneau->duree}}</td>
+                <td>@if(!$date_creneau->isSameDay($date))
+                        Le {{$date_creneau->dayName}} {{$date_creneau->day}} à
+                    @endif {{$date_creneau->hour}}h </td>
+                <td>{{$creneau->duree}}h </td>
 
                 @can('ajout_events')
                     <td><button class="btn btn-xs btn-warning " type="button" onclick="window.location='{{ route("events.one.creneau.edit",['evenement'=> $evenement, 'creneau' => $creneau]) }}'">

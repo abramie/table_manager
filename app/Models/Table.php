@@ -26,7 +26,17 @@ class Table extends Model
         'nb_joueur_min',
         'nb_joueur_max',
         'mj',
-        'sans_table'
+        'sans_table',
+        'debut_table'
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'debut_table' => 'datetime:Y-m-d',
     ];
 
     public function creneaus(): BelongsTo {
