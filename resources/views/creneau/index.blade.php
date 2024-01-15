@@ -61,8 +61,8 @@
                 {{substr($table->description, 0,1000) . "..." }}
             @endif
         </p>
-        @if($table->mjs->id != Auth::user()->id)
-            @if($table->users->contains(Auth::user()))
+        @if( !Auth::check()|| $table->mjs->id != Auth::user()?->id)
+            @if(Auth::check() && $table->users->contains(Auth::user()))
                 <form action="{{route('events.one.creneau.table.desinscription',['evenement'=> $evenement, 'creneau' => $creneau, 'table'=> $table ])}}" method="post">
                     @csrf
                     <div class="input-group mb-3">
