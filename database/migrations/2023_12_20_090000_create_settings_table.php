@@ -41,6 +41,28 @@ return new class extends Migration
                 'description' => "Definit si les champs trigger warnings sont gerer sur le site. true/false TODO"
             )
         );
+
+        DB::table('settings')->insert(
+            array(
+                'name' => 'fermeture_inscriptions_avant_date',
+                'value' => '4',
+                'description' => "Definit le nombre de jour precedent un evenement par defaut avant la fermeture des inscriptions"
+            )
+        );
+        DB::table('settings')->insert(
+            array(
+                'name' => 'ouverture_inscriptions_avant_date',
+                'value' => '30',
+                'description' => "Definit le nombre de jour precedent un evenement par defaut avant qu'il soit possible de s'inscrire sur les tables"
+            )
+        );
+        DB::table('settings')->insert(
+            array(
+                'name' => 'visibiliter_avant_date',
+                'value' => '30',
+                'description' => "Definit le nombre de jour precedent un evenement par defaut avant qu'il soit visible dans la liste"
+            )
+        );
     }
 
     /**

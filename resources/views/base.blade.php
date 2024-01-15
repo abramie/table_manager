@@ -30,15 +30,16 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-            <li class="nav-item active">
-                <a class="nav-link" href="{{ route("events.index") }}">Index event <span class="sr-only">(current)</span></a>
+
+            <li class="nav-item {{ Route::currentRouteNamed('events.index') ? 'active' : '' }}">
+                <a class="nav-link"  href="{{ route("events.index") }}">Index event <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{route("events.one.show", ['evenement'=> \App\Models\Evenement::all()->where('slug','=', "som-24")[1]])}}">Som-24</a>
+                <a class="nav-link {{ Str::contains(url()->current(), 'som') ? 'active' : '' }}"  href="{{route("events.one.show", ['evenement'=> \App\Models\Evenement::all()->where('slug','=', "som-24")[1]])}}">Som-24</a>
             </li>
             @role('admin')
             <li class="nav-item">
-                <a class="nav-link" href="{{route("admin.index")}}">Admin</a>
+                <a class="nav-link {{ Str::contains(Route::currentRouteName(), 'admin')? 'active' : '' }}"  href="{{route("admin.index")}}">Admin</a>
             </li>
             @endrole
             <li class="nav-item">

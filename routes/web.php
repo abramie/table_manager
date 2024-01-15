@@ -46,17 +46,12 @@ Route::get('/register', [RegisteredUserController::class, 'create'])->name('regi
 Route::prefix('/admin')->name('admin.')->middleware('auth')->middleware('role:admin')->group(function () {
 
     Route::view('/', 'admin.index')->name('index');
-    Route::get('/{slug}-{id}', function (string $slug, string $id, Request $request) {
-        return [
-            "slug" => $slug,
-            "id" => $id,
-            "name" => $request->input('name', 'non-stipuler')
-        ];
-    })->where([
-        'id' => '[0-9]+',
-        'slug' => '[a-z0-9\-]+'
-    ])->name('show');
+
     Route::view('/users', 'admin.users')->name('users');
+    Route::prefix('/settings')->name('settings')->group(function(){
+        Route::get('/', [\App\Http\Controllers\SettingsController::class, 'index']);
+        Route::post('/{setting}', [\App\Http\Controllers\SettingsController::class, 'update'])->name(".update");
+    });
 
 
 });
