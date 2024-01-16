@@ -134,10 +134,13 @@ class TableController extends Controller
         }elseif($table->mjs == Auth::user()){
             return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau])
                 ->with('echec', "Tu ne peut pas t'inscrire sur ta propre table, comment tu es arrivé là ??? ");
+        }elseif($table->users->count() > $creneau->nb_inscription_online_max){
+            return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau])
+                ->with('echec', "Ce creneau impose une limite au nombre de personnes pouvant s'inscrire via la platforme à une table.Cette limite est de : ".$creneau->nb_inscription_online_max );
         }
         elseif($table->users->count() < $table->nb_joueur_max){
             $table->users()->attach(Auth::user());
-            $creneau->tables()->where("sans_table", "=","1")->get()->first()->users()->detach(Auth::user());
+            $creneau->tables()->where("sans_table", "=","1")->get()->first()?->users()->detach(Auth::user());
             return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau])
                 ->with('success', "Inscription validée sur la table \"".$table->nom);
         }else{

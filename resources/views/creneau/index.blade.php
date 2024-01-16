@@ -10,7 +10,7 @@
         <td><button class="btn btn-xs btn-warning " type="button" onclick="window.location='{{ route("events.one.creneau.delete",['evenement'=> $evenement, 'creneau' => $creneau]) }}'">
                 Delete </button></td>
     @endcan
-    <h1>Index tables</h1>
+    <h1>{{$evenement->nom_evenement}} : {{$creneau->nom}}</h1>
 
     @if($evenement->creneaus()->count()>1)
         <p>
@@ -18,6 +18,10 @@
                 {{$evenement->nom_evenement}}</button>
         </p>
     @endif
+    <div>
+        Date : {{$evenement->showDate()}}
+
+    </div>
     <div>
         Horaires : {{$creneau->debut_creneau->toTimeString()}} -> {{$creneau->debut_creneau->addHour($creneau->duree)->toTimeString()}};
     </div>
@@ -51,7 +55,7 @@
 
                 @endif
             @endif
-            <span>Inscrits : {{$table->nb_inscrits()}} @if($isSansTable)/{{$table->nb_joueur_max}}@endif</span>
+            <span>Inscrits : {{$table->nb_inscrits()}} @if(!$isSansTable)/ {{$table->nb_joueur_max}}@endif</span>
 
         </evenement>
         <p>

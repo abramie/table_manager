@@ -22,9 +22,7 @@
 
              @endphp
 
-            <h3>Le {{$date->dayName}} {{$date->day}} {{ $date->monthName }} @if($date->year != now()->year)
-                    {{$date->year}}
-                @endif à partir de {{$date->hour}}h</h3>
+            <h3>{{$evenement->showDate()}} à partir de {{$date->hour}}h</h3>
             <p>
                 @if($creneaux_count == 1)
                     <a href="{{route('events.one.creneau.tablesindex', ['evenement' => $evenement->slug, 'creneau' =>$evenement->creneaus->first()])}}"  >Liste des tables</a>

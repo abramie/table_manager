@@ -29,7 +29,12 @@ class Evenement extends Model
     ];
 
     public function showDate(){
-        return $this->date_debut->toDayDateTimeString();
+        $date = $this->date_debut;
+        $date_string = "Le ".$date->dayName. " ". $date->day. " " .$date->monthName;
+        if($date->year != now()->year)
+            $date_string =  $date_string . " " . $date->year;
+
+        return $date_string;
     }
     public function creneaus() : HasMany{
         return $this->hasMany(Creneau::class);
