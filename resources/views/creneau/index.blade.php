@@ -2,7 +2,6 @@
 
 @section('title', 'Liste des tables')
 
-
 @section('content')
     @can('ajout_events')
         <td><button class="btn btn-xs btn-warning " type="button" onclick="window.location='{{ route("events.one.creneau.edit",['evenement'=> $evenement, 'creneau' => $creneau]) }}'">
@@ -31,6 +30,13 @@
             <li class="list-group-item">{{$user->name}}</li>
         @endforeach
     </ul>
+
+    @php
+        $ouverture_inscription =$evenement->ouverture_inscription;
+        $inscription_ouverte = $ouverture_inscription->isPast();
+        $fermeture_inscription =$evenement->fermeture_inscription;
+        $inscription_fermee = $fermeture_inscription->isPast();
+    @endphp
     @foreach($tables as $table)
         @php
             $isSansTable = $table->sans_table == 1;
@@ -65,30 +71,11 @@
                 {{substr($table->description, 0,1000) . "..." }}
             @endif
         </p>
-        @if( !Auth::check()|| $table->mjs->id != Auth::user()?->id)
-            @if(Auth::check() && $table->users->contains(Auth::user()))
-                <form action="{{route('events.one.creneau.table.desinscription',['evenement'=> $evenement, 'creneau' => $creneau, 'table'=> $table ])}}" method="post">
-                    @csrf
-                    <div class="input-group mb-3">
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-secondary btn-danger" type="submit">Desinscription</button>
-                        </div>
-                    </div>
-                </form>
-            @else
-                <form action="{{route('events.one.creneau.table.inscription',['evenement'=> $evenement, 'creneau' => $creneau, 'table'=> $table ])}}" method="post">
-                    @csrf
-                    <div class="input-group mb-3">
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-secondary btn-light" type="submit">Inscription à la table</button>
-                        </div>
-                    </div>
-                </form>
-            @endif
-        @endif
+        @include('table.bouton_inscription')
 
 
     @endforeach
+
     @can('ajout_tables')
         <p>
             <button class="btn btn-xs btn-info pull-right" type="button" onclick="window.location='{{ route("events.one.creneau.tables.add",['evenement'=> $evenement, 'creneau' => $creneau]) }}'">

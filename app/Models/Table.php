@@ -49,6 +49,10 @@ class Table extends Model
     public function users() : BelongsToMany{
         return $this->belongsToMany(User::class, 'inscrits');
     }
+
+    /**
+     * @return int
+     */
     public function nb_inscrits() : int {
         return $this->users->count();
     }

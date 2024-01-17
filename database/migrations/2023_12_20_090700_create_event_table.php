@@ -20,6 +20,10 @@ return new class extends Migration
             sur une table via le logiciel autorisé. -1 pour pas de limite");
             $table->longText('description')->nullable();
             $table->date('date_debut');
+            $table->date('archivage')->nullable();
+            $table->date('ouverture_inscription');
+            $table->date('fermeture_inscription');
+            $table->date('affichage_evenement');
             //Ajout relationel creneaux
             //$table->dateTime('date');
             $table->timestamps();

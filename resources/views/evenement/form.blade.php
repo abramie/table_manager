@@ -49,6 +49,57 @@
 
         </div>
     </div>
+    <div>
+        <div class="form-group" >
+            <div class="input-group date" id="affichage_evenement_div">
+                <label for="affichage_evenement">Date d'affichage de l'evenement / ajout des tables</label>
+                <input type="datetime-local" class="form-control" id="affichage_evenement" name="affichage_evenement"value="{{old('affichage_evenement', $evenement->affichage_evenement)}}">
+
+            </div>
+            <label for="toggle-affichage_evenement"  class="form-check-label">Choisir une date manuelle d'affichage de l'evenement</label>
+            <input type="checkbox"    aria-expanded="false" aria-controls="moreabout" class="form-check-input" id="toggle-affichage_evenement" name="toggle-affichage_evenement" value="no">
+
+        </div>
+
+
+
+        <div class="form-group">
+            <div class="input-group date" id="ouverture_inscription_div">
+                <label for="ouverture_inscription"  class="form-check-label">Date d'ouverture des inscriptions joueurs</label>
+                <input type="datetime-local" class="form-control" id="ouverture_inscription" name="ouverture_inscription"value="{{old('ouverture_inscription', $evenement->ouverture_inscription)}}">
+
+            </div>
+            <label for="toggle-ouverture_inscription">Choisir une date manuelle d'ouverture des inscriptions</label>
+            <input type="checkbox"    aria-expanded="false" aria-controls="moreabout" class="form-check-input" id="toggle-ouverture_inscription" name="toggle-ouverture_inscription" value="no">
+
+        </div>
+
+        <div class="form-group">
+            <div class="input-group date" id="fermeture_inscription_div">
+                <label for="fermeture_inscription">Date de fermeture des inscriptions joueurs</label>
+                <input type="datetime-local" class="form-control" id="fermeture_inscription" name="fermeture_inscription"value="{{old('fermeture_inscription', $evenement->fermeture_inscription)}}">
+
+            </div>
+            <label for="toggle-fermeture_inscription"  class="form-check-label">Choisir une date manuelle de fermeture des inscriptions</label>
+            <input type="checkbox"    aria-expanded="false" aria-controls="moreabout" class="form-check-input" id="toggle-fermeture_inscription" name="toggle-fermeture_inscription" value="no">
+
+        </div>
+
+        <script>
+            $("input[id*='toggle'][type=checkbox]").each(function(){
+                let div = $("#"+$(this).attr('id').split('-')[1] + "_div")
+                div.hide()
+                $(this).on('click', function() {
+                    if(div.is(':hidden')) {
+                        div.show();
+                    } else {
+                        div.hide();
+                    }
+                });
+            })
+        </script>
+
+    </div>
     <button class="btn btn-primary">
 
         @if($evenement->id)

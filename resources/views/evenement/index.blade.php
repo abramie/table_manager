@@ -11,11 +11,16 @@
     @endcan
     @foreach($evenements as $evenement)
         @php
-            $creneaux_count = $evenement->creneaus()->count()
+            $creneaux_count = $evenement->creneaus()->count();
+            $today = now();
+            $date_affichage = $evenement->affichage_evenement;
+
+            $affiche = $date_affichage->isPast();
+
         @endphp
-        @if( $creneaux_count>0 || auth()->user()->can('ajout_events'))
+        @if( ($affiche && $creneaux_count>0) || auth()->user()?->can('ajout_events'))
             <evenement>
-                <h2>{{$evenement->nom_evenement}}</h2>
+                <h2>@if(!$affiche) Previsionnel @endif{{$evenement->nom_evenement}}</h2>
             </evenement>
             @php
                 $date = $evenement->date_debut;

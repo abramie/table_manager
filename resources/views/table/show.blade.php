@@ -29,11 +29,11 @@
         @endforeach
         </ul>
     </div>
-
-
-    <p>
-        {{-- Ajout condition sur le nombre de personnes inscrites. --}}
-        <button class="btn btn-xs btn-info " type="button" onclick="window.location='{{ route("events.one.creneau.table.inscription",['evenement'=> $evenement, 'creneau'=>$creneau, 'table'=>$table]) }}'">
-           Inscription à la table</button>
-    </p>
+    @php
+        $ouverture_inscription =$evenement->ouverture_inscription;
+        $inscription_ouverte = $ouverture_inscription->isPast();
+        $fermeture_inscription =$evenement->fermeture_inscription;
+        $inscription_fermee = $fermeture_inscription->isPast();
+    @endphp
+    @include('table.bouton_inscription')
 @endsection

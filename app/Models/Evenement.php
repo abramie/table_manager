@@ -15,17 +15,25 @@ class Evenement extends Model
         'slug',
         'max_tables',
         'nb_inscription_online_max',
-        'date_debut'
+        'date_debut',
+        'ouverture_inscription',
+        'affichage_evenement',
+        'archivage',
+        'fermeture_inscription',
     ];
 
 
     /**
      * The attributes that should be cast.
-     *
+     * Sans ça, les dates sont cast en string ce qui est pas tip top pour faire quoi que ce soit
      * @var array
      */
     protected $casts = [
         'date_debut' => 'datetime:Y-m-d',
+        'ouverture_inscription' => 'datetime:Y-m-d',
+        'fermeture_inscription' => 'datetime:Y-m-d',
+        'affichage_evenement' => 'datetime:Y-m-d',
+        'archivage' => 'datetime:Y-m-d',
     ];
 
     public function showDate(){

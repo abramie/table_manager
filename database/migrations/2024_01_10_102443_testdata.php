@@ -49,7 +49,10 @@ return new class extends Migration
                 array(
                     'nom_evenement' => 'Soirée crepe',
                     'slug' => 'crepe-2024',
-                    'date_debut' => \Carbon\Carbon::create(2024,01,19,21)
+                    'date_debut' => \Carbon\Carbon::create(2024,01,19,21),
+                    'ouverture_inscription'=> \Carbon\Carbon::create(2024,01,01,21),
+                    'affichage_evenement' => \Carbon\Carbon::create(2024,01,01,21),
+                    'fermeture_inscription'=> \Carbon\Carbon::create(2024,01,19,21),
                 )
             );
             DB::table('evenements')->insert(
@@ -57,6 +60,9 @@ return new class extends Migration
                     'nom_evenement' => 'Sous l\'oeil de melusine',
                     'slug' => 'som-24',
                     'date_debut' => \Carbon\Carbon::create(2024,05,11,10),
+                    'ouverture_inscription'=> \Carbon\Carbon::create(2024,01,01,21),
+                    'affichage_evenement' => \Carbon\Carbon::create(2024,01,01,21),
+                    'fermeture_inscription'=> \Carbon\Carbon::create(2024,05,11,10),
                 )
             );
 
@@ -64,7 +70,10 @@ return new class extends Migration
                 array(
                     'nom_evenement' => 'Soirée barbecue',
                     'slug' => 'barbecue-24',
-                    'date_debut' => \Carbon\Carbon::create(2024,06,19,21)
+                    'date_debut' => \Carbon\Carbon::create(2024,06,19,21),
+                    'ouverture_inscription'=> \Carbon\Carbon::create(2024,05,19,21),
+                    'affichage_evenement' => \Carbon\Carbon::create(2024,05,19,20),
+                    'fermeture_inscription'=> \Carbon\Carbon::create(2024,06,19,21),
                 )
             );
 
