@@ -83,6 +83,8 @@ Route::prefix('/events')->name('events.')->group(function () {
         Route::get('/add', [CreneauController::class, 'add'])->name('add')->middleware('auth')->middleware('permission:ajout_events');
         Route::post('/add', [CreneauController::class, 'store'])->middleware('auth')->middleware('permission:ajout_events');
 
+        Route::get('/delete', [EventController::class, 'delete'])->name('delete')->middleware('auth')->middleware('permission:ajout_events');
+
         Route::prefix('/creneau-{creneau:id}')->where(['creneau' => '[0-9]+'])->name('creneau.')->group(function () {
             //Affiche un creneau
             Route::get('/', [CreneauController::class, 'index'])->name('tablesindex');//->withoutScopedBindings();

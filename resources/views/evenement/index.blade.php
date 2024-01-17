@@ -22,12 +22,25 @@
             <evenement>
                 <h2>@if(!$affiche) Previsionnel @endif{{$evenement->nom_evenement}}</h2>
             </evenement>
+
+            @if($evenement->image)
+                <img src="{{url("storage/".$evenement->image?->image_path)}}" alt="description" width="300" height="250"/>
+            @endif
+
             @php
                 $date = $evenement->date_debut;
 
              @endphp
 
             <h3>{{$evenement->showDate()}} à partir de {{$date->hour}}h</h3>
+
+            <p>
+                @if(strlen($evenement->description) < 100)
+                    {{$evenement->description}}
+                @else
+                    {{substr($evenement->description, 0,100) . "..." }}
+                @endif
+            </p>
             <p>
                 @if($creneaux_count == 1)
                     <a href="{{route('events.one.creneau.tablesindex', ['evenement' => $evenement->slug, 'creneau' =>$evenement->creneaus->first()])}}"  >Liste des tables</a>
@@ -36,11 +49,13 @@
 
                 @endif
                     @can('ajout_events')
-
+                        <button class="btn btn-xs btn-danger pull-right" type="button" onclick="window.location='{{ route("events.one.delete",['evenement'=> $evenement]) }}'">
+                            Delete </button>
                         <button class="btn btn-xs btn-warning pull-right" type="button" onclick="window.location='{{ route("events.one.edit",['evenement'=> $evenement]) }}'">
                             Edit </button>
 
                     @endcan
+
 
             </p>
         @endif

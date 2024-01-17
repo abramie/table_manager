@@ -5,6 +5,10 @@
 
 @section('content')
     <h1>{{$evenement->nom_evenement}}</h1>
+
+    <p class="text-justify">
+        {{$evenement->description}}
+    </p>
     @can('ajout_events')
     <button class="btn btn-xs btn-warning pull-right" type="button" onclick="window.location='{{ route("events.one.edit",['evenement'=> $evenement]) }}'">
         Edit </button>
@@ -26,7 +30,7 @@
                 $date = $evenement->date_debut;
                 $date->setTimezone('UTC');
                 $date_creneau->setTimezone('UTC');
- @endphp
+            @endphp
             <tr>
                 <td><a href="{{route('events.one.creneau.tablesindex', ['evenement' => $evenement, 'creneau' => $creneau->id])}}"> {{$creneau->nom}} </a></td>
                 <td>@if(!$date_creneau->isSameDay($date))

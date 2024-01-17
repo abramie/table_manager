@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class Evenement extends Model
 {
@@ -20,6 +22,7 @@ class Evenement extends Model
         'affichage_evenement',
         'archivage',
         'fermeture_inscription',
+        'description',
     ];
 
 
@@ -46,5 +49,10 @@ class Evenement extends Model
     }
     public function creneaus() : HasMany{
         return $this->hasMany(Creneau::class);
+    }
+
+    public function image(): MorphOne
+    {
+        return $this->morphOne(Image::class, 'imageable');
     }
 }

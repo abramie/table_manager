@@ -9,13 +9,16 @@
         <td><button class="btn btn-xs btn-warning " type="button" onclick="window.location='{{ route("events.one.creneau.delete",['evenement'=> $evenement, 'creneau' => $creneau]) }}'">
                 Delete </button></td>
     @endcan
-    <h1>{{$evenement->nom_evenement}} : {{$creneau->nom}}</h1>
+
 
     @if($evenement->creneaus()->count()>1)
+        <h1>{{$evenement->nom_evenement}} : {{$creneau->nom}}</h1>
         <p>
             <button class="btn btn-xs btn-info " type="button" onclick="window.location='{{ route("events.one.show",['evenement'=> $evenement]) }}'">
                 {{$evenement->nom_evenement}}</button>
         </p>
+    @else
+        <h1>{{$evenement->nom_evenement}} </h1>
     @endif
     <div>
         Date : {{$evenement->showDate()}}

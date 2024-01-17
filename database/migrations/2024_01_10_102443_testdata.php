@@ -53,6 +53,7 @@ return new class extends Migration
                     'ouverture_inscription'=> \Carbon\Carbon::create(2024,01,01,21),
                     'affichage_evenement' => \Carbon\Carbon::create(2024,01,01,21),
                     'fermeture_inscription'=> \Carbon\Carbon::create(2024,01,19,21),
+                    'description' => "La soirée crêpe annuel de la guilde ",
                 )
             );
             DB::table('evenements')->insert(
@@ -63,6 +64,7 @@ return new class extends Migration
                     'ouverture_inscription'=> \Carbon\Carbon::create(2024,01,01,21),
                     'affichage_evenement' => \Carbon\Carbon::create(2024,01,01,21),
                     'fermeture_inscription'=> \Carbon\Carbon::create(2024,05,11,10),
+                    'description' => "La convention annuelle de l'association La guilde, dans la salle du foyer du porteau à Poitiers. Buvette (options vegans), entrée gratuite, ouverte à tous. ",
                 )
             );
 
