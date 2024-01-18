@@ -27,13 +27,16 @@
     <div>
         Horaires : {{$creneau->debut_creneau->toTimeString()}} -> {{$creneau->debut_creneau->addHour($creneau->duree)->toTimeString()}};
     </div>
-
+{{--
     <ul class="list-group list-group-flush">
         @foreach($creneau->tables()->with('users')->get()->pluck('users')->flatten() as $user)
             <li class="list-group-item">{{$user->name}}</li>
         @endforeach
     </ul>
-
+--}}
+    <div>
+        Nombre d'inscrit sur ce creneau : {{$creneau->tables()->with('users')->get()->pluck('users')->flatten()->count() }}
+    </div>
     @php
         $ouverture_inscription =$evenement->ouverture_inscription;
         $inscription_ouverte = $ouverture_inscription->isPast();
