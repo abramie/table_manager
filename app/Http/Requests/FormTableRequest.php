@@ -26,7 +26,10 @@ class FormTableRequest extends FormRequest
      */
     public function rules(): array
     {
-
+        //Ignore la validation si l'action n'est pas de sauvegarder les données (quand je veux conserver le form en changeant de fenetre.
+        if($this->action != 'save'){
+            return [];
+        }
     //dd($this->request);
         return [
             //
@@ -70,16 +73,18 @@ class FormTableRequest extends FormRequest
             'max_duree' => floatval($creneau->duree),
             'mj' => $mj->id,
             'debut_creneau' => $creneau->debut_creneau,
-            'debut_table' => $creneau->debut_creneau->setTimeFromTimeString($this->debut_table),
+            'debut_table' => $this->debut_table ? $creneau->debut_creneau->setTimeFromTimeString($this->debut_table) : null,
         ]);
         //Combien de temps après le debut du creneau la table doit commencer
-        $diffHour = $this->debut_table->diffInHours($this->route('creneau')->debut_creneau);
-        //dd($diffHour);
-        if($diffHour+$this->duree > $creneau->duree){
-            throw ValidationException::withMessages([
-                'erreur_temps' => "La partie ne peut pas exceder l'heure de fin du creneau, reduiser la durée de celle ci",
+        if($this->debut_table) {
+            $diffHour = $this->debut_table->diffInHours($this->route('creneau')->debut_creneau);
+            //dd($diffHour);
+            if ($diffHour + $this->duree > $creneau->duree) {
+                throw ValidationException::withMessages([
+                    'erreur_temps' => "La partie ne peut pas exceder l'heure de fin du creneau, reduiser la durée de celle ci",
 
-            ]);
+                ]);
+            }
         }
 
         //Probablement ajouter la partie qui permet de decider l'heure de depart d'une table :)

@@ -12,10 +12,10 @@
     @can('manage_tables_all')
         <div class="form-group">
             <label for="mj_name">Le nom du MJ</label>
-            <select class=" form-control form-select" @error("mj_name") is-invalid @enderror id="mj_name" name="mj_name">
+            <select class=" form-control form-select" @error("mj_name") is-invalid @enderror id="mj_name" name="mj_name" data-live-search="true">
 
                 @foreach(App\Models\User::role('mj')->get() as $mj)
-                    <option value="{{$mj->name}}" @selected(old('mj_name',Auth::user()->name )== $mj->name) >{{$mj->name}}</option>
+                    <option value="{{$mj->name}}" @selected( $table->mjs->name ? old('mj_name',$table->mjs->name) ==$mj->name : old('mj_name',Auth::user()->name )== $mj->name) >{{$mj->name}}</option>
                 @endforeach
             </select>
             @error("mj_name")
@@ -52,7 +52,7 @@
         <label for="tw" data-toggle="tooltip" rel="tooltip" data-placement="top"
                title="{{$descriptions->firstWhere('name','trigger_warnings')->description}}">TW/CW</label>
         <select type="text" class="form-control @error("tw") is-invalid @enderror" id="tw" name="triggerwarnings[]"
-                multiple>
+                multiple data-live-search="true">
             @php
                 $tw_id = $table->triggerwarnings()->pluck('id');
             @endphp
@@ -74,7 +74,20 @@
 
     <div class="form-group">
         <label for="tag">Tags</label>
-        <select class="form-control @error("tags") is-invalid @enderror" id="tag" name="tags[]" multiple>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+        <style type="text/css">
+
+            .dropdown-toggle{
+
+                height: 40px;
+
+                width: 400px !important;
+
+            }
+        </style>
+        <select class="form-control @error("tags") is-invalid @enderror" id="tag" name="tags[]" multiple data-live-search="true">
             @php
                 $tag_id = $table->tags()->pluck('id');
             @endphp
@@ -88,11 +101,18 @@
         </div>
         @enderror
         <button class="btn btn-primary" type="submit" name="action" value="add_tag">
-
             Ajout de tag
         </button>
     </div>
+    <script type="text/javascript">
 
+        $(document).ready(function() {
+
+            $('select').selectpicker();
+
+        });
+
+    </script>
 
     <div class="form-group">
         <label for="nb_joueur_min">nb_joueur_min</label>
@@ -119,7 +139,7 @@
     <div class="form-group">
         <div class="input-group date">
             <label for="debut_table">Debut de la table</label>
-            <input type="time" class="form-control @error("debut_table")is-invalid @enderror" id="debut_table" name="debut_table" value="{{old('debut_table', $table->debut_table->toTimeString())}}">
+            <input type="time" class="form-control @error("debut_table")is-invalid @enderror" id="debut_table" name="debut_table" value="{{old('debut_table', $table->debut_table?->toTimeString())}}">
             @error("debut_table")
                 <div id="debut_tableFeedback" class="invalid-feedback">
                     {{ $message }}

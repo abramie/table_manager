@@ -61,14 +61,15 @@ class EventController extends Controller
         $events = Evenement::create($request->validated());
 
 
-
-        $title = $request->file('image')->getClientOriginalName();
-        $path = $request->file('image')->storePubliclyAs('images' , $title,'public');
-        //$request->file('image')->storeAs('images' , $title);
-        $save = new Image();
-        $save->title = $title;
-        $save->image_path = $path;
-        $events->image()->save($save);
+        if($request->file('image')) {
+            $title = $request->file('image')->getClientOriginalName();
+            $path = $request->file('image')->storePubliclyAs('images', $title, 'public');
+            //$request->file('image')->storeAs('images' , $title);
+            $save = new Image();
+            $save->title = $title;
+            $save->image_path = $path;
+            $events->image()->save($save);
+        }
 
         return redirect()->route('events.one.show', ['evenement' => $events->slug])
             ->with('success', "L'evenement a bien été ajouté");
@@ -83,7 +84,7 @@ class EventController extends Controller
 
         if($request->file('image'))
         {
-
+            $evenement->image()->delete();
             $title = uniqid().'.'.$request->file('image')->getClientOriginalName();
             $path = $request->file('image')->storePubliclyAs('images' , $title,'public');
             //$request->file('image')->storeAs('images' , $title);
@@ -92,7 +93,7 @@ class EventController extends Controller
             $save->title = $title;
             $save->image_path = $path;
             $evenement->image()->save($save);
-            dd($path);
+
         }
 
 

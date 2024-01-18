@@ -7,7 +7,8 @@
     <h1>Index event</h1>
     @can('ajout_events')
         <button class="btn btn-xs btn-warning pull-right" type="button" onclick="window.location='{{ route("events.add") }}'">
-            Ajout </button>
+            Ajout
+        </button>
     @endcan
     @foreach($evenements as $evenement)
         @php
@@ -19,45 +20,43 @@
 
         @endphp
         @if( ($affiche && $creneaux_count>0) || auth()->user()?->can('ajout_events'))
-            <evenement>
+
+            <div class="container">
                 <h2>@if(!$affiche) Previsionnel @endif{{$evenement->nom_evenement}}</h2>
-            </evenement>
 
-            @if($evenement->image)
-                <img src="{{asset("storage/".$evenement->image?->title)}}" alt="description" width="300" height="250"/>
-            @endif
+                @can('ajout_events')
+                    <button class="btn btn-xs btn-danger pull-right" type="button" onclick="window.location='{{ route("events.one.delete",['evenement'=> $evenement]) }}'">
+                        Delete </button>
+                    <button class="btn btn-xs btn-warning pull-right" type="button" onclick="window.location='{{ route("events.one.edit",['evenement'=> $evenement]) }}'">
+                        Edit </button>
+                    {{--https://getbootstrap.com/docs/4.2/components/dropdowns/  Pour les boutons, voir split button --}}
+                @endcan
+                @php
+                    $date = $evenement->date_debut;
 
-            @php
-                $date = $evenement->date_debut;
+                @endphp
 
-             @endphp
-
-            <h3>{{$evenement->showDate()}} à partir de {{$date->hour}}h</h3>
-
-            <p>
-                @if(strlen($evenement->description) < 100)
-                    {{$evenement->description}}
-                @else
-                    {{substr($evenement->description, 0,100) . "..." }}
+                <h3>{{$evenement->showDate()}} à partir de {{$date->hour}}h</h3>
+                @if($evenement->image)
+                    <img src="{{asset("storage/images/".$evenement->image?->title)}}" alt="description" width="300" height="250" class="img-thumbnail rounded float-left"/>
                 @endif
-            </p>
-            <p>
-                @if($creneaux_count == 1)
-                    <a href="{{route('events.one.creneau.tablesindex', ['evenement' => $evenement->slug, 'creneau' =>$evenement->creneaus->first()])}}"  >Liste des tables</a>
-                @else
-                    <a href="{{route('events.one.show', ['evenement' => $evenement->slug])}}"  >Liste des creneaux</a>
+                <p>
+                    @if(strlen($evenement->description) < 100)
+                        {{$evenement->description}}
+                    @else
+                        {{substr($evenement->description, 0,100) . "..." }}
+                    @endif
+                </p>
+                <p>
+                    @if($creneaux_count == 1)
+                        <a href="{{route('events.one.creneau.tablesindex', ['evenement' => $evenement->slug, 'creneau' =>$evenement->creneaus->first()])}}"  >Liste des tables</a>
+                    @else
+                        <a href="{{route('events.one.show', ['evenement' => $evenement->slug])}}"  >Liste des creneaux</a>
 
-                @endif
-                    @can('ajout_events')
-                        <button class="btn btn-xs btn-danger pull-right" type="button" onclick="window.location='{{ route("events.one.delete",['evenement'=> $evenement]) }}'">
-                            Delete </button>
-                        <button class="btn btn-xs btn-warning pull-right" type="button" onclick="window.location='{{ route("events.one.edit",['evenement'=> $evenement]) }}'">
-                            Edit </button>
-
-                    @endcan
-
+                    @endif
 
             </p>
+            </div>
         @endif
     @endforeach
 

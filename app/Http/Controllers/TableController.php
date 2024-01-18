@@ -54,10 +54,10 @@ class TableController extends Controller
      * Sauvegarde un Creneau depuis un formulaire
      */
     public function store(Evenement $evenement,Creneau $creneau, FormTableRequest $request){
+        dd("test");
         if($request->get('action') != 'save'){
             return $this->redirect_action($request);
         }
-
         $table = Table::create($request->validated());
         $creneau->tables()->save($table);
         $table->triggerwarnings()->sync($request->validated('triggerwarnings'));
@@ -99,8 +99,6 @@ class TableController extends Controller
         if($request->get('action') != 'save'){
             return $this->redirect_action($request);
         }
-
-
         $table->update($request->validated());
         $table->triggerwarnings()->sync($request->validated('triggerwarnings'));
         $table->tags()->sync($request->validated('tags'));
