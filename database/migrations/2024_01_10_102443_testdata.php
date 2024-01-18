@@ -85,7 +85,7 @@ return new class extends Migration
                     'duree' => '5',
                     'evenement_id' => 1,
                     'max_tables' => 8,
-                    'nb_inscription_online_max' => -1,
+                    'nb_inscription_online_max' => 15,
                     'debut_creneau' => \Carbon\Carbon::create(2024,01,19,21)
                 )
             );
@@ -95,7 +95,7 @@ return new class extends Migration
                     'duree' => '3',
                     'evenement_id' => 2,
                     'max_tables' => 8,
-                    'nb_inscription_online_max' => -1,
+                    'nb_inscription_online_max' => 2,
                     'debut_creneau' => \Carbon\Carbon::create(2024,05,11,10),
                 )
             );
@@ -106,7 +106,7 @@ return new class extends Migration
                     'duree' => '5',
                     'evenement_id' => 2,
                     'max_tables' => 8,
-                    'nb_inscription_online_max' => -1,
+                    'nb_inscription_online_max' => 2,
                     'debut_creneau' => \Carbon\Carbon::create(2024,05,11,14),
                 )
             );
@@ -117,7 +117,7 @@ return new class extends Migration
                     'duree' => '5',
                     'evenement_id' => 2,
                     'max_tables' => 8,
-                    'nb_inscription_online_max' => -1,
+                    'nb_inscription_online_max' => 2,
                     'debut_creneau' => \Carbon\Carbon::create(2024,05,11,21),
                 )
             );
@@ -128,7 +128,7 @@ return new class extends Migration
                     'duree' => '5',
                     'evenement_id' => 2,
                     'max_tables' => 8,
-                    'nb_inscription_online_max' => -1,
+                    'nb_inscription_online_max' => 2,
                     'debut_creneau' => \Carbon\Carbon::create(2024,05,12,03),
                 )
             );
@@ -139,7 +139,7 @@ return new class extends Migration
                     'duree' => '5',
                     'evenement_id' => 3,
                     'max_tables' => 8,
-                    'nb_inscription_online_max' => -1,
+                    'nb_inscription_online_max' => 15,
                     'debut_creneau' => \Carbon\Carbon::create(2024,06,19,21)
                 )
             );
@@ -268,6 +268,8 @@ return new class extends Migration
                     'table_id' => 1,
                 )
             );
+
+
         }
 
 
