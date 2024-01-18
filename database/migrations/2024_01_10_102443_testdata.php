@@ -262,13 +262,6 @@ return new class extends Migration
                 )
             );
 
-            DB::table('table_tag')->insert(
-                array(
-                    'tag_id' => 1,
-                    'table_id' => 1,
-                )
-            );
-
             DB::table('table_triggerwarning')->insert(
                 array(
                     'triggerwarning_id' => 1,

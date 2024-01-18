@@ -16,9 +16,9 @@ return new class extends Migration
             $table->timestamps();
             $table->string('nom')->unique();
         });
-        Schema::create('table_tag',function (Blueprint $table) {
+        Schema::create('taggables',function (Blueprint $table) {
             $table->foreignIdFor(\App\Models\Tag::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(\App\Models\Table::class)->constrained()->cascadeOnDelete();
+            $table->morphs("taggable");
         });
     }
 
