@@ -55,4 +55,14 @@ class Evenement extends Model
     {
         return $this->morphOne(Image::class, 'imageable');
     }
+
+    public function delete(){
+        $res=parent::delete();
+        if($res==true)
+        {
+            $relations=$this->image; // here get the relation data
+            $relations->delete();// delete Here
+
+        }
+    }
 }

@@ -24,7 +24,7 @@
             </evenement>
 
             @if($evenement->image)
-                <img src="{{url("storage/".$evenement->image?->image_path)}}" alt="description" width="300" height="250"/>
+                <img src="{{asset("storage/".$evenement->image?->title)}}" alt="description" width="300" height="250"/>
             @endif
 
             @php

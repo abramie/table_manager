@@ -63,9 +63,8 @@ class EventController extends Controller
 
 
         $title = $request->file('image')->getClientOriginalName();
-
-        $path = $request->file('image')->storePubliclyAs('images' , $title.".". $request->file('image')->extension(),'public');
-
+        $path = $request->file('image')->storePubliclyAs('images' , $title,'public');
+        //$request->file('image')->storeAs('images' , $title);
         $save = new Image();
         $save->title = $title;
         $save->image_path = $path;
@@ -81,6 +80,23 @@ class EventController extends Controller
     public function update(Evenement $evenement, FormEventRequest $request){
 //dd("test");
         $evenement->update($request->validated());
+
+        if($request->file('image'))
+        {
+
+            $title = uniqid().'.'.$request->file('image')->getClientOriginalName();
+            $path = $request->file('image')->storePubliclyAs('images' , $title,'public');
+            //$request->file('image')->storeAs('images' , $title);
+
+            $save = new Image();
+            $save->title = $title;
+            $save->image_path = $path;
+            $evenement->image()->save($save);
+            dd($path);
+        }
+
+
+
         return redirect()->route('events.one.show', ['evenement' => $evenement->slug])
             ->with('success', "L'evenement a bien été editer");
     }

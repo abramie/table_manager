@@ -22,4 +22,13 @@ class Image extends Model
     {
         return $this->morphTo();
     }
+
+    public function delete(){
+        $res=parent::delete();
+        if($res==true)
+        {
+            \Storage::delete('public/' .$this->image_path);
+
+        }
+    }
 }
