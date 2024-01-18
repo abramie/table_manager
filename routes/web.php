@@ -101,8 +101,8 @@ Route::prefix('/events')->name('events.')->group(function () {
 
             Route::prefix('/table-{table}')->where(['table' => '[0-9]+'])->name('table.')->group(function () {
                 //Affiche une table specifique du creneau
-                Route::get('/edit', [TableController::class, 'edit'])->name('edit')->middleware('auth')->middleware('permission:manage_tables_all');
-                Route::post('/edit', [TableController::class, 'update'])->middleware('auth')->middleware('permission:manage_tables_all');
+                Route::get('/edit', [TableController::class, 'edit'])->name('edit')->middleware('auth')->middleware('permission:manage_tables_all|manage_tables_own');
+                Route::post('/edit', [TableController::class, 'update'])->middleware('auth')->middleware('permission:manage_tables_all|manage_tables_own');
                 Route::get('/', [TableController::class, 'show'])->name('show');
                 Route::post('/inscription', [TableController::class, 'inscription_table'])->name('inscription')->middleware('auth');
                 Route::post('/desinscription', [TableController::class, 'desinscription_table'])->name('desinscription')->middleware('auth');

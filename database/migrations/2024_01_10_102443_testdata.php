@@ -42,7 +42,7 @@ return new class extends Migration
 
             $jeremy->assignRole('joueur','mj');
             $mad->assignRole('joueur','mj');
-            $admin->assignRole('joueur','mj', 'admin');
+            $admin->assignRole('admin');
             $modo->assignRole('joueur','mj', 'modo');
 
             DB::table('evenements')->insert(

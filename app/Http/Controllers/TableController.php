@@ -54,7 +54,7 @@ class TableController extends Controller
      * Sauvegarde un Creneau depuis un formulaire
      */
     public function store(Evenement $evenement,Creneau $creneau, FormTableRequest $request){
-        dd("test");
+
         if($request->get('action') != 'save'){
             return $this->redirect_action($request);
         }
@@ -69,6 +69,12 @@ class TableController extends Controller
 
 
     public function edit(Evenement $evenement,Creneau $creneau,Table $table){
+
+        if(!(auth()->user() && (auth()->user()?->can('manage_tables_all') ||
+                (auth()->user()?->can('manage_tables_own')&&  $table->mjs->name ==auth()->user()->name)))){
+            return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau->id])
+                ->with('echec', "Vous n'avez pas l'autorisation de modifier cette table");
+        }
         $descriptions = Description::whereIn('name',  ['trigger_warnings' ])->get();
         if(session()->has('saved_table_input') ){
             session()->flash('_old_input', session("saved_table_input"));

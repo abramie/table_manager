@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
  * @property mixed|string $nom
  * @property int|mixed $nb_joueur_max
  * @property float|mixed $duree
+ * @method static find(\Illuminate\Routing\Route|object|string|null $route)
  */
 class Table extends Model
 {

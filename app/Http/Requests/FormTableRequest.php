@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Table;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
@@ -16,7 +17,12 @@ class FormTableRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+
+        $table = $this->route('table');
+
+
+        return $this->user()->can('manage_tables_all') || ($table && $this->user()->can('manage_tables_own') && $table->mjs->id == $this->user()->id) ;
+
     }
 
     /**
@@ -52,6 +58,8 @@ class FormTableRequest extends FormRequest
     }
     protected function prepareForValidation(): void
     {
+        $table = $this->route('table');
+
         if( $this->mj_name && \Auth::user()->can('manage_tables_all') ){
             $mj = User::get()->where('name', $this->mj_name)->first();
             if($mj == null){
