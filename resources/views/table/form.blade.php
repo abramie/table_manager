@@ -15,7 +15,7 @@
             <select class=" form-control form-select" @error("mj_name") is-invalid @enderror id="mj_name" name="mj_name" data-live-search="true">
 
                 @foreach(App\Models\User::role('mj')->get() as $mj)
-                    <option value="{{$mj->name}}" @selected( $table->mjs->name ? old('mj_name',$table->mjs->name) ==$mj->name : old('mj_name',Auth::user()->name )== $mj->name) >{{$mj->name}}</option>
+                    <option value="{{$mj->name}}" @selected( $table->mjs?->name ? old('mj_name',$table->mjs->name) ==$mj->name : old('mj_name',Auth::user()->name )== $mj->name) >{{$mj->name}}</option>
                 @endforeach
             </select>
             @error("mj_name")
@@ -158,14 +158,15 @@
         </div>
         @enderror
     </div>
-
+{{--
+{{--
     <div class="form-group">
         <label for="jeu">jeu</label>
         <select class="form-control" id="jeu" name="jeu">
             {{-- @foreach($jeux as $jeu)
                  <option @selected(old('jeu') == $jeu->id) value="{{$jeu->id}}> {{$jeu->name}}</option>
              @endforeach
-             --}}
+             End comment
             <option value="-1">Option test</option>
         </select>
         <script>
@@ -189,7 +190,7 @@
             Ajouter un jeu (todo)
         </button>
     </div>
-
+    --}}
 
 
     <button class="btn btn-primary" type="submit" name="action" value="save">

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Creneau extends Model
 {
@@ -34,5 +35,24 @@ class Creneau extends Model
 
     public function tables() : HasMany{
         return $this->hasMany(Table::class);
+    }
+
+    public function users(){
+        //return $this->through('tables')->has('users');
+        $list_users = collect();
+        foreach ($this->tables as $table){
+            $list_users = $list_users->concat($table->users);
+        }
+        return $list_users;
+    }
+
+    public function desinscrit_user($user){
+        //return $this->through('tables')->has('users');
+        $values = 0;
+        foreach ($this->tables as $table) {
+           $values += $table->users()->detach($user);
+        }
+
+        return $values;
     }
 }

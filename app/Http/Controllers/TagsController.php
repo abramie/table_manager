@@ -13,7 +13,8 @@ class TagsController extends Controller
 
     public function add(){
         $tag = new Tag();
-        if(Str::contains(url()->previous(),"events")){
+        if(Str::contains(url()->previous(),"table")){
+            session()->put('links', url()->previous());
             session()->put('saved_table_input',session("_old_input"));
         }
 
@@ -25,6 +26,6 @@ class TagsController extends Controller
 
     public function store(Request $request){
         $tag = Tag::create($request->merge(['nom' => $request->nom_tag])->validate(['nom' => ['required', 'unique:tags']]));
-        return redirect(session('links')[0])->withInput();
+        return redirect(session('links'))->withInput();
     }
 }

@@ -36,7 +36,12 @@ class TableController extends Controller
         $table->nb_joueur_min = 3;
         $table->nb_joueur_max = 3;
         $table->duree = $creneau->duree;
-
+        $table->debut_table = $creneau->debut_creneau;
+        if(session()->has('saved_table_input') ){
+            session()->flash('_old_input', session("saved_table_input"));
+            session()->forget('saved_table_input');
+            //Ajout suppression de la valeur de session
+        }
         $descriptions = Description::whereIn('name',  ['trigger_warnings' ])->get();
         //return "formulaire ajout d'evenement";
         return view('table.create', [
@@ -62,9 +67,16 @@ class TableController extends Controller
         $creneau->tables()->save($table);
         $table->triggerwarnings()->sync($request->validated('triggerwarnings'));
 
-        $table->tags()->sync($request->validated('tags'));
+        //Desinscrit le mj de toute les tables où il est inscrit si il ouvre une table.
+        if($request->validated('mj') == Auth::user()->id){
+            $desincription = $creneau->desinscrit_user(Auth::user());
+        }else{
+            $desincription = 0;
+        }
+
+
         return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau->id])
-            ->with('success', "La table a bien été ajouté");
+            ->with('success', "La table a bien été ajouté." . ($desincription>0 ? "Et vous avez était desinscrit de vos tables" : "" ));
     }
 
 
@@ -138,7 +150,13 @@ class TableController extends Controller
         }elseif($table->mjs == Auth::user()){
             return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau])
                 ->with('echec', "Tu ne peut pas t'inscrire sur ta propre table, comment tu es arrivé là ??? ");
-        }elseif($table->users->count() > $creneau->nb_inscription_online_max){
+        }
+        //Ne marche pas, à corriger
+        elseif($creneau->tables()->with('mjs')->get()->pluck('mjs')->flatten()->contains('id',Auth::user()->id)){
+            return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau])
+                ->with('echec', "Tu es MJ sur ce creneau, tu ne peux pas t'inscrire");
+        }
+        elseif($table->users->count() > $creneau->nb_inscription_online_max){
             return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau])
                 ->with('echec', "Ce creneau impose une limite au nombre de personnes pouvant s'inscrire via la platforme à une table.Cette limite est de : ".$creneau->nb_inscription_online_max );
         }

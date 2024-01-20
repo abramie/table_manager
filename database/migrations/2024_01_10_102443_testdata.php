@@ -14,7 +14,7 @@ return new class extends Migration
     public function up(): void
     {
 
-        if (DB::table('evenements')->count() == 0){
+        if (DB::table('evenements')->count() == 0 && config('app.env') == "local"){
 
             $admin = User::create([
                 'name' => "admin",
@@ -270,6 +270,30 @@ return new class extends Migration
             );
 
 
+        }elseif (config('app.env') == "PROD" &&DB::table('users')->count() == 0 ){
+            $admin = User::create([
+                'name' => "admin",
+                'email' => "admin@som.fr",
+                'password' => Hash::make(config('app.admin_password')),
+            ]);
+            $admin->assignRole('admin');
+
+            DB::table('triggerwarnings')->insert(
+                array(
+                    'nom' => 'mort',
+                )
+            );
+
+            DB::table('tags')->insert(
+                array(
+                    'nom' => 'horreur',
+                )
+            );
+            DB::table('tags')->insert(
+                array(
+                    'nom' => 'magie',
+                )
+            );
         }
 
 

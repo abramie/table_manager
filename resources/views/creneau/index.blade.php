@@ -78,8 +78,6 @@
             @endif
         </p>
         @include('table.bouton_inscription')
-
-
     @endforeach
 
     @can('ajout_tables')

@@ -34,9 +34,11 @@
             <li class="nav-item {{ Route::currentRouteNamed('events.index') ? 'active' : '' }}">
                 <a class="nav-link"  href="{{ route("events.index") }}">Index event <span class="sr-only">(current)</span></a>
             </li>
+            {{--
             <li class="nav-item">
                 <a class="nav-link {{ Str::contains(url()->current(), 'som') ? 'active' : '' }}"  href="{{route("events.one.show", ['evenement'=> \App\Models\Evenement::all()->where('slug','=', "som-24")[1]])}}">Som-24</a>
             </li>
+            --}}
             @role('admin')
             <li class="nav-item">
                 <a class="nav-link {{ Str::contains(Route::currentRouteName(), 'admin')? 'active' : '' }}"  href="{{route("admin.index")}}">Admin</a>
@@ -95,3 +97,14 @@
 </div>
 
 </body>
+
+<footer>
+    <div>Si vous rencontrez un bug, ou que vous avez une idée d'amelioration rendez vous sur :
+    <a  class="link-danger" href="https://github.com/abramie/table_manager/issues">La page github, pour ajouter un ticket</a>
+    </div>
+    <div>
+        Il s'agit d'une version alpha, il est possible (et probable) que vous rencontriez des bugs, des erreurs, ou que des trucs soit juste mal foutu.
+        Pensez à signaler les choses, et j'essaierais de mettre à jour au plus vite.
+    </div>
+
+</footer>

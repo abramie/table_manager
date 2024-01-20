@@ -212,4 +212,5 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
 
+    'admin_password' => env('ADMIN_PASSWORD', "admin"),
 ];
