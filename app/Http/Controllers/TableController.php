@@ -156,7 +156,7 @@ class TableController extends Controller
             return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau])
                 ->with('echec', "Tu es MJ sur ce creneau, tu ne peux pas t'inscrire");
         }
-        elseif($table->users->count() > $creneau->nb_inscription_online_max){
+        elseif(!$table->sans_table && $table->users->count() > $creneau->nb_inscription_online_max){
             return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau])
                 ->with('echec', "Ce creneau impose une limite au nombre de personnes pouvant s'inscrire via la platforme à une table.Cette limite est de : ".$creneau->nb_inscription_online_max );
         }
