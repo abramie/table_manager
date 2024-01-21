@@ -11,7 +11,7 @@
             </div>
         </form>
     @else
-        @if($inscription_ouverte && !$inscription_fermee && $creneau->nb_inscription_online_max > $table->nb_inscrits() && $table->nb_joueur_max > $table->nb_inscrits())
+        @if($inscription_ouverte && !$inscription_fermee && (!$table->sans_table &&$creneau->nb_inscription_online_max > $table->nb_inscrits()) && $table->nb_joueur_max > $table->nb_inscrits())
 
 
             <form action="{{route('events.one.creneau.table.inscription',['evenement'=> $evenement, 'creneau' => $creneau, 'table'=> $table ])}}" method="post">
