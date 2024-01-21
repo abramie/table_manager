@@ -30,7 +30,7 @@
 
                     @elseif(!$inscription_ouverte)
                         <button class="btn btn-outline-secondary btn-light" type="submit" disabled>Inscription aux tables à partir du {{$ouverture_inscription->toDateTimeString()}}</button>
-                    @elseif($creneau->nb_inscription_online_max <= $table->nb_inscrits() )
+                    @elseif(!$table->sans_table &&  $creneau->nb_inscription_online_max <= $table->nb_inscrits() )
                         <button class="btn btn-outline-secondary btn-light" type="submit" disabled>Ce creneau impose une limite au nombre de personnes pouvant s'inscrire via la platforme à une table.Cette limite est de :
                             {{$creneau->nb_inscription_online_max}} </button>
                     @elseif($table->nb_joueur_max <=$table->nb_inscrits() )
