@@ -21,7 +21,7 @@ class CreneauController extends Controller
 
         return view('creneau.index', [
             'creneau' => $creneau,
-            'tables' => $creneau->tables()->with('tags', 'triggerwarnings')->orderByDesc("sans_table")->paginate(2),
+            'tables' => $creneau->tables()->with('tags', 'triggerwarnings')->orderByDesc("sans_table")->paginate(6),
             'evenement' => $evenement
         ]);
     }
