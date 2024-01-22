@@ -26,6 +26,7 @@
             <th scope="col">Nom creneau</th>
             <th scope="col">Début</th>
             <th scope="col">durée</th>
+            <th scope="col">Nombre de tables</th>
         </tr>
         @foreach($evenement->creneaus()->get() as $creneau)
             @php $date_creneau = $creneau->debut_creneau;
@@ -39,11 +40,13 @@
                         Le {{$date_creneau->dayName}} {{$date_creneau->day}} à
                     @endif {{$date_creneau->hour}}h </td>
                 <td>{{$creneau->duree}}h </td>
+                <td>{{$creneau->tables->count()}}</td>
+
 
                 @can('ajout_events')
                     <td><button class="btn btn-xs btn-warning " type="button" onclick="window.location='{{ route("events.one.creneau.edit",['evenement'=> $evenement, 'creneau' => $creneau]) }}'">
                             Edit </button></td>
-                    <td><button class="btn btn-xs btn-warning " type="button" onclick="window.location='{{ route("events.one.creneau.delete",['evenement'=> $evenement, 'creneau' => $creneau]) }}'">
+                    <td><button class="btn btn-xs btn-danger " type="button" onclick="window.location='{{ route("events.one.creneau.delete",['evenement'=> $evenement, 'creneau' => $creneau]) }}'">
                             Delete </button></td>
                 @endcan
             </tr>

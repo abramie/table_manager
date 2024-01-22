@@ -19,7 +19,7 @@ class CreneauController extends Controller
     public function index (Evenement $evenement, Creneau $creneau,  Request $request) {
         //return "test";
 
-        return view('creneau.index', [
+        return view('creneau.index_tables', [
             'creneau' => $creneau,
             'tables' => $creneau->tables()->with('tags', 'triggerwarnings')->orderByDesc("sans_table")->paginate(6),
             'evenement' => $evenement

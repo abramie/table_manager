@@ -82,7 +82,7 @@
 
     @can('ajout_tables')
         <p>
-            <button class="btn btn-xs btn-info pull-right" type="button" onclick="window.location='{{ route("events.one.creneau.tables.add",['evenement'=> $evenement, 'creneau' => $creneau]) }}'">
+            <button class="btn btn-lg btn-info pull-right" type="button" onclick="window.location='{{ route("events.one.creneau.tables.add",['evenement'=> $evenement, 'creneau' => $creneau]) }}'">
                 ajout d'une table </button>
         </p>
     @endcan
