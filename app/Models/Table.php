@@ -39,6 +39,7 @@ class Table extends Model
      */
     protected $casts = [
         'debut_table' => 'datetime:Y-m-d',
+        'sans_table' => 'boolean',
     ];
 
     public function creneaus(): BelongsTo {
