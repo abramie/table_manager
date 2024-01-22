@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Creneau;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
@@ -27,7 +28,8 @@ class TableFactory extends Factory
             'sans_table'=> false,
             'nb_joueur_min' => $this->faker->numberBetween(2,3),
             'nb_joueur_max' => $this->faker->numberBetween(3,5),
-            'mj_id' => User::factory(),
+            'mj' => User::factory(),
+            'creneau_id' => Creneau::factory(),
         ];
     }
 

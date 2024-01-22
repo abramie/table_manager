@@ -20,7 +20,6 @@ class EventController extends Controller
         return view('evenement.index', [
             'evenements' => Evenement::paginate(5)
         ]);
-        return Evenement::with('creneaux')->limit(10)->get();
     }
 
     public function add(){

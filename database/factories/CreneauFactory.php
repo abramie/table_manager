@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Evenement;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -26,6 +27,7 @@ class CreneauFactory extends Factory
             'duree' => $this->faker->numberBetween(2,5),
             'debut_creneau' => $this->faker->dateTimeBetween('now', '+1 year'),
             'sans_table'=> false,
+            'evenement_id' => Evenement::factory(),
         ];
     }
 

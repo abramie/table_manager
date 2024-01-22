@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
 /**
@@ -27,11 +28,23 @@ class EvenementFactory extends Factory
             'max_tables' => $this->faker->numberBetween(2,10),
             'nb_inscription_online_max' => $this->faker->numberBetween(0,5),
             'date_debut' => $start,
-            'affichage_evenement' => $this->faker->dateTimeBetween("- month", $start),
+            'affichage_evenement' => $this->faker->dateTimeBetween("-month", $start),
             'ouverture_inscription' => $this->faker->dateTimeBetween("now", $start),
             'fermeture_inscription' => $this->faker->dateTimeBetween("ouverture_inscription", $start),
             'archivage' => null,
         ];
+    }
+    /**
+     * Créer un evenement où la date precedete le present.
+     *
+     * @return $this
+     */
+    public function afficher(): static{
+
+        return $this->state(fn (array $attributes) => [
+            'affichage_evenement' => Carbon::yesterday(),
+        ]);
+
     }
 
 }

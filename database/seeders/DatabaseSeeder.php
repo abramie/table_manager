@@ -8,6 +8,7 @@ use App\Models\Evenement;
 use App\Models\Table;
 use App\Models\User;
 use Database\Factories\CreneauFactory;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -39,10 +40,6 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
-
-        User::factory()
-            ->count(10)
-            ->create();
         $modo = User::create([
             'name' => "modo",
             'email' => "modo@som.fr",
@@ -66,7 +63,7 @@ class DatabaseSeeder extends Seeder
         $admin->assignRole('admin');
         $modo->assignRole('joueur','mj', 'modo');
 
-
+/*
         DB::table('evenements')->insert(
             array(
                 'nom_evenement' => 'Soirée crepe',
@@ -263,13 +260,34 @@ class DatabaseSeeder extends Seeder
                 'debut_table' => \Carbon\Carbon::create(2024,06,19,21)
             )
         );
+*/
+        $Random_user = User::factory(50)->create();
 
-        Evenement::factory(3)
-            ->has(Creneau::factory()->count(2)->sans_table()
-                ->has(Table::factory()->count(3)->for(User::factory()->count(3), 'users'))
-            )
-            ->create();
+        $Random_user->each(function (User $item, int $key) {
+            // ...
+            $item->assignRole('joueur');
+        });
+        $Random_user_mj = User::factory(15)->create();
 
+        $Random_user_mj->each(function (User $item, int $key) {
+            // ...
+            $item->assignRole('joueur','mj');
+        });
+
+        $events = Collection::make();
+        $events->push(  Evenement::factory(1)
+            ->create());
+
+        $test = (Evenement::factory(3)
+            ->afficher()
+            ->create());
+        $events=$events->concat($test);
+
+        $creneaux = Creneau::factory(7)->recycle($events)->create();
+
+
+        Table::factory(12)->recycle($creneaux)->recycle($Random_user_mj)->create();
+/*
         DB::table('triggerwarnings')->insert(
             array(
                 'nom' => 'mort',
@@ -297,6 +315,6 @@ class DatabaseSeeder extends Seeder
                 'table_id' => 1,
             )
         );
-
+*/
     }
 }
