@@ -26,7 +26,9 @@ class FormTableRequest extends FormRequest
          * L'utilisateur peut editer toute les tables
          * La table existe et l'utiliseur peut modifier ses tables, et la table lui appartient.
          * **/
-        return ($table == null && $this->user()->can("ajout_tables"))|| $this->user()->can('manage_tables_all') || ($table && $this->user()->can('manage_tables_own') && $table->mjs->id == $this->user()->id) ;
+        return ($table == null && $this->user()->can("ajout_tables"))
+            || $this->user()->can('manage_tables_all')
+            || ($table && $this->user()->can('manage_tables_own') && $table->mjs->id == $this->user()->id) ;
 
     }
 

@@ -8,6 +8,7 @@ use App\Models\Evenement;
 use App\Models\Image;
 use App\Models\Settings;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Illuminate\Contracts\Pagination\Paginator;
@@ -58,20 +59,25 @@ class EventController extends Controller
      * Sauvegarde un Evenement depuis un formulaire
      */
     public function store(FormEventRequest $request){
-        $events = Evenement::create($request->validated());
+        $evenement = Evenement::create($request->validated());
 
 
-        if($request->file('image')) {
-            $title = $request->file('image')->getClientOriginalName();
-            $path = $request->file('image')->storePubliclyAs('images', $title, 'public');
-            //$request->file('image')->storeAs('images' , $title);
+        /** @var UploadedFile|null $image*/
+        $image = $request->file('image');
+        if($image != null && !$image->getError())
+        {
+            //dd($image);
+            $title = uniqid().'.'.$image->getClientOriginalName();
+            $path = $image->storePubliclyAs('images' , $title,'public');
+
             $save = new Image();
             $save->title = $title;
             $save->image_path = $path;
-            $events->image()->save($save);
+            $evenement->image()->save($save);
+
         }
 
-        return redirect()->route('events.one.show', ['evenement' => $events->slug])
+        return redirect()->route('events.one.show', ['evenement' => $evenement->slug])
             ->with('success', "L'evenement a bien été ajouté");
     }
 
@@ -82,11 +88,13 @@ class EventController extends Controller
 //dd("test");
         $evenement->update($request->validated());
 
-        if($request->file('image'))
+        /** @var UploadedFile|null $image*/
+        $image = $request->file('image');
+        if($image != null && !$image->getError())
         {
             $evenement->image()->delete();
-            $title = uniqid().'.'.$request->file('image')->getClientOriginalName();
-            $path = $request->file('image')->storePubliclyAs('images' , $title,'public');
+            $title = uniqid().'.'.$image->getClientOriginalName();
+            $path = $image->storePubliclyAs('images' , $title,'public');
             //$request->file('image')->storeAs('images' , $title);
 
             $save = new Image();

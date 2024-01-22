@@ -6,7 +6,7 @@
 @section('content')
     <h1>{{$evenement->nom_evenement}}</h1>
     @if($evenement->image)
-        <img src="{{asset("storage/".$evenement->image?->title)}}" alt="description" width="300" height="250"/>
+        <img src="{{asset("storage/images/".$evenement->image?->title)}}" alt="description" width="300" height="250"/>
     @endif
     <p class="text-justify">
         {{$evenement->description}}
