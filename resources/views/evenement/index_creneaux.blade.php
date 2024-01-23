@@ -1,4 +1,4 @@
-@extends('base')
+@extends('layouts.master')
 
 @section('title', 'Index des evenements')
 
@@ -12,8 +12,10 @@
         {{$evenement->description}}
     </p>
     @can('ajout_events')
-    <button class="btn btn-xs btn-warning pull-right" type="button" onclick="window.location='{{ route("events.one.edit",['evenement'=> $evenement]) }}'">
-        Edit </button>
+        <button class="btn btn-xs btn-warning pull-right" type="button"
+                onclick="window.location='{{ route("events.one.edit",['evenement'=> $evenement]) }}'">
+            Edit
+        </button>
     @endcan
     <table class="table">
         <thead>
@@ -35,18 +37,29 @@
                 $date_creneau->setTimezone('UTC');
             @endphp
             <tr>
-                <td><a href="{{route('events.one.creneau.tablesindex', ['evenement' => $evenement, 'creneau' => $creneau->id])}}"> {{$creneau->nom}} </a></td>
+                <td>
+                    <a href="{{route('events.one.creneau.tablesindex', ['evenement' => $evenement, 'creneau' => $creneau->id])}}"> {{$creneau->nom}} </a>
+                </td>
                 <td>@if(!$date_creneau->isSameDay($date))
                         Le {{$date_creneau->dayName}} {{$date_creneau->day}} à
-                    @endif {{$date_creneau->hour}}h </td>
-                <td>{{$creneau->duree}}h </td>
+                    @endif {{$date_creneau->hour}}h
+                </td>
+                <td>{{$creneau->duree}}h</td>
                 <td>{{$creneau->tables->count()}}</td>
 
                 @can('ajout_events')
-                    <td><button class="btn btn-xs btn-warning " type="button" onclick="window.location='{{ route("events.one.creneau.edit",['evenement'=> $evenement, 'creneau' => $creneau]) }}'">
-                            Edit </button></td>
-                    <td><button class="btn btn-xs btn-danger " type="button" onclick="window.location='{{ route("events.one.creneau.delete",['evenement'=> $evenement, 'creneau' => $creneau]) }}'">
-                            Delete </button></td>
+                    <td>
+                        <button class="btn btn-xs btn-warning " type="button"
+                                onclick="window.location='{{ route("events.one.creneau.edit",['evenement'=> $evenement, 'creneau' => $creneau]) }}'">
+                            Edit
+                        </button>
+                    </td>
+                    <td>
+                        <button class="btn btn-xs btn-danger " type="button"
+                                onclick="window.location='{{ route("events.one.creneau.delete",['evenement'=> $evenement, 'creneau' => $creneau]) }}'">
+                            Delete
+                        </button>
+                    </td>
                 @endcan
             </tr>
         @endforeach
@@ -55,8 +68,10 @@
 
     @can('ajout_events')
         <p>
-            <button class="btn btn-xs btn-info " type="button" onclick="window.location='{{ route("events.one.add",['evenement'=> $evenement]) }}'">
-                ajout d'un creneau </button>
+            <button class="btn btn-xs btn-info " type="button"
+                    onclick="window.location='{{ route("events.one.add",['evenement'=> $evenement]) }}'">
+                ajout d'un creneau
+            </button>
         </p>
     @endcan
 @endsection

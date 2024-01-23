@@ -125,6 +125,17 @@ class TableController extends Controller
         //return redirect()->route('events.one.creneau.table.show', ['evenement' => $evenement,'creneau' => $creneau->id,'table'=> $table])->with('success', "Le table a bien été modifier");
     }
 
+    public function delete(Evenement $evenement,Creneau $creneau,Table $table){
+        if(!(auth()->user() && (auth()->user()?->can('manage_tables_all') ||
+                (auth()->user()?->can('manage_tables_own')&&  $table->mjs->name ==auth()->user()->name)))){
+            return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau])
+                ->with('echec', "Vous n'avez pas l'autorisation de modifier cette table");
+        }
+        $table->delete();
+        return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau])
+            ->with('success', "La table a bien été supprimé");
+    }
+
     private function redirect_action(FormTableRequest $request){
         if($request->get('action') == 'add_tag'){
             return redirect()->route('tags.add')->withInput();

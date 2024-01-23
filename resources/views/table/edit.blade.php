@@ -1,4 +1,4 @@
-@extends('base')
+@extends('layouts.master')
 
 @section('title', 'Modification de la table')
 

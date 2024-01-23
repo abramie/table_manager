@@ -1,5 +1,4 @@
-
-@extends('base')
+@extends('layouts.master')
 
 @section('title', 'Edite un creneau')
 

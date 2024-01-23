@@ -1,4 +1,4 @@
-@extends('base')
+@extends('layouts.master')
 
 @section('title', 'Modification du tag')
 

@@ -1,4 +1,4 @@
-@extends('base')
+@extends('layouts.master')
 
 @section('title', 'Index des evenements')
 

@@ -27,8 +27,8 @@ return new class extends Migration
         });
 
         Schema::table('tables', function(Blueprint $table){
-            //$table->foreignIdFor(\App\Models\Creneau::class)->nullable()->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(\App\Models\Creneau::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(\App\Models\Creneau::class)->nullable()->constrained()->cascadeOnDelete();
+            //$table->foreignIdFor(\App\Models\Creneau::class)->constrained()->cascadeOnDelete();
         });
 
     }

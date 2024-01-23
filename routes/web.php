@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+
 Route::get('/', function () {
     return redirect('/events');
 });
@@ -47,7 +49,16 @@ Route::prefix('/admin')->name('admin.')->middleware('auth')->middleware('role:ad
 
     Route::view('/', 'admin.index')->name('index');
 
-    Route::get('/gestion_deleted', [\App\Http\Controllers\GestionDeletedController::class, 'index_event'])->name('deleted');
+    Route::prefix('/gestion_deleted')->name('deleted')->group(function(){
+        Route::get('/', function(){return redirect('/admin/gestion_deleted/events');});
+        Route::get('/events', [\App\Http\Controllers\GestionDeletedController::class, 'index_event'])->name('.evenement');
+        Route::get('/users', [\App\Http\Controllers\GestionDeletedController::class, 'index_users'])->name('.user');
+        Route::get('/creneaux', [\App\Http\Controllers\GestionDeletedController::class, 'index_creneaux'])->name('.creneau');
+        Route::get('/tables', [\App\Http\Controllers\GestionDeletedController::class, 'index_tables'])->name('.table');
+
+        Route::get('/restore/{type}/{id}', [\App\Http\Controllers\GestionDeletedController::class, 'restore'])->name('.restore');
+        Route::get('/delete/{type}/{id}', [\App\Http\Controllers\GestionDeletedController::class, 'delete'])->name('.delete');
+    });
     Route::view('/users', 'admin.users')->name('users');
     Route::prefix('/settings')->name('settings')->group(function(){
         Route::get('/', [\App\Http\Controllers\SettingsController::class, 'index']);
@@ -104,6 +115,7 @@ Route::prefix('/events')->name('events.')->group(function () {
                 //Affiche une table specifique du creneau
                 Route::get('/edit', [TableController::class, 'edit'])->name('edit')->middleware('auth')->middleware('permission:manage_tables_all|manage_tables_own');
                 Route::post('/edit', [TableController::class, 'update'])->middleware('auth')->middleware('permission:manage_tables_all|manage_tables_own');
+                Route::get('/delete', [TableController::class, 'delete'])->name('delete')->middleware('permission:manage_tables_all|manage_tables_own');
                 Route::get('/', [TableController::class, 'show'])->name('show');
                 Route::post('/inscription', [TableController::class, 'inscription_table'])->name('inscription')->middleware('auth');
                 Route::post('/desinscription', [TableController::class, 'desinscription_table'])->name('desinscription')->middleware('auth');

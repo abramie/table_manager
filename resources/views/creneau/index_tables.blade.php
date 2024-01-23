@@ -1,20 +1,29 @@
-@extends('base')
+@extends('layouts.master')
 
 @section('title', 'Liste des tables')
 
 @section('content')
     @can('ajout_events')
-        <td><button class="btn btn-xs btn-warning " type="button" onclick="window.location='{{ route("events.one.creneau.edit",['evenement'=> $evenement, 'creneau' => $creneau]) }}'">
-                Edit </button></td>
-        <td><button class="btn btn-xs btn-warning " type="button" onclick="window.location='{{ route("events.one.creneau.delete",['evenement'=> $evenement, 'creneau' => $creneau]) }}'">
-                Delete </button></td>
+        <td>
+            <button class="btn btn-xs btn-warning " type="button"
+                    onclick="window.location='{{ route("events.one.creneau.edit",['evenement'=> $evenement, 'creneau' => $creneau]) }}'">
+                Edit
+            </button>
+        </td>
+        <td>
+            <button class="btn btn-xs btn-warning " type="button"
+                    onclick="window.location='{{ route("events.one.creneau.delete",['evenement'=> $evenement, 'creneau' => $creneau]) }}'">
+                Delete
+            </button>
+        </td>
     @endcan
 
 
     @if($evenement->creneaus()->count()>1)
         <h1>{{$evenement->nom_evenement}} : {{$creneau->nom}}</h1>
         <p>
-            <button class="btn btn-xs btn-info " type="button" onclick="window.location='{{ route("events.one.show",['evenement'=> $evenement]) }}'">
+            <button class="btn btn-xs btn-info " type="button"
+                    onclick="window.location='{{ route("events.one.show",['evenement'=> $evenement]) }}'">
                 {{$evenement->nom_evenement}}</button>
         </p>
     @else
@@ -25,17 +34,19 @@
 
     </div>
     <div>
-        Horaires : {{$creneau->debut_creneau->toTimeString()}} -> {{$creneau->debut_creneau->addHour($creneau->duree)->toTimeString()}};
+        Horaires : {{$creneau->debut_creneau->toTimeString()}}
+        -> {{$creneau->debut_creneau->addHour($creneau->duree)->toTimeString()}};
     </div>
-{{--
-    <ul class="list-group list-group-flush">
-        @foreach($creneau->tables()->with('users')->get()->pluck('users')->flatten() as $user)
-            <li class="list-group-item">{{$user->name}}</li>
-        @endforeach
-    </ul>
---}}
+    {{--
+        <ul class="list-group list-group-flush">
+            @foreach($creneau->tables()->with('users')->get()->pluck('users')->flatten() as $user)
+                <li class="list-group-item">{{$user->name}}</li>
+            @endforeach
+        </ul>
+    --}}
     <div>
-        Nombre d'inscrit sur ce creneau : {{$creneau->tables()->with('users')->get()->pluck('users')->flatten()->count() }}
+        Nombre d'inscrit sur ce creneau
+        : {{$creneau->tables()->with('users')->get()->pluck('users')->flatten()->count() }}
     </div>
     @php
         $ouverture_inscription =$evenement->ouverture_inscription;
@@ -46,9 +57,11 @@
     @foreach($tables as $table)
         @php
             $isSansTable = $table->sans_table == 1;
-         @endphp
-        <evenement>
-            <h2><a href="{{route('events.one.creneau.table.show', ['evenement' => $evenement->slug, 'creneau' => $creneau, 'table' => $table])}}">{{$table->nom}}</a></h2>
+        @endphp
+        <div>
+            <h2>
+                <a href="{{route('events.one.creneau.table.show', ['evenement' => $evenement->slug, 'creneau' => $creneau, 'table' => $table])}}">{{$table->nom}}</a>
+            </h2>
             @if(!$isSansTable)
                 <span>MJ : {{$table->mjs->name}}</span>
                 @if(!$table->tags->isEmpty())
@@ -67,9 +80,11 @@
 
                 @endif
             @endif
-            <span>Inscrits : {{$table->nb_inscrits()}} @if(!$isSansTable)/ {{$table->nb_joueur_max}}@endif</span>
+            <span>Inscrits : {{$table->nb_inscrits()}} @if(!$isSansTable)
+                    / {{$table->nb_joueur_max}}
+                @endif</span>
 
-        </evenement>
+        </div>
         <p>
             @if(strlen($table->description) < 1000)
                 {{$table->description}}
@@ -82,8 +97,10 @@
 
     @can('ajout_tables')
         <p>
-            <button class="btn btn-lg btn-info pull-right" type="button" onclick="window.location='{{ route("events.one.creneau.tables.add",['evenement'=> $evenement, 'creneau' => $creneau]) }}'">
-                ajout d'une table </button>
+            <button class="btn btn-lg btn-info pull-right" type="button"
+                    onclick="window.location='{{ route("events.one.creneau.tables.add",['evenement'=> $evenement, 'creneau' => $creneau]) }}'">
+                ajout d'une table
+            </button>
         </p>
     @endcan
     {{ $tables->links() }}

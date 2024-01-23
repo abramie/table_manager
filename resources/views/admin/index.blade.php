@@ -1,6 +1,6 @@
 @extends('admin.base')
 
-@section('title', 'Liste des tables')
+@section('title', 'Options administrateur')
 
 
 @section('content-admin')

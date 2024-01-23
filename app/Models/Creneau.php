@@ -23,6 +23,20 @@ class Creneau extends Model
         'debut_creneau'
     ];
 
+    protected static function booted(): void
+    {
+        static::restoring(function (Creneau $creneau) {
+            // ...
+
+            $creneau->tables()->onlyTrashed()->get()->each(function(Table $tables){
+                $tables->restore();
+            });
+        });
+    }
+
+
+
+
     /**
      * The attributes that should be cast.
      *
@@ -66,17 +80,6 @@ class Creneau extends Model
 
             $this->tables->each(function(Table $tables){
                 $tables->delete();
-            });
-
-        }
-    }
-    public function restore(){
-        $res=parent::restore();
-        if($res==true)
-        {
-
-            $this->tables->each(function(Table $tables){
-                $tables->restore();
             });
 
         }
