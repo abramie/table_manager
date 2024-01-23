@@ -32,6 +32,12 @@ class Creneau extends Model
                 $tables->restore();
             });
         });
+
+        static::forceDeleting(function(Creneau $creneau){
+            $creneau->tables()->onlyTrashed()->get()->each(function(Table $tables){
+                $tables->forceDelete();
+            });
+        });
     }
 
 

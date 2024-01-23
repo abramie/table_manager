@@ -63,10 +63,9 @@ class GestionDeletedController extends Controller
 
     public function delete($type, $id) {
         $model = $this->identify($type,$id);
-        dd($model);
-        return view('admin.deleted.users', [
-            'evenements' => User::onlyTrashed()->paginate(5)
-        ]);
+        $model->forceDelete();
+        return redirect()->route('admin.deleted.'. lcfirst( $type))
+            ->with('success', "Le ".$type." a bien été supprimé");
     }
 
     private function identify($type, $id){
