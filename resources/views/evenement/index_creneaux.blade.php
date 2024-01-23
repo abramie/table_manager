@@ -42,7 +42,6 @@
                 <td>{{$creneau->duree}}h </td>
                 <td>{{$creneau->tables->count()}}</td>
 
-
                 @can('ajout_events')
                     <td><button class="btn btn-xs btn-warning " type="button" onclick="window.location='{{ route("events.one.creneau.edit",['evenement'=> $evenement, 'creneau' => $creneau]) }}'">
                             Edit </button></td>

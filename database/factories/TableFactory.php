@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Creneau;
+use App\Models\Table;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
@@ -34,6 +35,20 @@ class TableFactory extends Factory
     }
 
     /**
+     * Configure the model factory.
+     */
+    public function configure(): static
+    {
+        return $this->afterMaking(function (Table $table) {
+            // ...
+        })->afterCreating(function (Table $table) {
+            // ...
+            $users = User::role('joueur')->get()->random(rand($table->nb_joueur_min,$table->nb_joueur_max));
+            $table->users()->sync($users);
+        });
+    }
+
+    /**
      * Indicate that the model's should be sans table
      *
      * @return $this
@@ -44,5 +59,8 @@ class TableFactory extends Factory
             'sans_table' => true,
         ]);
     }
+
+
+
 
 }

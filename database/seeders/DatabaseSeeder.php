@@ -6,6 +6,8 @@ namespace Database\Seeders;
 use App\Models\Creneau;
 use App\Models\Evenement;
 use App\Models\Table;
+use App\Models\Tag;
+use App\Models\Triggerwarning;
 use App\Models\User;
 use Database\Factories\CreneauFactory;
 use Illuminate\Database\Eloquent\Collection;
@@ -280,13 +282,24 @@ class DatabaseSeeder extends Seeder
 
         $test = (Evenement::factory(3)
             ->afficher()
+            ->inscriptions_ouvertes()
             ->create());
         $events=$events->concat($test);
 
         $creneaux = Creneau::factory(7)->recycle($events)->create();
 
 
-        Table::factory(12)->recycle($creneaux)->recycle($Random_user_mj)->create();
+        $table = Table::factory(12)->recycle($creneaux)->recycle($Random_user_mj)->create();
+
+
+        $tags = Tag::factory(30)->create();
+        $triggerwarning = Triggerwarning::factory(30)->create();
+
+        $table->each(function (Table $item, int $key, ) use ($tags,$triggerwarning) {
+            // ...
+            $item->tags()->sync($tags->random(rand(0,20)));
+            $item->triggerwarnings()->sync($triggerwarning->random(rand(0,20)));
+        });
 /*
         DB::table('triggerwarnings')->insert(
             array(

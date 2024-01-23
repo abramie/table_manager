@@ -23,7 +23,7 @@ class CreneauFactory extends Factory
             'nom' =>$nom,
             'description' => $this->faker->sentence(6,true),
             'max_tables' => $this->faker->numberBetween(2,10),
-            'nb_inscription_online_max' => $this->faker->numberBetween(0,5),
+            'nb_inscription_online_max' => $this->faker->numberBetween(0,15),
             'duree' => $this->faker->numberBetween(2,5),
             'debut_creneau' => $this->faker->dateTimeBetween('now', '+1 year'),
             'sans_table'=> false,
