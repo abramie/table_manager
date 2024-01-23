@@ -14,8 +14,15 @@
             </li>
             --}}
             @role('admin')
-            <x-navigation-item routeName="admin.index" contain="admin" >Admin</x-navigation-item>
+                <x-navigation-item routeName="admin.index" contain="admin" >Admin</x-navigation-item>
             @endrole
+
+            @can('ajout_tags')
+                <x-navigation-item routeName="tags.add" contain="admin" >Ajout Tag</x-navigation-item>
+            @endcan
+            @can('ajout_tws')
+                <x-navigation-item routeName="tw.add" contain="admin" >Ajout TW</x-navigation-item>
+            @endcan
         </ul>
     </div>
     <div class="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -25,12 +32,13 @@
             <form action="{{route('logout')}}" method="post">
 
                 @csrf
-                <button class="nav-link">Se deconnecter</button>
+                <button class="nav-link"> Se deconnecter</button>
             </form>
         @endauth
         @guest()
             <a href="{{route('register')}}">Créer son compte </a>
-            <a href="{{route('login')}}">Se connecter </a>
+
+            <a href="{{route('login')}}"> Se connecter </a>
         @endguest
 
 

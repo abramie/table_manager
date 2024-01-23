@@ -47,7 +47,6 @@
         @enderror
     </div>
 
-
     <div class="form-group">
         <label for="tw" data-toggle="tooltip" rel="tooltip" data-placement="top"
                title="{{$descriptions->firstWhere('name','trigger_warnings')->description}}">TW/CW</label>
@@ -58,7 +57,7 @@
             @endphp
             @foreach($triggerwarnings as $triggerwarning)
                 <option
-                    @selected($tw_id->contains($triggerwarning->id)) value="{{$triggerwarning->id}}">{{$triggerwarning->nom}}</option>
+                    @selected($tw_id->contains($triggerwarning->id) || collect(old('triggerwarnings'))?->contains($triggerwarning->id) ||$triggerwarning->id == $new_tw ) value="{{$triggerwarning->id}}">{{$triggerwarning->nom}}</option>
             @endforeach
         </select>
         @error("triggerwarnings")
@@ -92,7 +91,7 @@
                 $tag_id = $table->tags()->pluck('id');
             @endphp
             @foreach($tags as $tag)
-                <option @selected($tag_id->contains($tag->id)) value="{{$tag->id}}">{{$tag->nom}}</option>
+                <option @selected($tag_id->contains($tag->id) || collect(old('tags'))?->contains($tag->id) || $tag->id == $new_tag) value="{{$tag->id}}">{{$tag->nom}}</option>
             @endforeach
         </select>
         @error("tags")

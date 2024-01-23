@@ -24,6 +24,11 @@ class TriggerwarningController extends Controller
     public function store(Request $request){
         $triggerwarning = Triggerwarning::create($request->merge(['nom' => $request->nom_triggerwarning])->validate(['nom' => ['required', 'unique:triggerwarnings']]));
 
-        return redirect(session('links'))->withInput();
+        if(session('links')) {
+            session()->put('new_tw', $triggerwarning->id);
+            return redirect(session('links'))->withInput();
+        }
+        else
+            return redirect()->route('tags.add');
     }
 }

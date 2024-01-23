@@ -26,6 +26,11 @@ class TagsController extends Controller
 
     public function store(Request $request){
         $tag = Tag::create($request->merge(['nom' => $request->nom_tag])->validate(['nom' => ['required', 'unique:tags']]));
-        return redirect(session('links'))->withInput();
+        if(session('links')) {
+            session()->put('new_tag', $tag->id);
+            return redirect(session('links'))->withInput();
+        }
+        else
+            return redirect()->route('tags.add');
     }
 }

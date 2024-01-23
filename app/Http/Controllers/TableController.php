@@ -43,6 +43,19 @@ class TableController extends Controller
             //Ajout suppression de la valeur de session
         }
         $descriptions = Description::whereIn('name',  ['trigger_warnings' ])->get();
+
+        //Quand un tag ou un tw est ajouter pendant le process de creation d'une table, il est automatiquement ajouter à la table
+        $new_tag = $new_tw = null;
+        if(session()->has('new_tag') ){
+            $new_tag = session('new_tw');
+            session()->forget('new_tag');
+            //Ajout suppression de la valeur de session
+        }
+        if(session()->has('new_tw') ){
+            $new_tw = session('new_tw');
+            session()->forget('new_tw');
+            //Ajout suppression de la valeur de session
+        }
         //return "formulaire ajout d'evenement";
         return view('table.create', [
             'table' => $table,
@@ -51,6 +64,8 @@ class TableController extends Controller
             'creneaux' => Creneau::get(),
             'triggerwarnings' => Triggerwarning::select('id', 'nom')->get(),
             'tags' => Tag::select('id', 'nom')->get(),
+            'new_tag' => $new_tag ,
+            'new_tw' => $new_tw ,
             'descriptions' => $descriptions
         ]);
     }
@@ -96,7 +111,17 @@ class TableController extends Controller
         $links =  [];
         $currentLink = request()->path(); // Getting current URI like 'category/books/'
         array_unshift($links, $currentLink); // Putting it in the beginning of links array
-        session(['links' => $links]); // Saving links array to the session
+        $new_tag = $new_tw = null;
+        if(session()->has('new_tag') ){
+            $new_tag = session('new_tw');
+            session()->forget('new_tag');
+            //Ajout suppression de la valeur de session
+        }
+        if(session()->has('new_tw') ){
+            $new_tw = session('new_tw');
+            session()->forget('new_tw');
+            //Ajout suppression de la valeur de session
+        }
 
         return view('table.edit', [
             'table' => $table,
@@ -105,6 +130,8 @@ class TableController extends Controller
             'creneaux' => Creneau::get(),
             'triggerwarnings' => Triggerwarning::select('id', 'nom')->get(),
             'tags' => Tag::select('id', 'nom')->get(),
+            'new_tag' => $new_tag ,
+            'new_tw' => $new_tw ,
             'descriptions' => $descriptions
         ]);
     }
