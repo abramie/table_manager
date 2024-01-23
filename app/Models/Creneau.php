@@ -55,4 +55,19 @@ class Creneau extends Model
 
         return $values;
     }
+
+
+    public function delete(){
+        $res=parent::delete();
+        if($res==true)
+        {
+
+            $this->tables->each(function(Table $tables){
+                $tables->delete();
+            });
+
+        }
+    }
+
+
 }

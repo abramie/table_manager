@@ -111,7 +111,7 @@ class EventController extends Controller
 
     public function delete(Evenement $evenement){
         $evenement->delete();
-        return redirect()->route('events.index', ['evenement' => $evenement])
+        return redirect()->route('events.index')
             ->with('success', "L'event a bien été supprimé");
     }
 }

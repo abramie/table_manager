@@ -292,13 +292,13 @@ class DatabaseSeeder extends Seeder
         $table = Table::factory(12)->recycle($creneaux)->recycle($Random_user_mj)->create();
 
 
-        $tags = Tag::factory(30)->create();
-        $triggerwarning = Triggerwarning::factory(30)->create();
+        $tags = Tag::factory(15)->create();
+        $triggerwarning = Triggerwarning::factory(15)->create();
 
         $table->each(function (Table $item, int $key, ) use ($tags,$triggerwarning) {
             // ...
-            $item->tags()->sync($tags->random(rand(0,20)));
-            $item->triggerwarnings()->sync($triggerwarning->random(rand(0,20)));
+            $item->tags()->sync($tags->random(rand(0,15)));
+            $item->triggerwarnings()->sync($triggerwarning->random(rand(0,15)));
         });
 /*
         DB::table('triggerwarnings')->insert(

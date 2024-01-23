@@ -22,7 +22,7 @@ class TriggerwarningFactory extends Factory
     {
 
         return [
-            'nom' =>$this->faker->sentence(1,true),
+            'nom' =>$this->faker->sentence(2,true),
         ];
     }
 

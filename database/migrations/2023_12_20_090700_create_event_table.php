@@ -29,7 +29,8 @@ return new class extends Migration
             $table->timestamps();
         });
         Schema::table('creneaux', function(Blueprint $table){
-            $table->foreignIdFor(\App\Models\Evenement::class)->nullable()->constrained()->cascadeOnDelete();
+            //$table->foreignIdFor(\App\Models\Evenement::class)->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(\App\Models\Evenement::class)->constrained()->cascadeOnUpdate()->cascadeOnDelete(); //Update sur un fresh data
         });
 
 

@@ -29,10 +29,10 @@ return new class extends Migration
 
 
 
-            Schema::create('inscrits',function (Blueprint $table) {
-                $table->foreignIdFor(\App\Models\User::class)->constrained()->cascadeOnDelete();
-                $table->foreignIdFor(\App\Models\Table::class)->constrained()->cascadeOnDelete();
-            });
+        Schema::create('inscrits',function (Blueprint $table) {
+            $table->foreignIdFor(\App\Models\User::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(\App\Models\Table::class)->constrained()->cascadeOnDelete();
+        });
 
 
 

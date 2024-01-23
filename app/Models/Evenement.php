@@ -61,7 +61,14 @@ class Evenement extends Model
         if($res==true)
         {
             $relations=$this->image; // here get the relation data
-            $relations->delete();// delete Here
+            if($relations){
+
+                $relations->delete();// delete Here
+            }
+
+             $this->creneaus->each(function(Creneau $creneau){
+                 $creneau->delete();
+             });
 
         }
     }
