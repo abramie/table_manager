@@ -27,6 +27,7 @@ return new class extends Migration
             //Ajout relationel creneaux
             //$table->dateTime('date');
             $table->timestamps();
+            $table->softDeletes();
         });
         Schema::table('creneaux', function(Blueprint $table){
             //$table->foreignIdFor(\App\Models\Evenement::class)->nullable()->constrained()->cascadeOnDelete();

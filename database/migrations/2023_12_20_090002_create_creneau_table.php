@@ -23,6 +23,7 @@ return new class extends Migration
             $table->date('debut_creneau');
             //$table->dateTime('date');
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::table('tables', function(Blueprint $table){

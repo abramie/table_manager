@@ -13,9 +13,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-
-
-
+/*
+        Schema::table('tables', function(Blueprint $table){
+            //$table->foreignIdFor(\App\Models\Creneau::class)->nullable()->constrained()->cascadeOnDelete();
+            $table->softDeletes();
+        });
+        Schema::table('evenements', function(Blueprint $table){
+            //$table->foreignIdFor(\App\Models\Creneau::class)->nullable()->constrained()->cascadeOnDelete();
+            $table->softDeletes();
+        });
+        Schema::table('creneaux', function(Blueprint $table){
+            //$table->foreignIdFor(\App\Models\Creneau::class)->nullable()->constrained()->cascadeOnDelete();
+            $table->softDeletes();
+        });
+*/
         //
 
     }

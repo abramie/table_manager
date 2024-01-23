@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @property int|mixed $nb_joueur_min
@@ -19,7 +20,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 class Table extends Model
 {
     use HasFactory;
-
+    use SoftDeletes;
     protected $fillable = [
         'nom',
         'duree',

@@ -31,22 +31,16 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
 
-            <li class="nav-item {{ Route::currentRouteNamed('events.index') ? 'active' : '' }}">
-                <a class="nav-link"  href="{{ route("events.index") }}">Index event <span class="sr-only">(current)</span></a>
-            </li>
+
+            <x-navigation-item routeName="events.index" >Index event</x-navigation-item>
             {{--
             <li class="nav-item">
                 <a class="nav-link {{ Str::contains(url()->current(), 'som') ? 'active' : '' }}"  href="{{route("events.one.show", ['evenement'=> \App\Models\Evenement::all()->where('slug','=', "som-24")[1]])}}">Som-24</a>
             </li>
             --}}
             @role('admin')
-            <li class="nav-item">
-                <a class="nav-link {{ Str::contains(Route::currentRouteName(), 'admin')? 'active' : '' }}"  href="{{route("admin.index")}}">Admin</a>
-            </li>
+            <x-navigation-item routeName="admin.index" contain="admin" >Admin</x-navigation-item>
             @endrole
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#">Disabled</a>
-            </li>
         </ul>
     </div>
     <div class="navbar-nav ms-auto mb-2 mb-lg-0">

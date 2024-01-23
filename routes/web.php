@@ -47,6 +47,7 @@ Route::prefix('/admin')->name('admin.')->middleware('auth')->middleware('role:ad
 
     Route::view('/', 'admin.index')->name('index');
 
+    Route::get('/gestion_deleted', [\App\Http\Controllers\GestionDeletedController::class, 'index_event'])->name('deleted');
     Route::view('/users', 'admin.users')->name('users');
     Route::prefix('/settings')->name('settings')->group(function(){
         Route::get('/', [\App\Http\Controllers\SettingsController::class, 'index']);
