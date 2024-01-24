@@ -16,6 +16,13 @@
                 </div>
             </div>
         </form>
+
+        @foreach($tables as $table)
+
+            <x-table-preview :table="$table" showDate/>
+        @endforeach
+
+
     @else
         <form action="{{route('profile.toggle-mj')}}" method="post">
             @csrf

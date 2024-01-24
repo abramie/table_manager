@@ -70,5 +70,5 @@
         $fermeture_inscription =$evenement->fermeture_inscription;
         $inscription_fermee = $fermeture_inscription->isPast();
     @endphp
-    @include('table.bouton_inscription')
+    <x-bouton_inscription :table="$table"/>
 @endsection

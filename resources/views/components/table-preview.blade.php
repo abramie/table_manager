@@ -1,33 +1,55 @@
-<div>
+<div class="card">
     <!-- I begin to speak only when I am certain what I will say is not better left unsaid. - Cato the Younger -->
     @php
         $isSansTable = $table->sans_table == 1;
     @endphp
-    <div>
-        <h2>
+
+    <div class="card-body">
+        <h3 class="card-title">
             <a href="{{route('events.one.creneau.table.show', ['evenement' => $table->creneaus->evenement->slug, 'creneau' => $table->creneaus, 'table' => $table])}}">{{$table->nom}}</a>
-        </h2>
+        </h3>
         @if(!$isSansTable)
-            <span>MJ : {{$table->mjs->name}}</span>
+            <h5 class="card-subtitle mb-2 text-body-secondary">MJ : {{$table->mjs->name}}</h5>
             @if(!$table->tags->isEmpty())
-                Tags :
-                @foreach($table->tags as $tag )
-                    <span class="badge bg-secondary">{{$tag->nom}}</span>
-                @endforeach
+                <p>
+                    Tags :
+                    @foreach($table->tags as $tag )
+                        <span class=" card-text badge badge-pill badge-secondary">{{$tag->nom}}</span>
+                    @endforeach
+                </p>
 
             @endif
 
             @if(!$table->triggerwarnings->isEmpty())
-                TW :
-                @foreach($table->triggerwarnings as $tw )
-                    <span class="badge bg-secondary">{{$tw->nom}}</span>
-                @endforeach
-
+                <p>
+                    TW :
+                    @foreach($table->triggerwarnings as $tw )
+                        <span class="badge bg-secondary">{{$tw->nom}}</span>
+                    @endforeach
+                </p>
             @endif
         @endif
-        <span>Inscrits : {{$table->nb_inscrits()}} @if(!$isSansTable)
-                / {{$table->nb_joueur_max}}
-            @endif</span>
+        <p>
+            <span>Inscrits : {{$table->nb_inscrits()}} @if(!$isSansTable)
+                    / {{$table->nb_joueur_max}}
+                @endif
+            </span>
+
+            <a class="btn btn-link bt-xs" data-toggle="collapse" href="#collapseListInscrits{{$table->id}}"
+               role="button" aria-expanded="false" aria-controls="collapseExample">
+                Inscrits
+            </a>
+        <div class="collapse card-body" id="collapseListInscrits{{$table->id}}">
+            <ul class="list-group list-group-flush">
+                @foreach($table->users as $inscrit)
+                    <li class="list-group-item">
+                        {{$inscrit->name}}
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+        </p>
+
 
         @if($showDate)
             <div>
@@ -35,15 +57,17 @@
                 {{$table->debut_table->toTimeString($unitPrecision ='minute')}}
             </div>
         @endif
+        <div>
+            <p class="card-text">
+                @if(strlen($table->description) < 1000)
+                    {{$table->description}}
+                @else
+                    {{substr($table->description, 0,1000) . "..." }}
+                @endif
+            </p>
+        </div>
+        <x-bouton_inscription :table="$table"/>
     </div>
-    <div>
-        <p>
-            @if(strlen($table->description) < 1000)
-                {{$table->description}}
-            @else
-                {{substr($table->description, 0,1000) . "..." }}
-            @endif
-        </p>
-    </div>
+
 
 </div>
