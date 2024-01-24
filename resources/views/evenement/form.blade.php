@@ -25,16 +25,10 @@
         <label class="form-label" for="inputImage">Image:</label>
 
         <input
-
             type="file"
-
             name="image"
-
             id="image"
-
             class="form-control @error('image') is-invalid @enderror">
-
-
 
         @error('image')
             <div class="invalid-feedback">
@@ -46,7 +40,7 @@
 
     <div class="form-group">
         <label for="description">Description</label>
-        <textarea type="text" class="form-control @error("description") is-invalid @enderror" id="description" name="description" value="{{ old('description', $evenement->description) }}"></textarea>
+        <textarea type="text" class="form-control @error("description") is-invalid @enderror" id="description" name="description" >{{ old('description', $evenement->description) }}</textarea>
         @error("description")
         <div class="invalid-feedback">
             {{ $message }}
