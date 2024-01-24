@@ -45,8 +45,8 @@
         @endif
     </p>
     <div>
-        Horaires : {{$table->debut_table->toTimeString()}}
-        -> {{$table->debut_table->addHour($table->duree)->toTimeString()}};
+        Horaires : {{$table->debut_table->toTimeString($unitPrecision ='minute')}}
+        -> {{$table->debut_table->addHour($table->duree)->toTimeString($unitPrecision ='minute')}};
     </div>
     <div>
         <h2>Description de la table</h2>

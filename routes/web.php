@@ -38,6 +38,7 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/toggleMJ', [ProfileController::class, 'toggleMJ'])->name('profile.toggle-mj');
     Route::view('/profile/optionMJ', 'profile.mj')->name("profile.mj");
+    Route::get('/profile/optionJoueur', [\App\Http\Controllers\Users\JoueursPageController::class, 'show'])->name("profile.joueur");
 });
 
 Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');

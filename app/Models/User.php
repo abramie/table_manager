@@ -56,7 +56,7 @@ class User extends Authenticatable
     }
 
     public function inscriptions() : BelongsToMany{
-        return $this->BelongToMany(Table::class, 'inscrits');
+        return $this->BelongsToMany(Table::class, 'inscrits');
     }
 
 
