@@ -26,7 +26,7 @@
                 <h2 class="card-title">@if(!$affiche)
                         Previsionnel
                     @endif{{$evenement->nom_evenement}}</h2>
-
+@dump($affiche)
                 @can('ajout_events')
                     <div class="pull-right">
                         <button class="btn btn-xs btn-danger " type="button"

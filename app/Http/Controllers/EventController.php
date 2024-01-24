@@ -9,6 +9,7 @@ use App\Models\Image;
 use App\Models\Settings;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Illuminate\Contracts\Pagination\Paginator;
@@ -17,9 +18,22 @@ class EventController extends Controller
     //
     public function index() : View{
         //dd(Evenement::paginate(3));
-        return view('evenement.index', [
-            'evenements' => Evenement::paginate(5)
-        ]);
+
+        /**
+         * Recupere de la bdd uniquement les evenements qui peuvent etre afficher
+         * Tous pour les modo
+         * Juste ceux avec des creneaux et une date d'affichage pour les joueurs
+        **/
+        if(Auth()->user()?->can('ajout_events')){
+            return view('evenement.index', [
+                'evenements' => Evenement::paginate(5)
+            ]);
+        }else{
+            return view('evenement.index', [
+                'evenements' => Evenement::has('creneaus' )->where('affichage_evenement', '<', Carbon::now()->startOfDay())->paginate(5)
+            ]);
+        }
+
     }
 
     public function add(){
