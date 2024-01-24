@@ -6,8 +6,14 @@
         $date_affichage = $evenement->affichage_evenement;
 
         $affiche = $date_affichage->isPast();
-
+        if($creneaux_count == 1){
+            $route = route('events.one.creneau.tablesindex', ['evenement' => $evenement->slug, 'creneau' =>$evenement->creneaus->first()]);
+        }else{
+            $route = route('events.one.show', ['evenement' => $evenement->slug]);
+        }
     @endphp
+
+
     @if( ($affiche && $creneaux_count>0) || auth()->user()?->can('ajout_events'))
 
         <div class="row align-items-start g-0">
@@ -23,10 +29,10 @@
                 </div>
             @endif
             <div class="col-md-8">
-                <h2 class="card-title">@if(!$affiche)
+                <h2 class="card-title"><a href="{{$route}}"> @if(!$affiche)
                         Previsionnel
-                    @endif{{$evenement->nom_evenement}}</h2>
-@dump($affiche)
+                    @endif{{$evenement->nom_evenement}}</a></h2>
+
                 @can('ajout_events')
                     <div class="pull-right">
                         <button class="btn btn-xs btn-danger " type="button"
@@ -48,16 +54,6 @@
                     @else
                         {{substr($evenement->description, 0,100) . "..." }}
                     @endif
-                </p>
-                <p class="card-text">
-                    @if($creneaux_count == 1)
-                        <a href="{{route('events.one.creneau.tablesindex', ['evenement' => $evenement->slug, 'creneau' =>$evenement->creneaus->first()])}}">Liste
-                            des tables</a>
-                    @else
-                        <a href="{{route('events.one.show', ['evenement' => $evenement->slug])}}">Liste des creneaux</a>
-
-                    @endif
-
                 </p>
 
             </div>
