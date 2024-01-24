@@ -9,6 +9,7 @@
                     onclick="window.location='{{ route("events.one.creneau.edit",['evenement'=> $evenement, 'creneau' => $creneau]) }}'">
                 Edit
             </button>
+
         </td>
         <td>
             <button class="btn btn-xs btn-warning " type="button"
@@ -29,6 +30,7 @@
     @else
         <h1>{{$evenement->nom_evenement}} </h1>
     @endif
+
     <div>
         Date : {{$evenement->showDate()}}
 
