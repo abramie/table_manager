@@ -48,7 +48,7 @@
     --}}
     @php
         $nb_inscrit = $creneau->tables()->with('users')->get()->pluck('users')->flatten()->count();
-        $max_place = $creneau->tables()->pluck('nb_joueur_max')->sum();
+        $max_place = $creneau->tables()->where('sans_table','=',0)->pluck('nb_joueur_max')->sum();
     @endphp
     <div>
         Nombre d'inscrit sur ce creneau : {{ $nb_inscrit}}
