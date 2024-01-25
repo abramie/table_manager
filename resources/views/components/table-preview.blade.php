@@ -9,7 +9,13 @@
             <a href="{{route('events.one.creneau.table.show', ['evenement' => $table->creneaus->evenement->slug, 'creneau' => $table->creneaus, 'table' => $table])}}">{{$table->nom}}</a>
         </h3>
         @if(!$isSansTable)
-            <h5 class="card-subtitle mb-2 text-body-secondary">MJ : {{$table->mjs->name}}</h5>
+            <h5 class="card-subtitle mb-2 text-body-secondary">MJ : {{$table->mjs->name}}
+                @if($showDate)
+                {{$table->creneaus->debut_creneau->toDateString()}}
+                {{$table->debut_table->toTimeString($unitPrecision ='minute')}}
+                @endif
+            </h5>
+
             @if(!$table->tags->isEmpty())
                 <p>
                     Tags :
@@ -29,42 +35,41 @@
                 </p>
             @endif
         @endif
-        <p>
-            <span>Inscrits : {{$table->nb_inscrits()}} @if(!$isSansTable)
-                    / {{$table->nb_joueur_max}}
-                @endif
-            </span>
 
-            <a class="btn btn-link bt-xs" data-toggle="collapse" href="#collapseListInscrits{{$table->id}}"
-               role="button" aria-expanded="false" aria-controls="collapseExample">
-                Inscrits
-            </a>
-        <div class="collapse card-body" id="collapseListInscrits{{$table->id}}">
-            <ul class="list-group list-group-flush">
-                @foreach($table->users as $inscrit)
-                    <li class="list-group-item">
-                        {{$inscrit->name}}
-                    </li>
-                @endforeach
-            </ul>
-        </div>
-        </p>
+        <div class="row align-items-start">
 
 
-        @if($showDate)
-            <div>
-                {{$table->creneaus->debut_creneau->toDateString()}}
-                {{$table->debut_table->toTimeString($unitPrecision ='minute')}}
+            <div class="col">
+                <p class="card-text">
+                    @if(strlen($table->description) < 1000)
+                        {{$table->description}}
+                    @else
+                        {{substr($table->description, 0,1000) . "..." }}
+                    @endif
+                </p>
             </div>
-        @endif
-        <div>
-            <p class="card-text">
-                @if(strlen($table->description) < 1000)
-                    {{$table->description}}
-                @else
-                    {{substr($table->description, 0,1000) . "..." }}
-                @endif
-            </p>
+            <div class="col">
+                <a class="btn btn-link bt-xs" data-toggle="collapse" href="#collapseListInscrits{{$table->id}}"
+                   role="button" aria-expanded="false" aria-controls="collapseExample">
+                    Inscrits : {{$table->nb_inscrits()}} @if(!$isSansTable)
+                        / {{$table->nb_joueur_max}}
+                        ⬇️
+                    @endif
+                </a>
+                <div class="collapse card-body" id="collapseListInscrits{{$table->id}}">
+                    <ul class="list-group list-group-flush">
+                        @foreach($table->users as $inscrit)
+                            <li class="list-group-item">
+                                {{$inscrit->name}}
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+
+
+
+
         </div>
         <x-bouton_inscription :table="$table"/>
     </div>
