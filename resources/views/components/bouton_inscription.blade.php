@@ -12,7 +12,7 @@
             @csrf
             <div class="input-group mb-3">
                 <div class="input-group-append">
-                    <button class="btn btn-outline-secondary btn-danger" type="submit">Desinscription</button>
+                    <button class="btn btn-outline-secondary btn-danger btn-lg" type="submit">Desinscription</button>
                 </div>
             </div>
         </form>
@@ -23,26 +23,27 @@
                 @csrf
                 <div class="input-group mb-3">
                     <div class="input-group-append">
-                        <button class="btn btn-outline-secondary btn-light" type="submit">Inscription à la table</button>
+                        <button class="btn btn-outline-secondary btn-default" type="submit">Inscription à la table</button>
                     </div>
                 </div>
             </form>
         @else
             <div class="input-group mb-3">
                 <div class="input-group-append">
-                    @if($inscription_fermee)
-                        <button class="btn btn-outline-secondary btn-light" type="submit" disabled>Les inscriptions en ligne sont fermée</button>
+                    @php
+                        if($inscription_fermee){
+                            $error_button = "Les inscriptions en ligne sont fermée";
+                        }
+                        elseif(!$inscription_ouverte){
+                           $error_button = "Inscription aux tables à partir du {$ouverture_inscription->toDateTimeString('minute')}";
+                        }elseif(!$table->sans_table &&  $table->creneaus->nb_inscription_online_max <= $table->nb_inscrits() ){
+                            $error_button = "Ce creneau impose une limite au nombre de personnes pouvant s'inscrire via la platforme à une table.Cette limite est de :{$table->creneaus->nb_inscription_online_max}";
+                        }elseif($table->nb_joueur_max <=$table->nb_inscrits() ){
+                            $error_button = "Cette table est complete";
+                        }
+                    @endphp
 
-                    @elseif(!$inscription_ouverte)
-                        <button class="btn btn-outline-secondary btn-light" type="submit" disabled>Inscription aux tables à partir du {{$ouverture_inscription->toDateTimeString('minute')}}</button>
-                    @elseif(!$table->sans_table &&  $table->creneaus->nb_inscription_online_max <= $table->nb_inscrits() )
-                        <button class="btn btn-outline-secondary btn-light" type="submit" disabled>Ce creneau impose une limite au nombre de personnes pouvant s'inscrire via la platforme à une table.Cette limite est de :
-                            {{$table->creneaus->nb_inscription_online_max}} </button>
-                    @elseif($table->nb_joueur_max <=$table->nb_inscrits() )
-                        <button class="btn btn-outline-secondary btn-light" type="submit" disabled>Cette table est complete</button>
-
-                    @endif
-
+                    <button class="btn btn-outline-secondary btn-light" type="submit" disabled>{{$error_button}}</button>
                 </div>
             </div>
         @endif

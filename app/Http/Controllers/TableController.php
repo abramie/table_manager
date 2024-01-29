@@ -210,17 +210,26 @@ class TableController extends Controller
 
 
     }
-    public function desinscription_table(Evenement $evenement,Creneau $creneau,Table $table, InscriptionTableRequest $request){
+    public function desinscription_table(Evenement $evenement,Creneau $creneau,Table $table,User $user = null, InscriptionTableRequest $request){
         //Do the attach
 
-        $table->users()->detach(Auth::user());
+        if($user->getConnectionName() ==null){
+            $user = Auth::user();
+            $success_message = "Vous vous etes bien desinscrit de la table : ".$table->nom;
+        }else{
+            $success_message = "L'utilisateur {$user->name} a bien été desinscrit de la table : ".$table->nom;
 
-        return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau])
-            ->with('succes', "Vous vous etes bien desinscrit de la table : ".$table->nom);
+        }
+
+        $table->users()->detach($user);
+
+        return redirect()->back()
+            ->with('success', $success_message);
 
 
 
     }
+
     public function todo (Evenement $evenement, Creneau $creneau, Table $table, Request $request){
         return view('todo', [
             'evenement' => $evenement,

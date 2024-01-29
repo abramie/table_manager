@@ -119,8 +119,8 @@ Route::prefix('/events')->name('events.')->group(function () {
                 Route::get('/delete', [TableController::class, 'delete'])->name('delete')->middleware('permission:manage_tables_all|manage_tables_own');
                 Route::get('/', [TableController::class, 'show'])->name('show');
                 Route::post('/inscription', [TableController::class, 'inscription_table'])->name('inscription')->middleware('auth');
-                Route::post('/desinscription', [TableController::class, 'desinscription_table'])->name('desinscription')->middleware('auth');
-
+                //Route::post('/desinscription', [TableController::class, 'desinscription_table'])->name('desinscription')->middleware('auth');
+                Route::post('/desinscription/{user?}', [TableController::class, 'desinscription_table'])->name('desinscription')->middleware('auth');
             });
         });
     });

@@ -1,3 +1,15 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+<style type="text/css">
+
+    .dropdown-toggle{
+
+        height: 40px;
+
+        width: 400px !important;
+
+    }
+</style>
 <form action="" method="post" class="vstack gap-2">
     @csrf
 
@@ -57,7 +69,7 @@
             @endphp
             @foreach($triggerwarnings as $triggerwarning)
                 <option
-                    @selected($tw_id->contains($triggerwarning->id) || collect(old('triggerwarnings'))?->contains($triggerwarning->id) ||$triggerwarning->id == $new_tw ) value="{{$triggerwarning->id}}">{{$triggerwarning->nom}}</option>
+                    @selected((old('triggerwarnings') ? collect(old('triggerwarnings'))?->contains($triggerwarning->id) : $tw_id->contains($triggerwarning->id) ) ||$triggerwarning->id == $new_tw ) value="{{$triggerwarning->id}}">{{$triggerwarning->nom}}</option>
             @endforeach
         </select>
         @error("triggerwarnings")
@@ -73,25 +85,12 @@
 
     <div class="form-group">
         <label for="tag">Tags</label>
-
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
-        <style type="text/css">
-
-            .dropdown-toggle{
-
-                height: 40px;
-
-                width: 400px !important;
-
-            }
-        </style>
         <select class="form-control @error("tags") is-invalid @enderror" id="tag" name="tags[]" multiple data-live-search="true">
             @php
                 $tag_id = $table->tags()->pluck('id');
             @endphp
             @foreach($tags as $tag)
-                <option @selected($tag_id->contains($tag->id) || collect(old('tags'))?->contains($tag->id) || $tag->id == $new_tag) value="{{$tag->id}}">{{$tag->nom}}</option>
+                <option @selected((old('tags') ? collect(old('tags'))?->contains($tag->id) : $tag_id->contains($tag->id) )|| $tag->id == $new_tag) value="{{$tag->id}}">{{$tag->nom}}</option>
             @endforeach
         </select>
         @error("tags")
@@ -192,6 +191,26 @@
     --}}
 
 
+    @can('manage_tables_all')
+        <div class="form-group">
+            <label for="inscrits">Joueurs inscrits</label>
+            <select class=" form-control form-select @error("inscrits") is-invalid @enderror"  id="inscrit" name="inscrits[]"  multiple data-live-search="true">
+                @php
+                    $users_name =$table->users()->pluck('name');
+                @endphp
+                @foreach(App\Models\User::role('joueur')->get() as $joueur)
+                    <option value="{{$joueur->name}}" @selected(old('inscrits') ? collect(old('inscrits'))?->contains($joueur->name) : $users_name->contains($joueur->name))   >{{$joueur->name}}</option>
+                @endforeach
+            </select>
+
+            @error("inscrits")
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+            @enderror
+
+        </div>
+    @endcan
     <button class="btn btn-primary" type="submit" name="action" value="save">
 
         @if($table->id)
@@ -200,4 +219,34 @@
             Créer
         @endif
     </button>
+
+
 </form>
+
+@can('manage_tables_all')
+    <div class="col">
+        <a class="btn btn-link bt-xs" data-toggle="collapse" href="#collapseListInscrits{{$table->id}}"
+           role="button" aria-expanded="false" aria-controls="collapseExample">
+            Inscrits : {{$table->nb_inscrits()}}
+            ⬇️
+        </a>
+        <div class="collapse card-body" id="collapseListInscrits{{$table->id}}">
+            <ul class="list-group list-group-flush">
+                @foreach($table->users as $inscrit)
+                    <li class="list-group-item">
+                        {{$inscrit->name}}
+
+                        <form action="{{route('events.one.creneau.table.desinscription',['evenement'=> $table->creneaus->evenement, 'creneau' => $table->creneaus, 'table'=> $table, 'user'=>$inscrit ])}}" method="post">
+                            @csrf
+                            <div class="input-group mb-3">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary btn-danger" type="submit">Desinscrire</button>
+                                </div>
+                            </div>
+                        </form>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    </div>
+@endcan

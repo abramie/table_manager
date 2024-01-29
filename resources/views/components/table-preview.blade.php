@@ -53,8 +53,8 @@
                    role="button" aria-expanded="false" aria-controls="collapseExample">
                     Inscrits : {{$table->nb_inscrits()}} @if(!$isSansTable)
                         / {{$table->nb_joueur_max}}
-                        ⬇️
                     @endif
+                    ⬇️
                 </a>
                 <div class="collapse card-body" id="collapseListInscrits{{$table->id}}">
                     <ul class="list-group list-group-flush">
