@@ -54,8 +54,8 @@ class FormTableRequest extends FormRequest
             'tags' => ['array', 'exists:tags,id'],
             'triggerwarnings' => ['array', 'exists:triggerwarnings,id'],
             'mj' => ['required'],
-            'debut_table' => ['required', 'date', 'after_or_equal:debut_creneau']
-
+            'debut_table' => ['required', 'date', 'after_or_equal:debut_creneau'],
+            'inscrits' => ['array', 'exists:users,id'],
 
             //Ajout verification clef etrangere que l'event existe bien ?
         ];
@@ -80,6 +80,12 @@ class FormTableRequest extends FormRequest
         }
         $creneau = $this->route('creneau');
 
+        if($this->inscrits) {
+            $this->merge([
+                'inscrits' => User::whereIn('name', $this->inscrits)->pluck('id')->toArray()
+            ]);
+        }
+
         //$date = $creneau->debut_creneau->
         $this->merge([
             'duree' => floatval($this->duree),
@@ -90,6 +96,7 @@ class FormTableRequest extends FormRequest
             'debut_creneau' => $creneau->debut_creneau,
             'debut_table' => $this->debut_table ? $creneau->debut_creneau->setTimeFromTimeString($this->debut_table) : null,
         ]);
+
         //Combien de temps après le debut du creneau la table doit commencer
         if($this->debut_table) {
             $diffHour = $this->debut_table->diffInHours($this->route('creneau')->debut_creneau);

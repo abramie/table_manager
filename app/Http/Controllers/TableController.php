@@ -81,7 +81,7 @@ class TableController extends Controller
         $table = Table::create($request->validated());
         $creneau->tables()->save($table);
         $table->triggerwarnings()->sync($request->validated('triggerwarnings'));
-
+        $table->users()->sync($request->validated('inscrits'));
         //Desinscrit le mj de toute les tables où il est inscrit si il ouvre une table.
         if($request->validated('mj') == Auth::user()->id){
             $desincription = $creneau->desinscrit_user(Auth::user());
@@ -147,6 +147,13 @@ class TableController extends Controller
         $table->update($request->validated());
         $table->triggerwarnings()->sync($request->validated('triggerwarnings'));
         $table->tags()->sync($request->validated('tags'));
+
+
+        if($request->validated('inscrits'))
+            $table->users()->sync($request->validated('inscrits'));
+
+
+
         return redirect()->route('events.one.creneau.table.show', ['evenement' => $evenement,'creneau' => $creneau,'table'=> $table])
             ->with('success', "Le table a bien été modifier");
         //return redirect()->route('events.one.creneau.table.show', ['evenement' => $evenement,'creneau' => $creneau->id,'table'=> $table])->with('success', "Le table a bien été modifier");
