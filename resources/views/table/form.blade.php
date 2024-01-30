@@ -65,11 +65,21 @@
         <select type="text" class="form-control @error("tw") is-invalid @enderror" id="tw" name="triggerwarnings[]"
                 multiple data-live-search="true">
             @php
-                $tw_id = $table->triggerwarnings()->pluck('id');
+                $tw_id = $table->triggerwarnings()->pluck('id','nom');
+                $tws = [];
             @endphp
             @foreach($triggerwarnings as $triggerwarning)
-                <option
-                    @selected((old('triggerwarnings') ? collect(old('triggerwarnings'))?->contains($triggerwarning->id) : $tw_id->contains($triggerwarning->id) ) ||$triggerwarning->id == $new_tw ) value="{{$triggerwarning->id}}">{{$triggerwarning->nom}}</option>
+                @if((old('triggerwarnings') ? collect(old('triggerwarnings'))?->contains($triggerwarning->id) : $tw_id->contains($triggerwarning->id) ) ||$triggerwarning->id == $new_tw )
+                    <option selected value="{{$triggerwarning->id}}">{{$triggerwarning->nom}}</option>
+                @else
+                    @php
+                        $tws[] = $triggerwarning;
+                    @endphp
+                @endif
+
+            @endforeach
+            @foreach($tws as $tw )
+                <option value="{{$tw->id}}">{{$tw->nom}}</option>
             @endforeach
         </select>
         @error("triggerwarnings")
@@ -82,15 +92,24 @@
             Ajout de tw
         </button>
     </div>
-
     <div class="form-group">
         <label for="tag">Tags</label>
         <select class="form-control @error("tags") is-invalid @enderror" id="tag" name="tags[]" multiple data-live-search="true">
             @php
-                $tag_id = $table->tags()->pluck('id');
+                $tags_id = $table->tags()->pluck('id', 'nom');
+                $tags_unselected = [];
             @endphp
             @foreach($tags as $tag)
-                <option @selected((old('tags') ? collect(old('tags'))?->contains($tag->id) : $tag_id->contains($tag->id) )|| $tag->id == $new_tag) value="{{$tag->id}}">{{$tag->nom}}</option>
+                @if((old('tags') ? collect(old('tags'))?->contains($tag->id) : $tags_id->contains($tag->id) )|| $tag->id == $new_tag)
+                    <option selected value="{{$tag->id}}">{{$tag->nom}}</option>
+                @else
+                    @php
+                        $tags_unselected[] = $tag;
+                    @endphp
+                @endif
+            @endforeach
+            @foreach($tags_unselected as $tag )
+                <option value="{{$tag->id}}">{{$tag->nom}}</option>
             @endforeach
         </select>
         @error("tags")
@@ -197,9 +216,16 @@
             <select class=" form-control form-select @error("inscrits") is-invalid @enderror"  id="inscrit" name="inscrits[]"  multiple data-live-search="true">
                 @php
                     $users_name =$table->users()->pluck('name');
+
                 @endphp
+                @foreach($users_name as $name)
+                    <option value="{{$name}}" selected>{{$name}}</option>
+                @endforeach
                 @foreach(App\Models\User::role('joueur')->get() as $joueur)
-                    <option value="{{$joueur->name}}" @selected(old('inscrits') ? collect(old('inscrits'))?->contains($joueur->name) : $users_name->contains($joueur->name))   >{{$joueur->name}}</option>
+                    @if(!(old('inscrits') ? collect(old('inscrits'))?->contains($joueur->name) : $users_name->contains($joueur->name)))
+                        <option value="{{$joueur->name}}">{{$joueur->name}}</option>
+                    @endif
+
                 @endforeach
             </select>
 
