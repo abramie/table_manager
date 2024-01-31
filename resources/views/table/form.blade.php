@@ -216,16 +216,23 @@
             <select class=" form-control form-select @error("inscrits") is-invalid @enderror"  id="inscrit" name="inscrits[]"  multiple data-live-search="true">
                 @php
                     $users_name =$table->users()->pluck('name');
-
+                    $users_non_inscrits = [];
                 @endphp
-                @foreach($users_name as $name)
-                    <option value="{{$name}}" selected>{{$name}}</option>
-                @endforeach
+
                 @foreach(App\Models\User::role('joueur')->get() as $joueur)
-                    @if(!(old('inscrits') ? collect(old('inscrits'))?->contains($joueur->name) : $users_name->contains($joueur->name)))
-                        <option value="{{$joueur->name}}">{{$joueur->name}}</option>
+                    @if((old('inscrits') ? collect(old('inscrits'))?->contains($joueur->name) : $users_name->contains($joueur->name)))
+                        <option value="{{$joueur->name}}" selected>{{$joueur->name}}</option>
+
+                    @else
+                        @php
+                            $users_non_inscrits[] = $joueur;
+                        @endphp
+
                     @endif
 
+                @endforeach
+                @foreach($users_non_inscrits as $joueur)
+                    <option value="{{$joueur->name}}" >{{$joueur->name}}</option>
                 @endforeach
             </select>
 
@@ -249,30 +256,3 @@
 
 </form>
 
-@can('manage_tables_all')
-    <div class="col">
-        <a class="btn btn-link bt-xs" data-toggle="collapse" href="#collapseListInscrits{{$table->id}}"
-           role="button" aria-expanded="false" aria-controls="collapseExample">
-            Inscrits : {{$table->nb_inscrits()}}
-            ⬇️
-        </a>
-        <div class="collapse card-body" id="collapseListInscrits{{$table->id}}">
-            <ul class="list-group list-group-flush">
-                @foreach($table->users as $inscrit)
-                    <li class="list-group-item">
-                        {{$inscrit->name}}
-
-                        <form action="{{route('events.one.creneau.table.desinscription',['evenement'=> $table->creneaus->evenement, 'creneau' => $table->creneaus, 'table'=> $table, 'user'=>$inscrit ])}}" method="post">
-                            @csrf
-                            <div class="input-group mb-3">
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary btn-danger" type="submit">Desinscrire</button>
-                                </div>
-                            </div>
-                        </form>
-                    </li>
-                @endforeach
-            </ul>
-        </div>
-    </div>
-@endcan
