@@ -11,7 +11,7 @@ class NavigationItem extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public string $routeName,public string $contain = "")
+    public function __construct(public string $routeName,public  $parameter = null ,public string $contain = "")
     {
         //
 

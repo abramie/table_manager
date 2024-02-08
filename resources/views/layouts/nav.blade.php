@@ -20,10 +20,10 @@
             @endrole
 
             @can('ajout_tags')
-                <x-navigation-item routeName="tags.add" contain="admin" >Ajout Tag</x-navigation-item>
+                <x-navigation-item routeName="tags.add" contain="tags" >Ajout Tag</x-navigation-item>
             @endcan
             @can('ajout_tws')
-                <x-navigation-item routeName="tw.add" contain="admin" >Ajout TW</x-navigation-item>
+                <x-navigation-item routeName="tw.add" contain="tw" >Ajout TW</x-navigation-item>
             @endcan
 
             @role('joueur')
