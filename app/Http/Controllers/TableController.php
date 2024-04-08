@@ -185,7 +185,7 @@ class TableController extends Controller
         //dd($table->users);
         //Verifie dans le creneau de la table si l'utilisateur est inscrit sur une des tables existante, à l'exception de la table "sans table"
         if(($table->sans_table && $table->users->contains(Auth::user()))
-            || $creneau->tables()->with('users')->where("sans_table", "=","0")->get()->pluck('users')->flatten()->contains('id',Auth::user()->id)){
+            || $creneau->tables()->with('users')->where("inscription_restrainte", "=","1")->get()->pluck('users')->flatten()->contains('id',Auth::user()->id)){
             return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau])
                 ->with('echec', "Vous etes deja inscrit sur une table ");
         }elseif($table->sans_table){
@@ -196,7 +196,6 @@ class TableController extends Controller
             return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau])
                 ->with('echec', "Tu ne peut pas t'inscrire sur ta propre table, comment tu es arrivé là ??? ");
         }
-        //Ne marche pas, à corriger
         elseif($creneau->tables()->with('mjs')->get()->pluck('mjs')->flatten()->contains('id',Auth::user()->id)){
             return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau])
                 ->with('echec', "Tu es MJ sur ce creneau, tu ne peux pas t'inscrire");
@@ -207,7 +206,9 @@ class TableController extends Controller
         }
         elseif($table->users->count() < $table->nb_joueur_max){
             $table->users()->attach(Auth::user());
-            $creneau->tables()->where("sans_table", "=","1")->get()->first()?->users()->detach(Auth::user());
+            //Desinscrit de sans table uniquement si on s'inscrit sur une table restreinte (une vrai table et pas du bénévolat ou qqch)
+            if($table->inscription_restrainte)
+                $creneau->tables()->where("sans_table", "=","1")->get()->first()?->users()->detach(Auth::user());
             return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau])
                 ->with('success', "Inscription validée sur la table \"".$table->nom);
         }else{

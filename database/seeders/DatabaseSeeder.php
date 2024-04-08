@@ -31,12 +31,13 @@ class DatabaseSeeder extends Seeder
         // ]);
 
 
-
         $admin = User::create([
             'name' => "admin",
             'email' => "admin@som.fr",
-            'password' => Hash::make("admin"),
+            'password' => Hash::make('admin'),
         ]);
+        $admin->assignRole('admin');
+
         $test_user = \App\Models\User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
@@ -47,6 +48,7 @@ class DatabaseSeeder extends Seeder
             'email' => "modo@som.fr",
             'password' => Hash::make("modo"),
         ]);
+
         $jeremy = User::create([
             'name' => "jeremy",
             'email' => "jeremyrou@hotmail.fr",
@@ -62,21 +64,34 @@ class DatabaseSeeder extends Seeder
         $test_user->assignRole('joueur','mj');
         $jeremy->assignRole('joueur','mj');
         $mad->assignRole('joueur','mj');
-        $admin->assignRole('admin');
+
         $modo->assignRole('joueur','mj', 'modo');
 
-/*
-        DB::table('evenements')->insert(
-            array(
-                'nom_evenement' => 'Soirée crepe',
-                'slug' => 'crepe-2024',
-                'date_debut' => \Carbon\Carbon::create(2024,01,19,21),
-                'ouverture_inscription'=> \Carbon\Carbon::create(2024,01,01,21),
-                'affichage_evenement' => \Carbon\Carbon::create(2024,01,01,21),
-                'fermeture_inscription'=> \Carbon\Carbon::create(2024,01,19,21),
-                'description' => "La soirée crêpe annuel de la guilde ",
-            )
-        );
+        $Random_user = User::factory(50)->create();
+
+        $Random_user->each(function (User $item, int $key) {
+            // ...
+            $item->assignRole('joueur');
+        });
+        $Random_user_mj = User::factory(15)->create();
+
+        $Random_user_mj->each(function (User $item, int $key) {
+            // ...
+            $item->assignRole('joueur','mj');
+        });
+
+        /*
+                DB::table('evenements')->insert(
+                    array(
+                        'nom_evenement' => 'Soirée crepe',
+                        'slug' => 'crepe-2024',
+                        'date_debut' => \Carbon\Carbon::create(2024,01,19,21),
+                        'ouverture_inscription'=> \Carbon\Carbon::create(2024,01,01,21),
+                        'affichage_evenement' => \Carbon\Carbon::create(2024,01,01,21),
+                        'fermeture_inscription'=> \Carbon\Carbon::create(2024,01,19,21),
+                        'description' => "La soirée crêpe annuel de la guilde ",
+                    )
+                );*/
         DB::table('evenements')->insert(
             array(
                 'nom_evenement' => 'Sous l\'oeil de melusine',
@@ -88,33 +103,33 @@ class DatabaseSeeder extends Seeder
                 'description' => "La convention annuelle de l'association La guilde, dans la salle du foyer du porteau à Poitiers. Buvette (options vegans), entrée gratuite, ouverte à tous. ",
             )
         );
+        /*
+                DB::table('evenements')->insert(
+                    array(
+                        'nom_evenement' => 'Soirée barbecue',
+                        'slug' => 'barbecue-24',
+                        'date_debut' => \Carbon\Carbon::create(2024,06,19,21),
+                        'ouverture_inscription'=> \Carbon\Carbon::create(2024,05,19,21),
+                        'affichage_evenement' => \Carbon\Carbon::create(2024,05,19,20),
+                        'fermeture_inscription'=> \Carbon\Carbon::create(2024,06,19,21),
+                    )
+                );
 
-        DB::table('evenements')->insert(
-            array(
-                'nom_evenement' => 'Soirée barbecue',
-                'slug' => 'barbecue-24',
-                'date_debut' => \Carbon\Carbon::create(2024,06,19,21),
-                'ouverture_inscription'=> \Carbon\Carbon::create(2024,05,19,21),
-                'affichage_evenement' => \Carbon\Carbon::create(2024,05,19,20),
-                'fermeture_inscription'=> \Carbon\Carbon::create(2024,06,19,21),
-            )
-        );
-
-        DB::table('creneaux')->insert(
-            array(
-                'nom' => 'Soirée',
-                'duree' => '5',
-                'evenement_id' => 1,
-                'max_tables' => 8,
-                'nb_inscription_online_max' => 15,
-                'debut_creneau' => \Carbon\Carbon::create(2024,01,19,21)
-            )
-        );
+                DB::table('creneaux')->insert(
+                    array(
+                        'nom' => 'Soirée',
+                        'duree' => '5',
+                        'evenement_id' => 1,
+                        'max_tables' => 8,
+                        'nb_inscription_online_max' => 15,
+                        'debut_creneau' => \Carbon\Carbon::create(2024,01,19,21)
+                    )
+                );*/
         DB::table('creneaux')->insert(
             array(
                 'nom' => 'creneau du matin',
                 'duree' => '3',
-                'evenement_id' => 2,
+                'evenement_id' => 1,
                 'max_tables' => 8,
                 'nb_inscription_online_max' => 2,
                 'debut_creneau' => \Carbon\Carbon::create(2024,05,11,10),
@@ -125,7 +140,7 @@ class DatabaseSeeder extends Seeder
             array(
                 'nom' => 'creneau de l\'aprem',
                 'duree' => '5',
-                'evenement_id' => 2,
+                'evenement_id' => 1,
                 'max_tables' => 8,
                 'nb_inscription_online_max' => 2,
                 'debut_creneau' => \Carbon\Carbon::create(2024,05,11,14),
@@ -136,7 +151,7 @@ class DatabaseSeeder extends Seeder
             array(
                 'nom' => 'creneau du soir',
                 'duree' => '5',
-                'evenement_id' => 2,
+                'evenement_id' => 1,
                 'max_tables' => 8,
                 'nb_inscription_online_max' => 2,
                 'debut_creneau' => \Carbon\Carbon::create(2024,05,11,21),
@@ -147,24 +162,24 @@ class DatabaseSeeder extends Seeder
             array(
                 'nom' => 'creneau de nuit',
                 'duree' => '5',
-                'evenement_id' => 2,
+                'evenement_id' => 1,
                 'max_tables' => 8,
                 'nb_inscription_online_max' => 2,
                 'debut_creneau' => \Carbon\Carbon::create(2024,05,12,03),
             )
         );
-
-        DB::table('creneaux')->insert(
-            array(
-                'nom' => 'Soirée',
-                'duree' => '5',
-                'evenement_id' => 3,
-                'max_tables' => 8,
-                'nb_inscription_online_max' => 15,
-                'debut_creneau' => \Carbon\Carbon::create(2024,06,19,21)
-            )
-        );
-
+        /*
+                DB::table('creneaux')->insert(
+                    array(
+                        'nom' => 'Soirée',
+                        'duree' => '5',
+                        'evenement_id' => 3,
+                        'max_tables' => 8,
+                        'nb_inscription_online_max' => 15,
+                        'debut_creneau' => \Carbon\Carbon::create(2024,06,19,21)
+                    )
+                );
+        */
         DB::table('tables')->insert(
             array(
                 'nom' => 'Le nom du scenario de pathfinder',
@@ -262,19 +277,7 @@ class DatabaseSeeder extends Seeder
                 'debut_table' => \Carbon\Carbon::create(2024,06,19,21)
             )
         );
-*/
-        $Random_user = User::factory(50)->create();
 
-        $Random_user->each(function (User $item, int $key) {
-            // ...
-            $item->assignRole('joueur');
-        });
-        $Random_user_mj = User::factory(15)->create();
-
-        $Random_user_mj->each(function (User $item, int $key) {
-            // ...
-            $item->assignRole('joueur','mj');
-        });
 
         $events = Collection::make();
         $events->push(  Evenement::factory(1)

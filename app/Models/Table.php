@@ -29,7 +29,8 @@ class Table extends Model
         'nb_joueur_max',
         'mj',
         'sans_table',
-        'debut_table'
+        'debut_table',
+        'inscription_restrainte'
     ];
 
     /**

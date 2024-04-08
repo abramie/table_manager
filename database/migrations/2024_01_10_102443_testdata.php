@@ -17,7 +17,7 @@ return new class extends Migration
         if (DB::table('evenements')->count() == 0 && config('app.env') == "local"){
 
 
-        }elseif (config('app.env') == "PROD" &&DB::table('users')->count() == 0 ){
+        }elseif (config('app.env') == "production" && DB::table('users')->count() == 0 ){
             $admin = User::create([
                 'name' => "admin",
                 'email' => "admin@som.fr",

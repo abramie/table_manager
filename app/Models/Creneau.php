@@ -72,7 +72,8 @@ class Creneau extends Model
         //return $this->through('tables')->has('users');
         $values = 0;
         foreach ($this->tables as $table) {
-           $values += $table->users()->detach($user);
+            if($table->inscription_restrainte || $table->sans_table)
+                $values += $table->users()->detach($user);
         }
 
         return $values;

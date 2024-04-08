@@ -100,6 +100,7 @@ class CreneauController extends Controller
             "nb_joueur_max" => 50,
             "mj" => User::first()->id,
             "sans_table" => 1,
+            "inscription_restrainte" => 0,
             "debut_table" => $creneau->debut_creneau,
         ]);
 

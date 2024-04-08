@@ -1,7 +1,7 @@
 @include('layouts.head')
 
 @yield('navigation_bonus')
-
+@livewireStyles
 <a  href="{{ url()->previous() }}">
     <i class="fa fa-arrow-circle-o-left"></i>
     <span>Back</span>
@@ -27,11 +27,12 @@
     @endif
 </div>
 
+
 <div class="container">
     @yield('content')
 
 </div>
 
 </body>
-
+@livewireScripts
 @include('layouts.foot')
