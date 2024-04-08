@@ -30,7 +30,7 @@ class EventController extends Controller
             ]);
         }else{
             return view('evenement.index', [
-                'evenements' => Evenement::has('creneaus' )->where('affichage_evenement', '<', Carbon::now()->startOfDay())->paginate(5)
+                'evenements' => Evenement::has('creneaus' )->where('archivage', '=', null)->where('affichage_evenement', '<', Carbon::now()->startOfDay())->paginate(5)
             ]);
         }
 
@@ -127,5 +127,26 @@ class EventController extends Controller
         $evenement->delete();
         return redirect()->route('events.index')
             ->with('success', "L'event a bien été supprimé");
+    }
+
+    public function archive(Evenement $evenement){
+        $evenement->archivage = now();
+        if($evenement->save()){
+            return redirect()->route('events.index')
+                ->with('success', "L'event a bien été archiver");
+        }
+        return redirect()->route('events.index')
+            ->with('error', "Oh no");
+    }
+
+    public function unarchive(Evenement $evenement){
+        $evenement->archivage = null;
+        if($evenement->save()){
+            return redirect()->route('events.index')
+                ->with('success', "L'event a bien été reactiver");
+        }
+        return redirect()->route('events.index')
+            ->with('error', "Oh no");
+
     }
 }

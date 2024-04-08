@@ -31,7 +31,11 @@
             <div class="col-md-8">
                 <h2 class="card-title"><a href="{{$route}}"> @if(!$affiche)
                         Previsionnel
-                    @endif{{$evenement->nom_evenement}}</a></h2>
+                    @endif
+                        @if($evenement->archivage)
+                            (Archiver)
+                        @endif
+                        {{$evenement->nom_evenement}}</a></h2>
 
                 @can('ajout_events')
                     <div class="pull-right">
@@ -43,6 +47,17 @@
                                 onclick="window.location='{{ route("events.one.edit",['evenement'=> $evenement]) }}'">
                             Edit
                         </button>
+                        @if($evenement->archivage)
+                            <button class="btn btn-xs btn-warning" type="button"
+                                    onclick="window.location='{{ route("events.one.unarchive",['evenement'=> $evenement]) }}'">
+                                Dé-Archive
+                            </button>
+                        @else
+                            <button class="btn btn-xs btn-warning" type="button"
+                                    onclick="window.location='{{ route("events.one.archive",['evenement'=> $evenement]) }}'">
+                                Archive
+                            </button>
+                        @endif
                     </div>
                         {{--https://getbootstrap.com/docs/4.2/components/dropdowns/  Pour les boutons, voir split button --}}
                 @endcan
