@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('jeux');
         Schema::create('jeux', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
