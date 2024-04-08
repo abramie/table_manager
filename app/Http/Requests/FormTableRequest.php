@@ -56,7 +56,8 @@ class FormTableRequest extends FormRequest
             'mj' => ['required'],
             'debut_table' => ['required', 'date', 'after_or_equal:debut_creneau'],
             'inscrits' => ['array', 'exists:users,id'],
-
+            'nom_jeu' => [''],
+            'description_jeu' => [''],
             //Ajout verification clef etrangere que l'event existe bien ?
         ];
 

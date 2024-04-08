@@ -175,40 +175,30 @@
         </div>
         @enderror
     </div>
-{{--
-{{--
-    <div class="form-group">
-        <label for="jeu">jeu</label>
-        <select class="form-control" id="jeu" name="jeu">
-            {{-- @foreach($jeux as $jeu)
-                 <option @selected(old('jeu') == $jeu->id) value="{{$jeu->id}}> {{$jeu->name}}</option>
-             @endforeach
-             End comment
-            <option value="-1">Option test</option>
-        </select>
-        <script>
-            function ouverture_page_ajout_table() {
 
-                var win = window.open('{{ route("events.one.add",['evenement'=> $evenement,'creneau' =>$creneau])}}', '_blank');
-                if (win) {
-                    //Browser has allowed it to be opened
-                    win.focus();
-                } else {
-                    //Browser has blocked it
-                    alert('Please allow popups for this website');
-                }
-            }
-        </script>
+    <div class="form-group" id="ajout_jeu">
 
-        <button class="btn btn-xs btn-info pull-right" type="button" onclick='window.location.reload()'>
-            Refresh
-        </button>
-        <button class="btn btn-xs btn-info pull-right" type="button" onclick='ouverture_page_ajout_table()'>
-            Ajouter un jeu (todo)
-        </button>
+
     </div>
-    --}}
 
+    <div class="form-group">
+        <label for="title">Nom du jeu</label>
+        <input type="text" class="form-control @error("nom_jeu") is-invalid @enderror" id="nom_jeu" name="nom_jeu"
+               value="{{ old('nom_jeu') }}">
+        @error("nom_jeu")
+        <div class="invalid-feedback">
+            {{ $message }}
+        </div>
+        @enderror
+        <label for="description_jeu">Description du jeu</label>
+        <input type="text" class="form-control @error("description_jeu") is-invalid @enderror" id="description_jeu"
+               name="description_jeu" value="{{ old('description_jeu') }}">
+        @error("description_jeu")
+        <div class="invalid-feedback">
+            {{ $message }}
+        </div>
+        @enderror
+    </div>
 
     @can('manage_tables_all')
         <div class="form-group">

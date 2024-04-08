@@ -52,6 +52,12 @@
         <h2>Description de la table</h2>
         {{$table->description}}
     </div>
+    @if($table->jeu)
+        <div>
+            <h2>Le jeu : {{$table->jeu->nom}}</h2>
+            {{$table->jeu->description}}
+        </div>
+    @endif
 
     <div>
         <span>Inscrits : {{$table->nb_inscrits()}} @if(!$isSansTable)

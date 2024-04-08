@@ -46,6 +46,10 @@ class Table extends Model
     public function creneaus(): BelongsTo {
         return $this->belongsTo(Creneau::class, 'creneau_id');
     }
+
+    public function jeu(): BelongsTo {
+        return $this->belongsTo(Jeu::class, 'jeu_id');
+    }
     public function mjs(): BelongsTo{
         return $this->belongsTo(User::class, 'mj');
     }

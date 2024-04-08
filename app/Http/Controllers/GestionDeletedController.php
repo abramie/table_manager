@@ -38,7 +38,7 @@ class GestionDeletedController extends Controller
     public function index_tables() : View{
         //dd(Evenement::paginate(3));
         return view('admin.deleted.tables', [
-            'tables' => Table::onlyTrashed()->whereHas('creneaus', function ( $query) {
+            'tables' => Table::onlyTrashed()->whereHas('creneau', function ($query) {
                 $query->where('deleted_at', null);
             })->paginate(5)
         ]);

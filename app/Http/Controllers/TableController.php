@@ -7,6 +7,7 @@ use App\Http\Requests\InscriptionTableRequest;
 use App\Models\Creneau;
 use App\Models\Description;
 use App\Models\Evenement;
+use App\Models\Jeu;
 use App\Models\Settings;
 use App\Models\Table;
 use App\Models\Tag;
@@ -87,6 +88,17 @@ class TableController extends Controller
             $desincription = $creneau->desinscrit_user(Auth::user());
         }else{
             $desincription = 0;
+        }
+
+        if($request->validated('nom_jeu')){
+            $jeu = new Jeu;
+            $jeu->nom = $request->validated('nom_jeu');
+            $jeu->description = $request->validated('description_jeu');
+
+            if($jeu->save()){
+                $table->jeu()->associate($jeu);
+                $table->save();
+            }
         }
 
 

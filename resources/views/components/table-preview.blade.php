@@ -15,6 +15,9 @@
                 {{$table->debut_table->toTimeString($unitPrecision ='minute')}}
                 @endif
             </h5>
+            @if($table->jeu)
+                Jeu : {{$table->jeu?->nom}}
+            @endif
 
             @if(!$table->tags->isEmpty())
                 <p>
@@ -49,6 +52,8 @@
                 </p>
             </div>
             <div class="col">
+
+
                 <a class="btn btn-link bt-xs" data-toggle="collapse" href="#collapseListInscrits{{$table->id}}"
                    role="button" aria-expanded="false" aria-controls="collapseExample">
                     Inscrits : {{$table->nb_inscrits()}} @if(!$isSansTable)
