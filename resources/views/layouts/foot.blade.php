@@ -3,7 +3,7 @@
         <a  class="link-danger" href="https://github.com/abramie/table_manager/issues">La page github, pour ajouter un ticket</a>
     </div>
     <div>
-        Il s'agit d'une version alpha, il est possible (et probable) que vous rencontriez des bugs, des erreurs, ou que des trucs soit juste mal foutu.
+        Il s'agit d'une version beta, normalement tous fonctionne correctement, mais le site est toujours en developpement et des bugs peuvent s'y etre glisser.
         Pensez à signaler les choses, et j'essaierais de mettre à jour au plus vite.
     </div>
 
