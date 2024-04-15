@@ -19,7 +19,7 @@
         <div class="row align-items-start g-0">
             @php
                 $date = $evenement->date_debut;
-
+                 $showMinute = $date->minute >0 ? ($date->minute > 9 ?$date->minute  : '0' . $date->minute ) : '';
             @endphp
             @if($evenement->image)
                 <div class="col-md-4">
@@ -61,7 +61,7 @@
                     </div>
                         {{--https://getbootstrap.com/docs/4.2/components/dropdowns/  Pour les boutons, voir split button --}}
                 @endcan
-                <h4 class="card-subtitle mb-2 text-body-secondary">{{$evenement->showDate()}} à partir de {{$date->hour}}h</h4>
+                <h4 class="card-subtitle mb-2 text-body-secondary">{{$evenement->showDate()}} à partir de {{$date->hour}}h{{$showMinute}}</h4>
 
                 <p class="card-text">
                     @if(strlen($evenement->description) < 100)
