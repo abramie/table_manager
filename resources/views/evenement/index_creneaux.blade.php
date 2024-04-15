@@ -35,6 +35,7 @@
                 $date = $evenement->date_debut;
                 $date->setTimezone('UTC');
                 $date_creneau->setTimezone('UTC');
+                $showMinute = $date_creneau->minute >0 ? ($date_creneau->minute > 9 ?$date_creneau->minute  : '0' . $date_creneau->minute ) : '';
             @endphp
             <tr>
                 <td>
@@ -42,7 +43,7 @@
                 </td>
                 <td>@if(!$date_creneau->isSameDay($date))
                         Le {{$date_creneau->dayName}} {{$date_creneau->day}} à
-                    @endif {{$date_creneau->hour}}h
+                    @endif {{$date_creneau->hour}}h{{ $showMinute }}
                 </td>
                 <td>{{$creneau->duree}}h</td>
                 <td>{{$creneau->tables->count()}}</td>
