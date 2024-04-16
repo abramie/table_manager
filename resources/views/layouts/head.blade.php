@@ -22,7 +22,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js"
             integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{asset('css/myCss.css')}}">
-
+    <link rel="shortcut icon" href="{{ asset('logo_guilde.png') }}" >
 </head>
 
 @include('layouts.nav')
