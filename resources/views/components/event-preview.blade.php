@@ -23,12 +23,12 @@
             @endphp
             @if($evenement->image)
                 <div class="col-md-4">
-
+                    {{asset("storage/images/".$evenement->image?->title)}}
                     <img src="{{asset("storage/images/".$evenement->image?->title)}}" alt="description" width="300"
                          height="250" class="img-thumbnail rounded-start"/>
                 </div>
             @endif
-            <div class="col-md-8">
+            <div class="col-md-8 card-body">
                 <h2 class="card-title"><a href="{{$route}}"> @if(!$affiche)
                         Previsionnel
                     @endif
@@ -38,22 +38,22 @@
                         {{$evenement->nom_evenement}}</a></h2>
 
                 @can('ajout_events')
-                    <div class="pull-right">
-                        <button class="btn btn-xs btn-danger " type="button"
+                    <div class="float-end">
+                        <button class="btn btn-sm btn-danger " type="button"
                                 onclick="window.location='{{ route("events.one.delete",['evenement'=> $evenement]) }}'">
                             Delete
                         </button>
-                        <button class="btn btn-xs btn-warning" type="button"
+                        <button class="btn btn-sm btn-warning" type="button"
                                 onclick="window.location='{{ route("events.one.edit",['evenement'=> $evenement]) }}'">
                             Edit
                         </button>
                         @if($evenement->archivage)
-                            <button class="btn btn-xs btn-warning" type="button"
+                            <button class="btn btn-sm btn-warning" type="button"
                                     onclick="window.location='{{ route("events.one.unarchive",['evenement'=> $evenement]) }}'">
                                 Dé-Archive
                             </button>
                         @else
-                            <button class="btn btn-xs btn-warning" type="button"
+                            <button class="btn btn-sm btn-warning" type="button"
                                     onclick="window.location='{{ route("events.one.archive",['evenement'=> $evenement]) }}'">
                                 Archive
                             </button>
@@ -67,7 +67,7 @@
                     @if(strlen($evenement->description) < 100)
                         {{$evenement->description}}
                     @else
-                        {{substr($evenement->description, 0,100) . "..." }}
+                        {{substr($evenement->description, 0,($evenement->image ?500 : 200)) . "..." }}
                     @endif
                 </p>
 
