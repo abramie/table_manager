@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\TokenResetPassword;
+use App\Models\User;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -22,6 +24,29 @@ class NewPasswordController extends Controller
         return view('auth.reset-password', ['request' => $request]);
     }
 
+    public function resetPassword(TokenResetPassword $passwordReset){
+
+        return view('user.reset-password', ['token' => $passwordReset]);
+
+    }
+
+    public function storeNewPassword(Request $request , TokenResetPassword $passwordReset){
+        $request->validate([
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+
+        $user = $passwordReset->user;
+
+        $user->password =  Hash::make($request->password);
+        if($user->save()){
+
+            $user->tokensPassword()->delete();
+            return redirect(route('login'));
+        }
+
+        return redirect()->back();
+
+    }
     /**
      * Handle an incoming new password request.
      *

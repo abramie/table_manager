@@ -59,5 +59,9 @@ class User extends Authenticatable
         return $this->BelongsToMany(Table::class, 'inscrits');
     }
 
+    public function tokensPassword(){
+        return $this->hasMany(TokenResetPassword::class);
+    }
+
 
 }

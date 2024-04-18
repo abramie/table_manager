@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\TokenResetPassword;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class PasswordResetLinkController extends Controller
@@ -16,6 +19,22 @@ class PasswordResetLinkController extends Controller
     public function create(): View
     {
         return view('auth.forgot-password');
+    }
+
+
+    public function generateResetLink(User $user){
+        $password = new TokenResetPassword;
+        $password->token = Str::random(40);
+        $password->user()->associate( $user);
+        $password->save();
+
+        return redirect()->back();
+    }
+
+    public function deleteResetLink(TokenResetPassword $passwordReset){
+        $user = $passwordReset->user;
+        $user->tokensPassword()->delete();
+        return redirect()->route('events.index');
     }
 
     /**
@@ -35,7 +54,6 @@ class PasswordResetLinkController extends Controller
         $status = Password::sendResetLink(
             $request->only('email')
         );
-
         return $status == Password::RESET_LINK_SENT
                     ? back()->with('status', __($status))
                     : back()->withInput($request->only('email'))

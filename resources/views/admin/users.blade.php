@@ -17,7 +17,7 @@
             </thead>
 
             <tbody>
-            @foreach(\App\Models\User::get() as $user)
+            @foreach($users as $user)
                 <tr>
                     <td>{{$user->name}}</td>
                     <td>{{$user->email}}</td>
@@ -25,34 +25,44 @@
                         <form action="{{route('profile.change_role', $user)}}" method="post">
                             @csrf
                             <div class="input-group mb-3">
-                                @foreach(\Spatie\Permission\Models\Role::get() as $role)
                                 <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                        <input type="checkbox" @checked($user->roles->contains($role) ) name="role-{{$role->id}}" value="{{$role->id}}"/>
-                                        <label for="role-{{$role->id}}"  class="form-control" >{{$role->name}}</label>
-                                    </div>
-                                    @error("roles")
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
-                                    @error("role-1")
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
+                                @foreach(\Spatie\Permission\Models\Role::get() as $role)
 
-                                </div>
+                                        <div class="input-group-text">
+                                            <input type="checkbox" @checked($user->roles->contains($role) ) name="role-{{$role->id}}" value="{{$role->id}}"/>
+                                            <label for="role-{{$role->id}}"  class="form-control" >{{$role->name}}</label>
+                                        </div>
+                                        @error("roles")
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
+                                        @error("role-1")
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
+
+
 
                                  @endforeach
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary" type="submit">Button</button>
-                                </div>
+                                    <button class="btn btn-outline-secondary btn-success" type="submit">Enregister</button>
+                                    </div>
+
                             </div>
                         </form>
+                    </td>
+                    <td>
+                        @if($user->tokensPassword()->count() > 0)
+                            <a href="{{route('admin.reset_password',$user->tokensPassword()->first() )}}">Lien de reset</a>
+                        @else
+                            <a href="{{route('admin.generate_reset_link', $user)}}">Genere un lien de reset</a>
+                        @endif
                     </td>
                 </tr>
             @endforeach
         </table>
+
+    {{$users->links()}}
 
 @endsection

@@ -43,6 +43,8 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
 
+
+
 /*
  * Pages relatives aux actions admins
  */
@@ -60,15 +62,18 @@ Route::prefix('/admin')->name('admin.')->middleware('auth')->middleware('role:ad
         Route::get('/restore/{type}/{id}', [\App\Http\Controllers\GestionDeletedController::class, 'restore'])->name('.restore');
         Route::get('/delete/{type}/{id}', [\App\Http\Controllers\GestionDeletedController::class, 'delete'])->name('.delete');
     });
-    Route::view('/users', 'admin.users')->name('users');
+    Route::get('/users', [\App\Http\Controllers\UserController::class, 'index'])->name('users');
     Route::prefix('/settings')->name('settings')->group(function(){
         Route::get('/', [\App\Http\Controllers\SettingsController::class, 'index']);
         Route::post('/{setting}', [\App\Http\Controllers\SettingsController::class, 'update'])->name(".update");
     });
 
-
+    route::get('/reset/{user}', [\App\Http\Controllers\Auth\PasswordResetLinkController::class, 'generateResetLink'])->name('generate_reset_link');
+    route::get('/reset/token/{passwordReset:token}', [\App\Http\Controllers\Auth\NewPasswordController::class, 'resetPassword'])->name('reset_password');
+    route::post('/reset/token/{passwordReset:token}', [\App\Http\Controllers\Auth\NewPasswordController::class, 'storeNewPassword'])->name('store_new_password');
 });
 
+route::get('/deleteResetToken/{passwordReset:token}',[\App\Http\Controllers\Auth\PasswordResetLinkController::class, 'deleteResetLink'])->name('deleteToken');
 /*
  * Pages relatives aux evenements
  * aka la soirée jeu
