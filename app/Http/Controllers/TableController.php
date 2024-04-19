@@ -83,6 +83,7 @@ class TableController extends Controller
         $creneau->tables()->save($table);
         $table->triggerwarnings()->sync($request->validated('triggerwarnings'));
         $table->users()->sync($request->validated('inscrits'));
+        $table->tags()->sync($request->validated('tags'));
         //Desinscrit le mj de toute les tables où il est inscrit si il ouvre une table.
         if($request->validated('mj') == Auth::user()->id){
             $desincription = $creneau->desinscrit_user(Auth::user());
