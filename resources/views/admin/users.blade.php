@@ -54,7 +54,7 @@
                     </td>
                     <td>
                         @if($user->tokensPassword()->count() > 0)
-                            <a href="{{route('admin.reset_password',$user->tokensPassword()->first() )}}">Lien de reset</a>
+                            <a href="{{route('reset_password',$user->tokensPassword()->first() )}}">Lien de reset</a>
                         @else
                             <a href="{{route('admin.generate_reset_link', $user)}}">Genere un lien de reset</a>
                         @endif

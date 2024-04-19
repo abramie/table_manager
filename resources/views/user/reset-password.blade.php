@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('admin.store_new_password', $token) }}">
+    <form method="POST" action="{{ route('store_new_password', $token) }}">
         @csrf
 
         <!-- Password -->
