@@ -46,7 +46,7 @@
                     @endif {{$date_creneau->hour}}h{{ $showMinute }}
                 </td>
                 <td>{{$creneau->duree}}h</td>
-                <td>{{$creneau->tables->count()}}</td>
+                <td>{{$creneau->tables_normal->count()}}</td>
 
                 @can('ajout_events')
                     <td>

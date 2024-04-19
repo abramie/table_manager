@@ -59,6 +59,10 @@ class Creneau extends Model
         return $this->hasMany(Table::class);
     }
 
+    public function tables_normal() : HasMany{
+        return $this->hasMany(Table::class)->where('sans_table', false);
+    }
+
     public function users(){
         //return $this->through('tables')->has('users');
         $list_users = collect();
