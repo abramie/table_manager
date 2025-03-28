@@ -58,6 +58,8 @@ class FormTableRequest extends FormRequest
             'inscrits' => ['array', 'exists:users,id'],
             'nom_jeu' => [''],
             'description_jeu' => [''],
+            'open_preinscription' => ['bool'],
+            'max_preinscription' => ['required','regex:/^[0-9]+$/'],
             //Ajout verification clef etrangere que l'event existe bien ?
         ];
 
@@ -92,11 +94,14 @@ class FormTableRequest extends FormRequest
             'duree' => floatval($this->duree),
             'nb_joueur_min' => floatval($this->nb_joueur_min),
             'nb_joueur_max' => floatval($this->nb_joueur_max),
+            'max_preinscription' => $this->open_preinscription ?  floatval($this->max_preinscription) : 0.0,
+            'open_preinscription' => $this->open_preinscription =='true',
             'max_duree' => floatval($creneau->duree),
             'mj' => $mj->id,
             'debut_creneau' => $creneau->debut_creneau,
             'debut_table' => $this->debut_table ? $creneau->debut_creneau->setTimeFromTimeString($this->debut_table) : null,
         ]);
+
 
         //Combien de temps après le debut du creneau la table doit commencer
         if($this->debut_table) {
@@ -109,6 +114,7 @@ class FormTableRequest extends FormRequest
                 ]);
             }
         }
+
 
         //Probablement ajouter la partie qui permet de decider l'heure de depart d'une table :)
     }

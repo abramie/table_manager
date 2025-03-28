@@ -16,11 +16,14 @@
         <!-- Password -->
         <div class="mt-4 form-group">
             <x-input-label for="password" :value="__('Password')" />
-
+            @if(config('app.env') !=  'local')
             <x-text-input id="password" class="block mt-1 w-full"
                             type="password"
                             name="password"
-                            required autocomplete="current-password" />
+
+                            required
+                          autocomplete="current-password" />
+            @endif
 
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>

@@ -154,6 +154,47 @@
     </div>
 
     <div class="form-group">
+        <label for="toggle-open_preinscription">Ouvrir la table aux pré-inscription</label>
+
+        <input type="checkbox"  @checked(old('open_preinscription', $table->open_preinscription))  aria-expanded="false" aria-controls="moreabout" class="form-check-input" id="toggle-open_preinscription" name="open_preinscription" value="true">
+
+        @error("open_preinscription")
+        <div class="invalid-feedback">
+            {{ $message }}
+        </div>
+        @enderror
+    </div>
+    <script>
+        console.log( $("input[id*='toggle'][type=checkbox]"))
+        $("input[id*='toggle'][type=checkbox]").each(function(){
+            let div = $("#"+$(this).attr('id').split('-')[1] + "_div");
+            if(!$(this).is(':checked'))  div.hide();
+            if(div.find("input").attr('class').includes("is-invalid")) {
+                div.show();
+                $(this).prop( "checked", true );
+            }
+            $(this).on('click', function() {
+                if(div.is(':hidden')) {
+                    div.show();
+                } else {
+                    div.hide();
+                }
+            });
+        })
+    </script>
+    <div class="form-group" id="open_preinscription_div">
+         <label for="max_preinscription">Nombre de pré-inscription maximum sur la table</label>
+        <input type="number" class="form-control @error("max_preinscription") is-invalid @enderror" id="max_preinscription"
+               name="max_preinscription" value="{{ old('max_preinscription', $table->max_preinscription) }}">
+
+        @error("max_preinscription")
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+        @enderror
+    </div>
+
+    <div class="form-group">
         <div class="input-group date">
             <label for="debut_table">Debut de la table</label>
             <input type="time" class="form-control @error("debut_table")is-invalid @enderror" id="debut_table" name="debut_table" value="{{old('debut_table', $table->debut_table?->toTimeString())}}">
@@ -245,4 +286,8 @@
 
 
 </form>
-
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    });
+</script>

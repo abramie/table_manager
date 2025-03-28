@@ -48,11 +48,10 @@ class FormEventRequest extends FormRequest
         $settings = Settings::whereIn('name',  ['ouverture_inscriptions_avant_date','fermeture_inscriptions_avant_date' ,'visibiliter_avant_date'])->get();
         $date_debut = Carbon::create($this->date_debut);
 
-        $ouverture_inscription = $this->ouverture_evenement ?Carbon::create($this->ouverture_evenement) : $date_debut->copy()->subDays( $settings->firstWhere('name', 'ouverture_inscriptions_avant_date')->value);
+        $ouverture_inscription = $this->ouverture_inscription ?Carbon::create($this->ouverture_inscription) : $date_debut->copy()->subDays( $settings->firstWhere('name', 'ouverture_inscriptions_avant_date')->value);
         $fermeture_inscription = $this->fermeture_inscription ?Carbon::create($this->fermeture_inscription ):$date_debut->copy()->subDays($settings->firstWhere('name', 'fermeture_inscriptions_avant_date')->value);
         $affichage_evenement = $this->affichage_evenement ?Carbon::create($this->affichage_evenement ):$date_debut->copy()->subDays($settings->firstWhere('name', 'visibiliter_avant_date')->value);
         //Produit un slug valide en cas d'absence.
-
 
         $this->merge([
             'slug' => $this->input('slug') ?: Str::slug($this->input('nom_evenement')),

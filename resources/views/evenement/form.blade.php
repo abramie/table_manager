@@ -103,7 +103,7 @@
         <div class="form-group">
             <div class="input-group date" id="ouverture_inscription_div">
                 <label for="ouverture_inscription"  class="form-check-label">Date d'ouverture des inscriptions joueurs</label>
-                <input type="datetime-local" class="form-control @error("ouverture_inscription") is-invalid @enderror" id="ouverture_inscription" name="ouverture_inscription"value="{{old('ouverture_inscription', $evenement->ouverture_inscription)}}">
+                <input type="datetime-local" class="form-control @error("ouverture_inscription") is-invalid @enderror" id="ouverture_inscription" name="ouverture_inscription" value="{{old('ouverture_inscription', $evenement->ouverture_inscription)}}">
                 @error("ouverture_inscription")
                 <div class="invalid-feedback">
                     {{ $message }}

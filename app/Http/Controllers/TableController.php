@@ -36,6 +36,7 @@ class TableController extends Controller
         $table->nom = "le nom de la table";
         $table->nb_joueur_min = 3;
         $table->nb_joueur_max = 3;
+        $table->max_preinscription = $creneau->nb_inscription_online_max;
         $table->duree = $creneau->duree;
         $table->debut_table = $creneau->debut_creneau;
         if(session()->has('saved_table_input') ){
@@ -157,7 +158,9 @@ class TableController extends Controller
         if($request->get('action') != 'save'){
             return $this->redirect_action($request);
         }
+
         $table->update($request->validated());
+
         $table->triggerwarnings()->sync($request->validated('triggerwarnings'));
         $table->tags()->sync($request->validated('tags'));
 
@@ -194,7 +197,7 @@ class TableController extends Controller
 
     public function inscription_table(Evenement $evenement,Creneau $creneau,Table $table, InscriptionTableRequest $request){
         //Do the attach
-
+        $maxInscription = $table->open_preinscription ? $table->max_preinscription ?? $creneau->nb_inscription_online_max : 0;
         //dd($table->users);
         //Verifie dans le creneau de la table si l'utilisateur est inscrit sur une des tables existante, à l'exception de la table "sans table"
         if(($table->sans_table && $table->users->contains(Auth::user()))
@@ -213,9 +216,9 @@ class TableController extends Controller
             return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau])
                 ->with('echec', "Tu es MJ sur ce creneau, tu ne peux pas t'inscrire");
         }
-        elseif(!$table->sans_table && $table->users->count() > $creneau->nb_inscription_online_max){
+        elseif(!$table->sans_table && $table->users->count() > $maxInscription){
             return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau])
-                ->with('echec', "Ce creneau impose une limite au nombre de personnes pouvant s'inscrire via la platforme à une table.Cette limite est de : ".$creneau->nb_inscription_online_max );
+                ->with('echec', "Ce creneau impose une limite au nombre de personnes pouvant s'inscrire via la platforme à une table.Cette limite est de : ".$maxInscription );
         }
         elseif($table->users->count() < $table->nb_joueur_max){
             $table->users()->attach(Auth::user());
@@ -236,9 +239,9 @@ class TableController extends Controller
 
         if($user->getConnectionName() ==null){
             $user = Auth::user();
-            $success_message = "Vous vous etes bien desinscrit de la table : ".$table->nom;
+            $success_message = "Vous vous êtes bien désinscrit de la table : ".$table->nom;
         }else{
-            $success_message = "L'utilisateur {$user->name} a bien été desinscrit de la table : ".$table->nom;
+            $success_message = "L'utilisateur {$user->name} a bien été désinscrit de la table : ".$table->nom;
 
         }
 

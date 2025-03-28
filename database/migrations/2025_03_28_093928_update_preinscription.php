@@ -11,16 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-
-        Schema::create('jeux', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-            $table->string('nom');
-            $table->longText('description');
-        });
+        //
         Schema::table('tables', function(Blueprint $table){
-            $table->foreignIdFor(\App\Models\Jeu::class)->nullable()->constrained()->cascadeOnDelete();
+            $table->double('max_preinscription')->nullable();
+            $table->boolean('open_preinscription')->default(true);
         });
+
+
     }
 
     /**
@@ -28,9 +25,12 @@ return new class extends Migration
      */
     public function down(): void
     {
+        //
         Schema::table('tables', function(Blueprint $table){
-            $table->dropColumn('jeu_id');
+            $table->dropColumn('max_preinscription');
+        });Schema::table('tables', function(Blueprint $table){
+
+            $table->dropColumn('open_preinscription');
         });
-        Schema::dropIfExists('jeux');
     }
 };

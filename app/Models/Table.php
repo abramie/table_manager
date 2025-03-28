@@ -30,7 +30,9 @@ class Table extends Model
         'mj',
         'sans_table',
         'debut_table',
-        'inscription_restrainte'
+        'inscription_restrainte',
+        'max_preinscription',
+        'open_preinscription'
     ];
 
     /**
