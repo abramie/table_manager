@@ -31,8 +31,8 @@
 
             @if(!$table->triggerwarnings->isEmpty())
                 <p>
-                    {{$settings->firstWhere('name','nom_trigger')->value}} :
-                 
+{{--                    {{$settings->firstWhere('name','nom_trigger')->value}} :--}}
+
                     @foreach($table->triggerwarnings as $tw )
                         <span class="badge bg-secondary">{{$tw->nom}}</span>
                     @endforeach
