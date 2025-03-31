@@ -58,7 +58,6 @@ class FormTableRequest extends FormRequest
             'inscrits' => ['array', 'exists:users,id'],
             'nom_jeu' => [''],
             'description_jeu' => [''],
-            'open_preinscription' => ['bool'],
             'max_preinscription' => ['required','regex:/^[0-9]+$/'],
             //Ajout verification clef etrangere que l'event existe bien ?
         ];
@@ -94,8 +93,8 @@ class FormTableRequest extends FormRequest
             'duree' => floatval($this->duree),
             'nb_joueur_min' => floatval($this->nb_joueur_min),
             'nb_joueur_max' => floatval($this->nb_joueur_max),
-            'max_preinscription' => $this->open_preinscription ?  floatval($this->max_preinscription) : 0.0,
-            'open_preinscription' => $this->open_preinscription =='true',
+            'max_preinscription' => floatval($this->max_preinscription),
+
             'max_duree' => floatval($creneau->duree),
             'mj' => $mj->id,
             'debut_creneau' => $creneau->debut_creneau,

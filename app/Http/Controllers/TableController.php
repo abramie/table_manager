@@ -20,11 +20,12 @@ class TableController extends Controller
 {
     //
     public function show(Evenement $evenement, Creneau $creneau, Table $table, Request $request) {
-
+        $settings = Settings::whereIn('name',  ['nom_trigger'])->get();
         return view('table.show', [
             'table' => $table,
             'creneau' => $creneau,
-            'evenement' => $evenement
+            'evenement' => $evenement,
+            'settings' => $settings,
         ]);
 
     }
@@ -37,6 +38,7 @@ class TableController extends Controller
         $table->nb_joueur_min = 3;
         $table->nb_joueur_max = 3;
         $table->max_preinscription = $creneau->nb_inscription_online_max;
+
         $table->duree = $creneau->duree;
         $table->debut_table = $creneau->debut_creneau;
         if(session()->has('saved_table_input') ){
@@ -197,13 +199,13 @@ class TableController extends Controller
 
     public function inscription_table(Evenement $evenement,Creneau $creneau,Table $table, InscriptionTableRequest $request){
         //Do the attach
-        $maxInscription = $table->open_preinscription ? $table->max_preinscription ?? $creneau->nb_inscription_online_max : 0;
+        $maxInscription =  $table->max_preinscription;
         //dd($table->users);
         //Verifie dans le creneau de la table si l'utilisateur est inscrit sur une des tables existante, à l'exception de la table "sans table"
         if(($table->sans_table && $table->users->contains(Auth::user()))
             || $creneau->tables()->with('users')->where("inscription_restrainte", "=","1")->get()->pluck('users')->flatten()->contains('id',Auth::user()->id)){
             return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau])
-                ->with('echec', "Vous etes deja inscrit sur une table ");
+                ->with('echec', "Vous êtes deja inscrit sur une table ");
         }elseif($table->sans_table){
             $table->users()->attach(Auth::user());
             return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau])

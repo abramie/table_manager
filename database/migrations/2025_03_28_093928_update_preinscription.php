@@ -13,8 +13,7 @@ return new class extends Migration
     {
         //
         Schema::table('tables', function(Blueprint $table){
-            $table->double('max_preinscription')->nullable();
-            $table->boolean('open_preinscription')->default(true);
+            $table->double('max_preinscription')->default(0);
         });
 
 
@@ -28,9 +27,6 @@ return new class extends Migration
         //
         Schema::table('tables', function(Blueprint $table){
             $table->dropColumn('max_preinscription');
-        });Schema::table('tables', function(Blueprint $table){
-
-            $table->dropColumn('open_preinscription');
         });
     }
 };

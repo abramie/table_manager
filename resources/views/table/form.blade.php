@@ -153,35 +153,7 @@
         @enderror
     </div>
 
-    <div class="form-group">
-        <label for="toggle-open_preinscription">Ouvrir la table aux pré-inscription</label>
 
-        <input type="checkbox"  @checked(old('open_preinscription', $table->open_preinscription))  aria-expanded="false" aria-controls="moreabout" class="form-check-input" id="toggle-open_preinscription" name="open_preinscription" value="true">
-
-        @error("open_preinscription")
-        <div class="invalid-feedback">
-            {{ $message }}
-        </div>
-        @enderror
-    </div>
-    <script>
-        console.log( $("input[id*='toggle'][type=checkbox]"))
-        $("input[id*='toggle'][type=checkbox]").each(function(){
-            let div = $("#"+$(this).attr('id').split('-')[1] + "_div");
-            if(!$(this).is(':checked'))  div.hide();
-            if(div.find("input").attr('class').includes("is-invalid")) {
-                div.show();
-                $(this).prop( "checked", true );
-            }
-            $(this).on('click', function() {
-                if(div.is(':hidden')) {
-                    div.show();
-                } else {
-                    div.hide();
-                }
-            });
-        })
-    </script>
     <div class="form-group" id="open_preinscription_div">
          <label for="max_preinscription">Nombre de pré-inscription maximum sur la table</label>
         <input type="number" class="form-control @error("max_preinscription") is-invalid @enderror" id="max_preinscription"
@@ -286,8 +258,4 @@
 
 
 </form>
-<script>
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    });
-</script>
+

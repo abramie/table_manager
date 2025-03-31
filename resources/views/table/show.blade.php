@@ -24,7 +24,7 @@
         @endif
 
         @if(!$table->triggerwarnings->isEmpty())
-            TW :
+          {{$settings->firstWhere('name','nom_trigger')->value}} :
             @foreach($table->triggerwarnings as $tw )
                 <span class="badge bg-secondary">{{$tw->nom}}</span>
             @endforeach
@@ -70,6 +70,8 @@
             @endforeach
         </ul>
     </div>
+    <span>Nombre de pré-inscriptions possible : {{$table->max_preinscription}}</span>
+
     @php
         $ouverture_inscription =$evenement->ouverture_inscription;
         $inscription_ouverte = $ouverture_inscription->isPast();
