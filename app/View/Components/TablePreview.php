@@ -13,7 +13,7 @@ class TablePreview extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public Table $table, public Settings $settings, public bool $showDate = false)
+    public function __construct(public Table $table, public $settings, public bool $showDate = false)
     {
         //
     }

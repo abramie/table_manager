@@ -56,7 +56,7 @@
     </div>
 
     @foreach($tables as $table)
-        <x-table-preview :table="$table" />
+        <x-table-preview :table="$table" :settings="$settings"/>
 
 
     @endforeach
