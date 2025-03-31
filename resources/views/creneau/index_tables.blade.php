@@ -55,11 +55,11 @@
         Place restante : {{$max_place-$creneau->tables()->where('sans_table','=',0)->with('users')->get()->pluck('users')->flatten()->count()}}/{{$max_place}}
     </div>
 
-    @foreach($tables as $table)
-        <x-table-preview :table="$table" :settings="$settings"/>
+{{--    @foreach($tables as $table)--}}
+{{--        <x-table-preview :table="$table" :settings="$settings"/>--}}
 
 
-    @endforeach
+{{--    @endforeach--}}
 
     @can('ajout_tables')
         <p>
