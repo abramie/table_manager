@@ -24,8 +24,10 @@ class MJPageController extends Controller
         $user = Auth::user();
 
         $tables = $user->tables;
+        $settings = Settings::whereIn('name',  ['nom_trigger'])->get();
         return view('profile.mj', [
             'tables' => $tables,
+            'settings' => $settings,
         ]);
     }
 
