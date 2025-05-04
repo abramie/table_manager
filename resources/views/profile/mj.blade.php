@@ -19,7 +19,7 @@
 
         @foreach($tables as $table)
 
-            <x-table-preview :table="$table" showDate/>
+            <x-table-preview :table="$table"  :settings="$settings" showDate/>
         @endforeach
 
 
