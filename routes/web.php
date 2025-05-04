@@ -26,6 +26,7 @@ Route::get('/', function () {
     return redirect('/events');
 });
 
+Route::get('/test/mail', [\App\Http\Controllers\TestController::class, 'mail'])->name('test.mail');
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
