@@ -44,8 +44,8 @@ return [
             'timeout' => null,
             'local_domain' => env('APP_URL'),
 
-            'auth_mode'  => null,
-            'verify_peer'       => false,
+            //'auth_mode'  => null,
+            'verify_peer' => false,
         ],
 
         'mailersend' => [
