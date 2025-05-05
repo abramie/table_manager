@@ -21,7 +21,7 @@ class MJPageController extends Controller
     //
     public function show() {
 
-        $user = Auth::user();
+        $user = Auth::user()->currentUser;
 
         $tables = $user->tables;
         $settings = Settings::whereIn('name',  ['nom_trigger'])->get();

@@ -25,6 +25,8 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->registerPolicies();
-
+//        \Auth::provider('users', function($app, array $config) {
+//            return new ExUserProvider();
+//        });
     }
 }

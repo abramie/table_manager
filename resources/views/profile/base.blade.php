@@ -9,6 +9,9 @@
                     <a class="nav-link" href="{{route("profile.edit")}}">Edit</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{{route("profile.edit")}}">Profiles</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{route("profile.mj")}}">MJ</a>
                 </li>
             </ul>

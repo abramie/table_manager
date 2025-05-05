@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\CompteController;
 use App\Http\Controllers\CreneauController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
@@ -32,14 +33,22 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::post('/profile/user-{user:name}/change_role', [ProfileController::class, 'update_role'])->name('profile.change_role');
 
-    Route::post('/toggleMJ', [ProfileController::class, 'toggleMJ'])->name('profile.toggle-mj');
-    Route::get('/profile/optionMJ', [\App\Http\Controllers\Users\MJPageController::class, 'show'])->name("profile.mj");
-    Route::get('/profile/optionJoueur', [\App\Http\Controllers\Users\JoueursPageController::class, 'show'])->name("profile.joueur");
+    Route::prefix('/profile')->name('profile.')->group(function () {
+        Route::post('/profile/user-{user:name}/change_role', [ProfileController::class, 'update_role'])->name('change_role');
+
+        Route::post('/toggleMJ', [ProfileController::class, 'toggleMJ'])->name('toggle-mj');
+        Route::get('/profile/optionMJ', [\App\Http\Controllers\Users\MJPageController::class, 'show'])->name("mj");
+        Route::get('/profile/optionJoueur', [\App\Http\Controllers\Users\JoueursPageController::class, 'show'])->name("joueur");
+    });
+
+
+
+    Route::prefix('/compte')->name("compte.")->group( function () {
+        Route::get('/compte', [CompteController::class, 'edit'])->name('edit');
+        Route::patch('/compte', [CompteController::class, 'update'])->name('update');
+        Route::delete('/compte', [CompteController::class, 'destroy'])->name('destroy');
+    });
 });
 
 Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');

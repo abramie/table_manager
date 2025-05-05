@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Http\Requests\FormEventRequest;
 use App\Models\Creneau;
 use App\Models\Evenement;
@@ -13,6 +14,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Support\Facades\Auth;
 class EventController extends Controller
 {
     //
@@ -24,7 +26,7 @@ class EventController extends Controller
          * Tous pour les modo
          * Juste ceux avec des creneaux et une date d'affichage pour les joueurs
         **/
-        if(Auth()->user()?->mainUser->can('ajout_events')){
+        if(Auth::user()?->mainUser->hasPermissionTo('ajout_events')){
             return view('evenement.index', [
                 'evenements' => Evenement::paginate(5)
             ]);

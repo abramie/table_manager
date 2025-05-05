@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\Compte;
 use App\Models\User;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
@@ -62,7 +63,7 @@ class LoginRequest extends FormRequest
         $this->ensureIsNotRateLimited();
 
         if(config('app.env') == 'local') {
-            Auth::login(User::where('email', '=', $this->only('email'))->first());
+            Auth::login(Compte::where('email', '=', $this->only('email'))->first());
         }else{
             if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
                 RateLimiter::hit($this->throttleKey());

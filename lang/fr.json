@@ -212,5 +212,9 @@
     "Web Server is Down": "Le serveur Web est en panne",
     "Whoops!": "Oups !",
     "Yes": "Oui",
-    "You are receiving this email because we received a password reset request for your account.": "Vous recevez cet e-mail car nous avons reçu une demande de réinitialisation de mot de passe pour votre compte."
+    "You are receiving this email because we received a password reset request for your account.": "Vous recevez cet e-mail car nous avons reçu une demande de réinitialisation de mot de passe pour votre compte.",
+    "Ensure your account is using a long, random password to stay secure.": "Utilisez un mot de passe sécuriser",
+    "new_mail_verif": "Un nouvel email de verification à été envoyer à votre adresse",
+    "Current Password": "Mot de passe actuel",
+    "New Password": "Nouveau mot de passe"
 }

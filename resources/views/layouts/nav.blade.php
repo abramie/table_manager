@@ -37,7 +37,7 @@
         <div class="pull-right">
             @auth()
                 <div class="nav-item">
-                <a href="{{route("profile.edit")}}"> {{\Illuminate\Support\Facades\Auth::user()->name}}</a>
+                <a href="{{route("compte.edit")}}"> {{ \Illuminate\Support\Facades\Auth::user()?->currentUser->name }}</a>
                 </div>
                 <div class="nav-item">
                 <form action="{{route('logout')}}" method="post">

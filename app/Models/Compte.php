@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -51,7 +51,8 @@ class Compte extends Authenticatable
 
     public function currentUser() : HasOne{
         $currentUser = \Session::get('currentUser',$this->mainUser()->select('name')->first()->name);
-        return $this->hasOne(User::class)->ofMany( function (Builder $query) use($currentUser){
+
+        return $this->users()->one()->ofMany( [],function (Builder $query) use($currentUser){
             $query->where('name', '=', $currentUser);
         });
     }
