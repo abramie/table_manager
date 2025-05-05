@@ -23,6 +23,8 @@ return new class extends Migration
             $table->double('nb_joueur_max')->default('4');
             $table->boolean('sans_table')->default('0');
             $table->date('debut_table');
+            $table->boolean('inscription_restrainte')->default('1');
+            $table->double('max_preinscription')->default(0);
             $table->softDeletes();
 
             $table->foreignId('mj')->constrained(table: 'users')->cascadeOnDelete();

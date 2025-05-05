@@ -67,7 +67,6 @@ class ProfileController extends Controller
         }else{
             return Redirect::route('admin.users');
         }
-        dd("test");
 
 
     }

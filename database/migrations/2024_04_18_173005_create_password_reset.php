@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('token');
-            $table->foreignIdFor(\App\Models\User::class);
+            $table->foreignIdFor(\App\Models\User::class)->constrained()->cascadeOnDelete();
         });
     }
 

@@ -18,6 +18,12 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+
+            $table->foreignIdFor(\App\Models\Compte::class)->nullable()->constrained()->nullOnDelete();
+        });
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreignIdFor(\App\Models\Compte::class)->nullable()->constrained()->nullOnDelete();
         });
     }
 
@@ -27,5 +33,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('comptes');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropForeign(\App\Models\Compte::class);
+        });
     }
 };

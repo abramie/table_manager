@@ -24,7 +24,7 @@ class EventController extends Controller
          * Tous pour les modo
          * Juste ceux avec des creneaux et une date d'affichage pour les joueurs
         **/
-        if(Auth()->user()?->can('ajout_events')){
+        if(Auth()->user()?->mainUser->can('ajout_events')){
             return view('evenement.index', [
                 'evenements' => Evenement::paginate(5)
             ]);

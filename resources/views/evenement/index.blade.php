@@ -4,6 +4,7 @@
 
 
 @section('content')
+
     <h1>Index event
         @can('ajout_events')
             <button class="btn btn-xs btn-warning pull-right" type="button"

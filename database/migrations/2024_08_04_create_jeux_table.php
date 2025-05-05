@@ -19,7 +19,7 @@ return new class extends Migration
             $table->longText('description');
         });
         Schema::table('tables', function(Blueprint $table){
-            $table->foreignIdFor(\App\Models\Jeu::class)->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(\App\Models\Jeu::class)->nullable()->constrained('jeux')->cascadeOnDelete();
         });
     }
 
