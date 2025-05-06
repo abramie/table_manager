@@ -6,13 +6,14 @@
             <ul class="navbar-nav">
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route("profile.edit")}}">Edit</a>
+                    <a class="nav-link" href="{{route("compte.edit",$compte)}}">Edit</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route("profile.edit")}}">Profiles</a>
+                    <a class="nav-link" href="{{route("profile.show", $compte)}}">Profiles</a>
                 </li>
+
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route("profile.mj")}}">MJ</a>
+                    <a class="nav-link" href="{{route("profile.mj",["compte" => $compte, "profile" => $compte->currentProfile])}}">MJ</a>
                 </li>
             </ul>
         </div>
@@ -20,6 +21,6 @@
 
 
 
-    @yield('content-profile')
+    @yield('content-compte')
 
 @endsection

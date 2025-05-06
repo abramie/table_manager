@@ -22,7 +22,7 @@
                     <td>{{$user->name}}</td>
                     <td>{{$user->email}}</td>
                     <td>
-                        <form action="{{route('profile.change_role', $user)}}" method="post">
+                        <form action="{{route('compte.change_role', $user)}}" method="post">
                             @csrf
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Users;
+namespace App\Http\Controllers\Profiles;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FormTableRequest;
@@ -12,22 +12,20 @@ use App\Models\Settings;
 use App\Models\Table;
 use App\Models\Tag;
 use App\Models\Triggerwarning;
-use App\Models\User;
+use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class MJPageController extends Controller
+class JoueursPageController extends Controller
 {
     //
     public function show() {
 
-        $user = Auth::user()->currentUser;
+        $profile = Auth::user()->currentProfile;
 
-        $tables = $user->tables;
-        $settings = Settings::whereIn('name',  ['nom_trigger'])->get();
-        return view('profile.mj', [
+        $tables = $profile->inscriptions;
+        return view('compte.profile.joueur', [
             'tables' => $tables,
-            'settings' => $settings,
         ]);
     }
 

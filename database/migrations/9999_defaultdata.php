@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\User;
+use App\Models\Profile;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Hash;
@@ -18,7 +18,7 @@ return new class extends Migration
 
 
         }elseif (config('app.env') == "production" && DB::table('users')->count() == 0 ){
-            $admin = User::create([
+            $admin = Profile::create([
                 'name' => "admin",
                 'email' => "admin@som.fr",
                 'password' => Hash::make(config('app.admin_password')),

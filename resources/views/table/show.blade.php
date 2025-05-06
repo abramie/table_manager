@@ -65,7 +65,7 @@
             @endif</span>
 
         <ul class="list-group list-group-flush">
-            @foreach($table->users as $user)
+            @foreach($table->inscrits as $user)
                 <li class="list-group-item">{{$user->name}}</li>
             @endforeach
         </ul>

@@ -4,12 +4,12 @@ namespace Database\Factories;
 
 use App\Models\Creneau;
 use App\Models\Table;
-use App\Models\User;
+use App\Models\Profile;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Profile>
  */
 class TagFactory extends Factory
 {

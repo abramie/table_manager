@@ -8,7 +8,7 @@ use App\Models\Evenement;
 use App\Models\Table;
 use App\Models\Tag;
 use App\Models\Triggerwarning;
-use App\Models\User;
+use App\Models\Profile;
 use Database\Factories\CreneauFactory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\Sequence;
@@ -23,15 +23,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        // \App\Models\Profile::factory(10)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
+        // \App\Models\Profile::factory()->create([
+        //     'name' => 'Test Profile',
         //     'email' => 'test@example.com',
         // ]);
 
-        if(User::where('email' ,'=', "admin@som.fr")->doesntExist()){
-            $admin = User::create([
+        if(Profile::where('email' ,'=', "admin@som.fr")->doesntExist()){
+            $admin = Profile::create([
                 'name' => "admin",
                 'email' => "admin@som.fr",
                 'password' => Hash::make('admin'),
@@ -39,29 +39,29 @@ class DatabaseSeeder extends Seeder
             $admin->assignRole('admin');
         }
 
-        if(User::where('email' ,'=', "test@example.com")->doesntExist()) {
-            $test_user = \App\Models\User::factory()->create([
-                'name' => 'Test User',
+        if(Profile::where('email' ,'=', "test@example.com")->doesntExist()) {
+            $test_user = \App\Models\Profile::factory()->create([
+                'name' => 'Test Profile',
                 'email' => 'test@example.com',
                 'password' => Hash::make('test'),
             ]);
         }
 
 
-        if(User::where('email' ,'=', "modo@som.fr")->doesntExist()) {
-            $modo = User::create([
+        if(Profile::where('email' ,'=', "modo@som.fr")->doesntExist()) {
+            $modo = Profile::create([
                 'name' => "modo",
                 'email' => "modo@som.fr",
                 'password' => Hash::make("modo"),
             ]);
         }
 
-        $jeremy = User::create([
+        $jeremy = Profile::create([
             'name' => "jeremy",
             'email' => "jeremyrou@som.fr",
             'password' => Hash::make("test"),
         ]);
-        $mad = User::create([
+        $mad = Profile::create([
             'name' => "mad",
             'email' => "mad@som.fr",
             'password' => Hash::make("mad"),
@@ -74,15 +74,15 @@ class DatabaseSeeder extends Seeder
 
         $modo->assignRole('joueur','mj', 'modo');
 
-        $Random_user = User::factory(50)->create();
+        $Random_user = Profile::factory(50)->create();
 
-        $Random_user->each(function (User $item, int $key) {
+        $Random_user->each(function (Profile $item, int $key) {
             // ...
             $item->assignRole('joueur');
         });
-        $Random_user_mj = User::factory(15)->create();
+        $Random_user_mj = Profile::factory(15)->create();
 
-        $Random_user_mj->each(function (User $item, int $key) {
+        $Random_user_mj->each(function (Profile $item, int $key) {
             // ...
             $item->assignRole('joueur','mj');
         });

@@ -63,21 +63,21 @@ class Creneau extends Model
         return $this->hasMany(Table::class)->where('sans_table', false);
     }
 
-    public function users(){
-        //return $this->through('tables')->has('users');
-        $list_users = collect();
+    public function inscrits(){
+        //return $this->through('tables')->has('inscrits');
+        $list_inscrits = collect();
         foreach ($this->tables as $table){
-            $list_users = $list_users->concat($table->users);
+            $list_inscrits = $list_inscrits->concat($table->inscrits);
         }
-        return $list_users;
+        return $list_inscrits;
     }
 
     public function desinscrit_user($user){
-        //return $this->through('tables')->has('users');
+        //return $this->through('tables')->has('inscrits');
         $values = 0;
         foreach ($this->tables as $table) {
             if($table->inscription_restrainte || $table->sans_table)
-                $values += $table->users()->detach($user);
+                $values += $table->inscrits()->detach($user);
         }
 
         return $values;

@@ -2,7 +2,7 @@
 
 namespace Database\Seeders\ImportBDD;
 
-use App\Models\User;
+use App\Models\Profile;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 

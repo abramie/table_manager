@@ -40,11 +40,15 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'roles' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
     ],
 
     /*
     |--------------------------------------------------------------------------
-    | User Providers
+    | Profile Providers
     |--------------------------------------------------------------------------
     |
     | All authentication drivers have a user provider. This defines how the
@@ -63,6 +67,10 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\Compte::class,
+        ],
+        'roles' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Profile::class,
         ],
 
         // 'users' => [

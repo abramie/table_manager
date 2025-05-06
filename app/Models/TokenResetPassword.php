@@ -9,6 +9,6 @@ class TokenResetPassword extends Model
 
     protected $table = 'password_resets';
     public function user(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Profile::class);
     }
 }

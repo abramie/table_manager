@@ -27,14 +27,15 @@ return new class extends Migration
             $table->double('max_preinscription')->default(0);
             $table->softDeletes();
 
-            $table->foreignId('mj')->constrained(table: 'users')->cascadeOnDelete();
+            $table->foreignId('mj')->nullable()->constrained(table: 'profiles')->nullOnDelete();
         });
 
 
 
         Schema::create('inscrits',function (Blueprint $table) {
-            $table->foreignIdFor(\App\Models\User::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(\App\Models\Profile::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(\App\Models\Table::class)->constrained()->cascadeOnDelete();
+            $table->softDeletes();
         });
 
 

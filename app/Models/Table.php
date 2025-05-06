@@ -53,18 +53,18 @@ class Table extends Model
         return $this->belongsTo(Jeu::class, 'jeu_id');
     }
     public function mjs(): BelongsTo{
-        return $this->belongsTo(User::class, 'mj');
+        return $this->belongsTo(Profile::class, 'mj');
     }
 
-    public function users() : BelongsToMany{
-        return $this->belongsToMany(User::class, 'inscrits');
+    public function inscrits() : BelongsToMany{
+        return $this->belongsToMany(Profile::class, 'inscrits');
     }
 
     /**
      * @return int
      */
     public function nb_inscrits() : int {
-        return $this->users->count();
+        return $this->inscrits->count();
     }
 
     public function triggerwarnings(): BelongsToMany

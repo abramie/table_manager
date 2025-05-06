@@ -2,7 +2,7 @@
 
 namespace Database\Seeders\ImportBDD;
 
-use App\Models\User;
+use App\Models\Profile;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
 
         foreach ($old_values as $old_value) {
             //DB::connection('mysql')->table('users')->insert(json_decode(json_encode($old_value), true));
-            $user = new User();
+            $user = new Profile();
             $user->id = $old_value->id;
             $user->name = $old_value->name;
             $user->email = $old_value->email;

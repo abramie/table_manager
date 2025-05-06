@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\Table;
-use App\Models\User;
+use App\Models\Profile;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -70,7 +70,7 @@ class FormTableRequest extends FormRequest
         $table = $this->route('table');
 
         if( $this->mj_name && \Auth::user()->can('manage_tables_all') ){
-            $mj = User::get()->where('name', $this->mj_name)->first();
+            $mj = Profile::get()->where('name', $this->mj_name)->first();
             if($mj == null){
               throw ValidationException::withMessages([
                   'mj_name' => "Le Mj n'existe pas",
@@ -84,7 +84,7 @@ class FormTableRequest extends FormRequest
 
         if($this->inscrits) {
             $this->merge([
-                'inscrits' => User::whereIn('name', $this->inscrits)->pluck('id')->toArray()
+                'inscrits' => Profile::whereIn('name', $this->inscrits)->pluck('id')->toArray()
             ]);
         }
 

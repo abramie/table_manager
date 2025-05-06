@@ -8,7 +8,7 @@ use App\Models\Creneau;
 use App\Models\Description;
 use App\Models\Evenement;
 use App\Models\Settings;
-use App\Models\User;
+use App\Models\Profile;
 use Illuminate\Http\Request;
 
 class CreneauController extends Controller
@@ -99,7 +99,7 @@ class CreneauController extends Controller
             "duree" => $creneau->duree,
             "nb_joueur_mini" => 0,
             "nb_joueur_max" => 50,
-            "mj" => User::first()->id,
+            "mj" => Profile::first()->id,
             "sans_table" => 1,
             "inscription_restrainte" => 0,
             "debut_table" => $creneau->debut_creneau,

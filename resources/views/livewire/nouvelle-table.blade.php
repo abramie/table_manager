@@ -1,9 +1,10 @@
 <div>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
     <style type="text/css">
 
-        .dropdown-toggle{
+        .dropdown-toggle {
 
             height: 40px;
 
@@ -26,9 +27,10 @@
         @can('manage_tables_all')
             <div class="form-group">
                 <label for="mj_name">Le nom du MJ</label>
-                <select class=" form-control form-select" @error("mj_name") is-invalid @enderror id="mj_name" name="mj_name" data-live-search="true">
+                <select class=" form-control form-select" @error("mj_name") is-invalid @enderror id="mj_name"
+                        name="mj_name" data-live-search="true">
 
-                    @foreach(App\Models\User::role('mj')->get() as $mj)
+                    @foreach(App\Models\Profile::role('mj')->get() as $mj)
                         <option value="{{$mj->name}}" @selected( $table->mjs?->name ? old('mj_name',$table->mjs->name) ==$mj->name : old('mj_name',Auth::user()->name )== $mj->name) >{{$mj->name}}</option>
                     @endforeach
                 </select>
@@ -66,7 +68,8 @@
         <div class="form-group">
             <label for="tw" data-toggle="tooltip" rel="tooltip" data-placement="top"
                    title="{{$descriptions->firstWhere('name','trigger_warnings')->description}}">TW/CW</label>
-            <select wire:model.live="tw"  type="text" class="form-control @error("tw") is-invalid @enderror" id="tw" name="triggerwarnings[]"
+            <select wire:model.live="tw" type="text" class="form-control @error("tw") is-invalid @enderror" id="tw"
+                    name="triggerwarnings[]"
                     multiple data-live-search="true">
                 @php
                     $tw_id = $table->triggerwarnings()->pluck('id','nom');
@@ -91,8 +94,8 @@
                 {{ $message }}
             </div>
             @enderror
-            <input type="text" wire:model.live="new_tw" >
-            <a  class="btn btn-primary"  href="#" wire:click.prevent="add_tw" >
+            <input type="text" wire:model.live="new_tw">
+            <a class="btn btn-primary" href="#" wire:click.prevent="add_tw">
 
                 Ajout de tw
             </a>
@@ -103,7 +106,8 @@
 
         <div class="form-group">
             <label for="tag">Tags</label>
-            <select class="form-control @error("tags") is-invalid @enderror" id="tag" name="tags[]" multiple data-live-search="true">
+            <select class="form-control @error("tags") is-invalid @enderror" id="tag" name="tags[]" multiple
+                    data-live-search="true">
                 @php
                     $tags_id = $table->tags()->pluck('id', 'nom');
                     $tags_unselected = [];
@@ -133,7 +137,7 @@
 
         <script type="text/javascript">
 
-            $(document).ready(function() {
+            $(document).ready(function () {
 
                 $('select').selectpicker();
 
@@ -166,7 +170,8 @@
         <div class="form-group">
             <div class="input-group date">
                 <label for="debut_table">Debut de la table</label>
-                <input type="time" class="form-control @error("debut_table")is-invalid @enderror" id="debut_table" name="debut_table" value="{{old('debut_table', $table->debut_table?->toTimeString())}}">
+                <input type="time" class="form-control @error("debut_table")is-invalid @enderror" id="debut_table"
+                       name="debut_table" value="{{old('debut_table', $table->debut_table?->toTimeString())}}">
                 @error("debut_table")
                 <div id="debut_tableFeedback" class="invalid-feedback">
                     {{ $message }}
@@ -189,13 +194,14 @@
         @can('manage_tables_all')
             <div class="form-group">
                 <label for="inscrits">Joueurs inscrits</label>
-                <select class=" form-control form-select @error("inscrits") is-invalid @enderror"  id="inscrit" name="inscrits[]"  multiple data-live-search="true">
+                <select class=" form-control form-select @error("inscrits") is-invalid @enderror" id="inscrit"
+                        name="inscrits[]" multiple data-live-search="true">
                     @php
                         $users_name =$table->users()->pluck('name');
                         $users_non_inscrits = [];
                     @endphp
 
-                    @foreach(App\Models\User::role('joueur')->get() as $joueur)
+                    @foreach(App\Models\Profile::role('joueur')->get() as $joueur)
                         @if((old('inscrits') ? collect(old('inscrits'))?->contains($joueur->name) : $users_name->contains($joueur->name)))
                             <option value="{{$joueur->name}}" selected>{{$joueur->name}}</option>
 
@@ -208,7 +214,7 @@
 
                     @endforeach
                     @foreach($users_non_inscrits as $joueur)
-                        <option value="{{$joueur->name}}" >{{$joueur->name}}</option>
+                        <option value="{{$joueur->name}}">{{$joueur->name}}</option>
                     @endforeach
                 </select>
 

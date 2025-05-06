@@ -15,7 +15,7 @@ use Spatie\Permission\Traits\HasRoles;
 class Compte extends Authenticatable
 {
     use HasApiTokens, Notifiable;
-    // The User model requires this trait
+    // The Profile model requires this trait
     use HasRoles;
     /**
      * The attributes that are mass assignable.
@@ -42,18 +42,18 @@ class Compte extends Authenticatable
 
 
     public function users() : HasMany{
-        return $this->hasMany(User::class);
+        return $this->hasMany(Profile::class);
     }
 
-    public function mainUser() : HasOne{
-        return $this->hasOne(User::class)->ofMany('order', 'min');
+    public function mainProfile() : HasOne{
+        return $this->hasOne(Profile::class)->ofMany('order', 'min');
     }
 
-    public function currentUser() : HasOne{
-        $currentUser = \Session::get('currentUser',$this->mainUser()->select('name')->first()->name);
+    public function currentProfile() : HasOne{
+        $currentProfile = \Session::get('currentProfile',$this->mainProfile()->select('name')->first()->name);
 
-        return $this->users()->one()->ofMany( [],function (Builder $query) use($currentUser){
-            $query->where('name', '=', $currentUser);
+        return $this->users()->one()->ofMany( [],function (Builder $query) use($currentProfile){
+            $query->where('name', '=', $currentProfile);
         });
     }
 }

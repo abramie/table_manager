@@ -4,7 +4,9 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\CompteController;
 use App\Http\Controllers\CreneauController;
 use App\Http\Controllers\EventController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Profiles\JoueursPageController;
+use App\Http\Controllers\Profiles\MJPageController;
+use App\Http\Controllers\Profiles\ProfileController;
 use App\Http\Controllers\TableController;
 use App\Http\Controllers\TagsController;
 use App\Http\Controllers\TriggerwarningController;
@@ -32,22 +34,28 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::prefix('/{compte}')->middleware('auth')->group(function () {
 
     Route::prefix('/profile')->name('profile.')->group(function () {
-        Route::post('/profile/user-{user:name}/change_role', [ProfileController::class, 'update_role'])->name('change_role');
+        Route::prefix('/{profile}')->group(function () {
 
-        Route::post('/toggleMJ', [ProfileController::class, 'toggleMJ'])->name('toggle-mj');
-        Route::get('/profile/optionMJ', [\App\Http\Controllers\Users\MJPageController::class, 'show'])->name("mj");
-        Route::get('/profile/optionJoueur', [\App\Http\Controllers\Users\JoueursPageController::class, 'show'])->name("joueur");
+            Route::get('/optionMJ', [MJPageController::class, 'show'])->name("mj");
+            Route::get('/optionJoueur', [JoueursPageController::class, 'show'])->name("joueur");
+            Route::get('/change', [ProfileController::class, 'change'])->name('change');
+        });
+
+        Route::get('/show', [ProfileController::class, 'show'])->name('show');
     });
 
 
 
     Route::prefix('/compte')->name("compte.")->group( function () {
-        Route::get('/compte', [CompteController::class, 'edit'])->name('edit');
-        Route::patch('/compte', [CompteController::class, 'update'])->name('update');
-        Route::delete('/compte', [CompteController::class, 'destroy'])->name('destroy');
+        Route::get('/', [CompteController::class, 'edit'])->name('edit');
+        Route::patch('/', [CompteController::class, 'update'])->name('update');
+        Route::delete('/', [CompteController::class, 'destroy'])->name('destroy');
+
+        Route::post('/change_role', [CompteController::class, 'update_role'])->name('change_role');
+        Route::post('/toggleMJ', [CompteController::class, 'toggleMJ'])->name('toggle-mj');
     });
 });
 
@@ -137,7 +145,7 @@ Route::prefix('/events')->name('events.')->group(function () {
                 Route::get('/', [TableController::class, 'show'])->name('show');
                 Route::post('/inscription', [TableController::class, 'inscription_table'])->name('inscription')->middleware('auth');
                 Route::post('/desinscription', [TableController::class, 'desinscription_table'])->name('desinscription')->middleware('auth');
-                Route::post('/desinscription/{user?}', [TableController::class, 'desinscription_table'])->name('desinscription')->middleware('auth')->middleware('permission:manage_tables_all');
+                Route::post('/desinscription/{profile?}', [TableController::class, 'desinscription_table'])->name('desinscription')->middleware('auth')->middleware('permission:manage_tables_all');
             });
         });
     });

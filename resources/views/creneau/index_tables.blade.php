@@ -47,12 +47,12 @@
         </ul>
     --}}
     @php
-        $nb_inscrit = $creneau->tables()->with('users')->get()->pluck('users')->flatten()->count();
+        $nb_inscrit = $creneau->tables()->with('inscrits')->get()->pluck('inscrits')->flatten()->count();
         $max_place = $creneau->tables()->where('sans_table','=',0)->pluck('nb_joueur_max')->sum();
     @endphp
     <div>
         Nombre d'inscrit sur ce creneau : {{ $nb_inscrit}}
-        Place restante : {{$max_place-$creneau->tables()->where('sans_table','=',0)->with('users')->get()->pluck('users')->flatten()->count()}}/{{$max_place}}
+        Place restante : {{$max_place-$creneau->tables()->where('sans_table','=',0)->with('inscrits')->get()->pluck('inscrits')->flatten()->count()}}/{{$max_place}}
     </div>
 
     @foreach($tables as $table)

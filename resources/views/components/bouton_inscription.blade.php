@@ -1,13 +1,13 @@
 <div>
     {{-- Recuperer via methode magique, a besoin de $table--}}
-@if( !Auth::check()|| $table->mjs->id != Auth::user()?->mainUser->id)
+@if( !Auth::check()|| $table->mjs->id != Auth::user()?->currentProfile->id)
     @php
         $ouverture_inscription =$table->creneaus->evenement->ouverture_inscription;
         $inscription_ouverte = $ouverture_inscription->isPast();
         $fermeture_inscription =$table->creneaus->evenement->fermeture_inscription;
         $inscription_fermee = $fermeture_inscription->isPast();
     @endphp
-    @if(Auth::check() && $table->users->contains(Auth::user()->currentUser))
+    @if(Auth::check() && $table->inscrits->contains(Auth::user()->currentProfile))
         <form action="{{route('events.one.creneau.table.desinscription',['evenement'=> $table->creneaus->evenement, 'creneau' => $table->creneaus, 'table'=> $table ])}}" method="post">
             @csrf
             <div class="input-group mb-3">

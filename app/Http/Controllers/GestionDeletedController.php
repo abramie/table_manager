@@ -8,7 +8,7 @@ use App\Models\Evenement;
 use App\Models\Image;
 use App\Models\Settings;
 use App\Models\Table;
-use App\Models\User;
+use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -46,7 +46,7 @@ class GestionDeletedController extends Controller
     public function index_users() : View{
         //dd(Evenement::paginate(3));
         return view('admin.deleted.users', [
-            'evenements' => User::onlyTrashed()->paginate(5)
+            'evenements' => Profile::onlyTrashed()->paginate(5)
         ]);
     }
 

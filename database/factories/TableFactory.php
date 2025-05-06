@@ -4,12 +4,12 @@ namespace Database\Factories;
 
 use App\Models\Creneau;
 use App\Models\Table;
-use App\Models\User;
+use App\Models\Profile;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Profile>
  */
 class TableFactory extends Factory
 {
@@ -29,7 +29,7 @@ class TableFactory extends Factory
             'sans_table'=> false,
             'nb_joueur_min' => $this->faker->numberBetween(2,3),
             'nb_joueur_max' => $this->faker->numberBetween(3,5),
-            'mj' => User::factory(),
+            'mj' => Profile::factory(),
             'creneau_id' => Creneau::factory(),
         ];
     }
@@ -43,7 +43,7 @@ class TableFactory extends Factory
             // ...
         })->afterCreating(function (Table $table) {
             // ...
-            $users = User::role('joueur')->get()->random(rand($table->nb_joueur_min,$table->nb_joueur_max));
+            $users = Profile::role('joueur')->get()->random(rand($table->nb_joueur_min,$table->nb_joueur_max));
             $table->users()->sync($users);
         });
     }

@@ -64,7 +64,7 @@
                 </a>
                 <div class="collapse card-body" id="collapseListInscrits{{$table->id}}">
                     <ul class="list-group list-group-flush">
-                        @foreach($table->users as $inscrit)
+                        @foreach($table->inscrits as $inscrit)
                             <li class="list-group-item">
                                 {{$inscrit->name}}
                             </li>

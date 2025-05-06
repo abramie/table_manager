@@ -1,4 +1,8 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    @php
+        $authCompte = Auth::user();
+        $currentProfile = $authCompte->currentProfile;
+    @endphp
     <div class="container-fluid">
 
     <a class="navbar-brand" href="{{ route("events.index") }}">Retour à l'accueil</a>
@@ -27,17 +31,17 @@
             @endcan
 
             @role('joueur')
-                <x-navigation-item routeName="profile.joueur" contain="joueur" >Joueur</x-navigation-item>
+                <x-navigation-item routeName="profile.joueur" :parameter="[$authCompte, $currentProfile]" contain="joueur" >Joueur</x-navigation-item>
             @endrole
 
             @role('mj')
-                <x-navigation-item routeName="profile.mj" contain="mj" >MJ</x-navigation-item>
+                <x-navigation-item routeName="profile.mj" :parameter="['compte' => $authCompte, 'profile' => $currentProfile]" contain="mj" >MJ</x-navigation-item>
             @endrole
         </ul>
         <div class="pull-right">
             @auth()
                 <div class="nav-item">
-                <a href="{{route("compte.edit")}}"> {{ \Illuminate\Support\Facades\Auth::user()?->currentUser->name }}</a>
+                <a href="{{route("compte.edit", $authCompte)}}"> {{ \Illuminate\Support\Facades\Auth::user()?->currentProfile->name }}</a>
                 </div>
                 <div class="nav-item">
                 <form action="{{route('logout')}}" method="post">

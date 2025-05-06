@@ -13,11 +13,12 @@ use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\Model;
-class User extends Model
+class Profile extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
-    // The User model requires this trait
-    use HasRoles;
+    // The Profile model requires this trait
+
+
     /**
      * The attributes that are mass assignable.
      *

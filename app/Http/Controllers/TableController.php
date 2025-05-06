@@ -12,7 +12,7 @@ use App\Models\Settings;
 use App\Models\Table;
 use App\Models\Tag;
 use App\Models\Triggerwarning;
-use App\Models\User;
+use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -85,7 +85,7 @@ class TableController extends Controller
         $table = Table::create($request->validated());
         $creneau->tables()->save($table);
         $table->triggerwarnings()->sync($request->validated('triggerwarnings'));
-        $table->users()->sync($request->validated('inscrits'));
+        $table->inscrits()->sync($request->validated('inscrits'));
         $table->tags()->sync($request->validated('tags'));
         //Desinscrit le mj de toute les tables où il est inscrit si il ouvre une table.
         if($request->validated('mj') == Auth::user()->id){
@@ -97,7 +97,7 @@ class TableController extends Controller
         if($request->validated('nom_jeu')){
             $jeu = new Jeu;
             $jeu->nom = $request->validated('nom_jeu');
-            $jeu->description = $request->validated('description_jeu');
+            $jeu->description = $request->validated('description_jeu') ?? '';
 
             if($jeu->save()){
                 $table->jeu()->associate($jeu);
@@ -113,8 +113,8 @@ class TableController extends Controller
 
     public function edit(Evenement $evenement,Creneau $creneau,Table $table){
 
-        if(!(auth()->user()->currentUser && (auth()->user()?->currentUser->hasPermissionTo('manage_tables_all') ||
-                (auth()->user()?->currentUser->hasPermissionTo('manage_tables_own')&&  $table->mjs->name ==auth()->user()->currentUser->name)))){
+        if(!(auth()->user()->currentProfile && (auth()->user()?->currentProfile->hasPermissionTo('manage_tables_all') ||
+                (auth()->user()?->currentProfile->hasPermissionTo('manage_tables_own')&&  $table->mjs->name ==auth()->user()->currentProfile->name)))){
             return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau->id])
                 ->with('echec', "Vous n'avez pas l'autorisation de modifier cette table");
         }
@@ -168,7 +168,7 @@ class TableController extends Controller
 
 
         if($request->validated('inscrits'))
-            $table->users()->sync($request->validated('inscrits'));
+            $table->inscrits()->sync($request->validated('inscrits'));
 
 
 
@@ -200,33 +200,33 @@ class TableController extends Controller
     public function inscription_table(Evenement $evenement,Creneau $creneau,Table $table, InscriptionTableRequest $request){
         //Do the attach
         $maxInscription =  $table->max_preinscription;
-        //dd($table->users);
+        //dd($table->inscrits);
         //Verifie dans le creneau de la table si l'utilisateur est inscrit sur une des tables existante, à l'exception de la table "sans table"
-        if(($table->sans_table && $table->users->contains(Auth::user()->currentUser))
-            || $creneau->tables()->with('users')->where("inscription_restrainte", "=","1")->get()->pluck('users')->flatten()->contains('id',Auth::user()->currentUser->id)){
+        if(($table->sans_table && $table->inscrits->contains(Auth::user()->currentProfile))
+            || $creneau->tables()->with('inscrits')->where("inscription_restrainte", "=","1")->get()->pluck('inscrits')->flatten()->contains('id',Auth::user()->currentProfile->id)){
             return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau])
                 ->with('echec', "Vous êtes deja inscrit sur une table ");
         }elseif($table->sans_table){
-            $table->users()->attach(Auth::user()->currentUser);
+            $table->inscrits()->attach(Auth::user()->currentProfile);
             return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau])
                 ->with('success', "Inscription en \"".$table->nom);
-        }elseif($table->mjs == Auth::user()->currentUser){
+        }elseif($table->mjs == Auth::user()->currentProfile){
             return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau])
                 ->with('echec', "Tu ne peut pas t'inscrire sur ta propre table, comment tu es arrivé là ??? ");
         }
-        elseif($creneau->tables()->with('mjs')->get()->pluck('mjs')->flatten()->contains('id',Auth::user()->currentUser->id)){
+        elseif($creneau->tables()->with('mjs')->get()->pluck('mjs')->flatten()->contains('id',Auth::user()->currentProfile->id)){
             return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau])
                 ->with('echec', "Tu es MJ sur ce creneau, tu ne peux pas t'inscrire");
         }
-        elseif(!$table->sans_table && $table->users->count() > $maxInscription){
+        elseif(!$table->sans_table && $table->inscrits->count() > $maxInscription){
             return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau])
                 ->with('echec', "Ce creneau impose une limite au nombre de personnes pouvant s'inscrire via la platforme à une table.Cette limite est de : ".$maxInscription );
         }
-        elseif($table->users->count() < $table->nb_joueur_max){
-            $table->users()->attach(Auth::user()->currentUser);
+        elseif($table->inscrits->count() < $table->nb_joueur_max){
+            $table->inscrits()->attach(Auth::user()->currentProfile);
             //Desinscrit de sans table uniquement si on s'inscrit sur une table restreinte (une vrai table et pas du bénévolat ou qqch)
             if($table->inscription_restrainte)
-                $creneau->tables()->where("sans_table", "=","1")->get()->first()?->users()->detach(Auth::user()->currentUser);
+                $creneau->tables()->where("sans_table", "=","1")->get()->first()?->inscrits()->detach(Auth::user()->currentProfile);
             return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau])
                 ->with('success', "Inscription validée sur la table \"".$table->nom);
         }else{
@@ -236,18 +236,18 @@ class TableController extends Controller
 
 
     }
-    public function desinscription_table(Evenement $evenement,Creneau $creneau,Table $table,User $user = null, InscriptionTableRequest $request){
+    public function desinscription_table(Evenement $evenement, Creneau $creneau, Table $table, Profile $profile , InscriptionTableRequest $request){
         //Do the attach
 
-        if($user->getConnectionName() ==null){
-            $user = Auth::user()->currentUser;
+        if($profile->getConnectionName() ==null){
+            $profile = Auth::user()->currentProfile;
             $success_message = "Vous vous êtes bien désinscrit de la table : ".$table->nom;
         }else{
-            $success_message = "L'utilisateur {$user->name} a bien été désinscrit de la table : ".$table->nom;
+            $success_message = "L'utilisateur {$profile->name} a bien été désinscrit de la table : ".$table->nom;
 
         }
 
-        $table->users()->detach($user);
+        $table->inscrits()->detach($profile);
 
         return redirect()->back()
             ->with('success', $success_message);

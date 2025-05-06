@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FormUpdateRoleRequest;
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Compte;
+use App\Models\Profile;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,17 +16,17 @@ class CompteController extends Controller
 {
     //
     /**
-     * Display the user's profile form.
+     * Display the user's compte form.
      */
-    public function edit(Request $request): View
+    public function edit(Request $request, Compte $compte): View
     {
-        return view('profile.edit', [
-            'user' => $request->user(),
+        return view('compte.edit', [
+            "compte" => $compte,
         ]);
     }
 
     /**
-     * Update the user's profile information.
+     * Update the user's compte information.
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
@@ -35,7 +38,7 @@ class CompteController extends Controller
 
         $request->user()->save();
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return Redirect::route('compte.edit')->with('status', 'compte-updated');
     }
 
     /**
@@ -57,5 +60,27 @@ class CompteController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+
+    public function update_role(Compte $compte, FormUpdateRoleRequest $request){
+        if(Auth::user()->hasPermissionTo('manage_roles') || $compte == Auth::user()){
+            $compte->syncRoles($request->validated());
+            return Redirect::route('admin.users');
+        }else{
+            return Redirect::route('admin.users');
+        }
+
+
+    }
+
+    public function toggleMJ(){
+        $compte = Auth::user();
+        if($compte->hasRole('mj')){
+            $compte->removeRole('mj');
+        }else{
+            $compte->assignRole('mj');;
+        }
+        return back();
     }
 }
