@@ -19,11 +19,11 @@ return new class extends Migration
             $table->double('nb_inscription_online_max')->default(50)->comment("Le nombre maximum d'inscription
             sur une table via le logiciel autorisé. -1 pour pas de limite");
             $table->longText('description')->nullable();
-            $table->date('date_debut');
-            $table->date('archivage')->nullable();
-            $table->date('ouverture_inscription');
-            $table->date('fermeture_inscription');
-            $table->date('affichage_evenement');
+            $table->dateTime('date_debut');
+            $table->dateTime('archivage')->nullable();
+            $table->dateTime('ouverture_inscription');
+            $table->dateTime('fermeture_inscription');
+            $table->dateTime('affichage_evenement');
             //Ajout relationel creneaux
             //$table->dateTime('date');
             $table->timestamps();

@@ -20,7 +20,7 @@ return new class extends Migration
             sur une table via le logiciel autorisé.")->default(50);
             $table->boolean('sans_table')->default(0);
             $table->longText('description')->nullable();
-            $table->date('debut_creneau');
+            $table->dateTime('debut_creneau');
             //$table->dateTime('date');
             $table->timestamps();
             $table->softDeletes();
