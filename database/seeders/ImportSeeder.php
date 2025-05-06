@@ -9,6 +9,7 @@ use Database\Seeders\ImportBDD\EventSeeder;
 use Database\Seeders\ImportBDD\imageSeeder;
 use Database\Seeders\ImportBDD\InscritsSeeder;
 use Database\Seeders\ImportBDD\JeuxSeeder;
+use Database\Seeders\ImportBDD\RolesSeeder;
 use Database\Seeders\ImportBDD\SettingsSeeder;
 use Database\Seeders\ImportBDD\tableSeeder;
 use Database\Seeders\ImportBDD\TriggerwarningsSeeder;
@@ -22,6 +23,7 @@ class ImportSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             CompteSeeder::class,
+            RolesSeeder::class,
             imageSeeder::class,
             jeuxSeeder::class,
             EventSeeder::class,
