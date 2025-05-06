@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     @php
         $authCompte = Auth::user();
-        $currentProfile = $authCompte->currentProfile;
+        $currentProfile = $authCompte?->currentProfile;
     @endphp
     <div class="container-fluid">
 
