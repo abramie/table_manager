@@ -41,7 +41,7 @@ class Compte extends Authenticatable
     ];
 
 
-    public function users() : HasMany{
+    public function profiles() : HasMany{
         return $this->hasMany(Profile::class);
     }
 
@@ -51,10 +51,11 @@ class Compte extends Authenticatable
 
     public function currentProfile() : HasOne{
         $currentProfile = \Session::get('currentProfile',$this->mainProfile()->select('name')->first()->name);
-
-        return $this->users()->one()->ofMany( [],function (Builder $query) use($currentProfile){
+        $relation = $this->profiles()->one()->ofMany( [],function (Builder $query) use($currentProfile){
             $query->where('name', '=', $currentProfile);
         });
+
+        return $relation->exists() ? $relation : $this->mainProfile();
     }
 }
 

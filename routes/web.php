@@ -42,9 +42,11 @@ Route::prefix('/{compte}')->middleware('auth')->group(function () {
             Route::get('/optionMJ', [MJPageController::class, 'show'])->name("mj");
             Route::get('/optionJoueur', [JoueursPageController::class, 'show'])->name("joueur");
             Route::get('/change', [ProfileController::class, 'change'])->name('change');
+            Route::post('/update', [ProfileController::class, 'update'])->name('update');
         });
 
         Route::get('/show', [ProfileController::class, 'show'])->name('show');
+        Route::post('/store', [ProfileController::class, 'store'])->name('store');
     });
 
 

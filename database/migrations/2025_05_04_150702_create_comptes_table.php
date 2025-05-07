@@ -19,7 +19,6 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
 
-            $table->foreignIdFor(\App\Models\Compte::class)->nullable()->constrained()->nullOnDelete();
         });
 
         Schema::table('profiles', function (Blueprint $table) {

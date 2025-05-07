@@ -1,5 +1,6 @@
 @extends('layouts.master')
-@section('content')
+@section('navigation_bonus')
+
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
         <div class="collapse navbar-collapse" id="navbarNav">
@@ -18,6 +19,10 @@
             </ul>
         </div>
     </nav>
+@endsection
+
+@section('content')
+
 
 
 

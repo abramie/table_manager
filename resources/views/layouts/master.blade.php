@@ -2,7 +2,7 @@
 
 @yield('navigation_bonus')
 @livewireStyles
-<a  href="{{ url()->previous() }}">
+<a  href="{{ url()->previous() }}" class="btn btn-primary">
     <i class="fa fa-arrow-circle-o-left"></i>
     <span>Back</span>
 </a>
