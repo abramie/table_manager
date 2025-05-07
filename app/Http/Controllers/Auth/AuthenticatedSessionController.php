@@ -32,8 +32,10 @@ class AuthenticatedSessionController extends Controller
 
 //dd($user);
         $request->session()->put('currentProfile', $user->mainProfile->name);
+
         return redirect()->intended(RouteServiceProvider::HOME);
     }
+
 
     /**
      * Destroy an authenticated session.

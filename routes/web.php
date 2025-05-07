@@ -145,7 +145,12 @@ Route::prefix('/events')->name('events.')->group(function () {
                 Route::post('/edit', [TableController::class, 'update'])->middleware('auth')->middleware('permission:manage_tables_all|manage_tables_own');
                 Route::get('/delete', [TableController::class, 'delete'])->name('delete')->middleware('permission:manage_tables_all|manage_tables_own');
                 Route::get('/', [TableController::class, 'show'])->name('show');
-                Route::post('/inscription', [TableController::class, 'inscription_table'])->name('inscription')->middleware('auth');
+                Route::post('/inscription/{profile?}', [TableController::class, 'inscription_table'])->name('inscription');
+                Route::get('/attempt/inscription', [TableController::class, 'inscriptionLoggedOut'])->name('inscriptionLoggedOut');
+                Route::post('/attempt/inscription/login', [TableController::class, 'inscriptionLogin'])->name('inscriptionLogin');
+                Route::post('/attempt/inscription/register', [TableController::class, 'inscriptionRegister'])->name('inscriptionRegister');
+                Route::post('/attempt/inscription/profil', [TableController::class, 'inscriptionProfil'])->name('inscriptionProfil');
+
                 Route::post('/desinscription', [TableController::class, 'desinscription_table'])->name('desinscription')->middleware('auth');
                 Route::post('/desinscription/{profile?}', [TableController::class, 'desinscription_table'])->name('desinscription')->middleware('auth')->middleware('permission:manage_tables_all');
             });

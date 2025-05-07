@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Compte;
 use App\Models\Profile;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -32,21 +33,20 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255','unique:'.Profile::class],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.Profile::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.Compte::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $user = Profile::create([
-            'name' => $request->name,
+        $user = Compte::create([
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
         $user->assignRole('joueur');
+
         event(new Registered($user));
 
         Auth::login($user);
-
+        $request->session()->put('currentProfile', $user->mainProfile->name);
         return redirect(RouteServiceProvider::HOME);
     }
 }
