@@ -27,8 +27,8 @@
             <select class=" form-control form-select" @error("mj_name") is-invalid @enderror id="mj_name" name="mj_name"
                     data-live-search="true">
 
-                @foreach(App\Models\Profile::role('mj')->get() as $mj)
-                    <option value="{{$mj->name}}" @selected( $table->mjs?->name ? old('mj_name',$table->mjs->name) ==$mj->name : old('mj_name',Auth::user()->name )== $mj->name) >{{$mj->name}}</option>
+                @foreach(App\Models\Compte::role('mj')->get() as $mj)
+                    <option value="{{$mj->mainProfile->name}}" @selected( $table->mjs?->name ? old('mj_name',$table->mjs->name) ==$mj->mainProfile->name : old('mj_name',Auth::user()->mainProfile->name )== $mj->mainProfile->name) >{{$mj->mainProfile->name}}</option>
                 @endforeach
             </select>
             @error("mj_name")
@@ -223,11 +223,11 @@
             <select class=" form-control form-select @error("inscrits") is-invalid @enderror" id="inscrit"
                     name="inscrits[]" multiple data-live-search="true">
                 @php
-                    $users_name =$table->users()->pluck('name');
+                    $users_name =$table->inscrits()->pluck('name');
                     $users_non_inscrits = [];
                 @endphp
 
-                @foreach(App\Models\Profile::role('joueur')->get() as $joueur)
+                @foreach(App\Models\Profile::get() as $joueur)
                     @if((old('inscrits') ? collect(old('inscrits'))?->contains($joueur->name) : $users_name->contains($joueur->name)))
                         <option value="{{$joueur->name}}" selected>{{$joueur->name}}</option>
 

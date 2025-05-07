@@ -31,7 +31,7 @@
             @endcan
 
             @role('joueur')
-                <x-navigation-item routeName="profile.joueur" :parameter="[$authCompte, $currentProfile]" contain="joueur" >Joueur</x-navigation-item>
+                <x-navigation-item routeName="profile.show" :parameter="[$authCompte]" contain="joueur" >Profiles</x-navigation-item>
             @endrole
 
             @role('mj')

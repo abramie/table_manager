@@ -113,8 +113,8 @@ class TableController extends Controller
 
     public function edit(Evenement $evenement,Creneau $creneau,Table $table){
 
-        if(!(auth()->user()->currentProfile && (auth()->user()?->currentProfile->hasPermissionTo('manage_tables_all') ||
-                (auth()->user()?->currentProfile->hasPermissionTo('manage_tables_own')&&  $table->mjs->name ==auth()->user()->currentProfile->name)))){
+        if(!(auth()->user()->currentProfile && (auth()->user()?->can('manage_tables_all') ||
+                (auth()->user()?->can('manage_tables_own')&&  $table->mjs->name ==auth()->user()->currentProfile->name)))){
             return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau->id])
                 ->with('echec', "Vous n'avez pas l'autorisation de modifier cette table");
         }
@@ -178,8 +178,8 @@ class TableController extends Controller
     }
 
     public function delete(Evenement $evenement,Creneau $creneau,Table $table){
-        if(!(auth()->user() && (auth()->user()?->hasPermissionTo('manage_tables_all') ||
-                (auth()->user()?->hasPermissionTo('manage_tables_own')&&  $table->mjs->name ==auth()->user()->name)))){
+        if(!(auth()->user() && (auth()->user()?->can('manage_tables_all') ||
+                (auth()->user()?->can('manage_tables_own')&&  $table->mjs->name ==auth()->user()->name)))){
             return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau])
                 ->with('echec', "Vous n'avez pas l'autorisation de modifier cette table");
         }
@@ -214,7 +214,7 @@ class TableController extends Controller
             return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau])
                 ->with('echec', "Tu ne peut pas t'inscrire sur ta propre table, comment tu es arrivé là ??? ");
         }
-        elseif($creneau->tables()->with('mjs')->get()->pluck('mjs')->flatten()->contains('id',Auth::user()->currentProfile->id)){
+        elseif($creneau->tables()->with('mjs')->where("inscription_restrainte", "=","1")->get()->pluck('mjs')->flatten()->contains('id',Auth::user()->currentProfile->id)){
             return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau])
                 ->with('echec', "Tu es MJ sur ce creneau, tu ne peux pas t'inscrire");
         }

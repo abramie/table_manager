@@ -9,7 +9,7 @@ use App\Models\Compte;
 use App\Models\Profile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
@@ -38,5 +38,9 @@ class ProfileController extends Controller
         return redirect()->route('profile.show', ['compte' => $compte]);
     }
 
+    public function change(Request $request, Compte $compte, Profile $profile){
+        $request->session()->put('currentProfile', $profile->name);
+        return redirect()->route('profile.show', ['compte' => $compte]);
+    }
 
 }

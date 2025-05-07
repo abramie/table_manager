@@ -35,6 +35,7 @@ return new class extends Migration
         Schema::create('inscrits',function (Blueprint $table) {
             $table->foreignIdFor(\App\Models\Profile::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(\App\Models\Table::class)->constrained()->cascadeOnDelete();
+            $table->string('status')->default('inscrit');
             $table->softDeletes();
         });
 
