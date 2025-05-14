@@ -168,15 +168,11 @@ class TableController extends Controller
         }
 
         $table->update($request->validated());
-
         $table->triggerwarnings()->sync($request->validated('triggerwarnings'));
         $table->tags()->sync($request->validated('tags'));
 
-
         if($request->validated('inscrits'))
             $table->inscrits()->sync($request->validated('inscrits'));
-
-
 
         return redirect()->route('events.one.creneau.table.show', ['evenement' => $evenement,'creneau' => $creneau,'table'=> $table])
             ->with('success', "Le table a bien été modifier");
@@ -202,8 +198,6 @@ class TableController extends Controller
             return redirect()->route('tw.add')->withInput();
         }
     }
-
-
 
     public function inscription_table(Evenement $evenement,Creneau $creneau,Table $table, Profile|null $profile = null){
         //Do the attach
@@ -305,7 +299,6 @@ class TableController extends Controller
             return $this->inscription_table($evenement, $creneau, $table, $profile);
 
         }
-        return redirect()->route("events.one.creneau.table.inscription", ['evenement' => $evenement, 'creneau' => $creneau, "table" => $table]);
     }
     public function desinscription_table(Evenement $evenement, Creneau $creneau, Table $table, Profile $profile , InscriptionTableRequest $request){
         //Do the attach

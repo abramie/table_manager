@@ -33,8 +33,8 @@ class FormEventRequest extends FormRequest
             'max_tables' => ['regex:/^[0-9]+$/' ],
             'nb_inscription_online_max' => ['regex:/^[0-9]+$/' ],
             'date_debut' => ['required', 'date', 'after:today'],
-            'ouverture_inscription' =>['required', 'date', 'before_or_equal:date_debut'],
-            'fermeture_inscription' =>['required', 'date', 'before_or_equal:date_debut'],
+            'ouverture_inscription' =>['required', 'date'],
+            'fermeture_inscription' =>['required', 'date'],
             'affichage_evenement' =>['required', 'date', 'before_or_equal:date_debut'],
             'description' => [],
 
