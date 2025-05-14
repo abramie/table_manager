@@ -19,13 +19,14 @@
         <div class="row align-items-start g-0">
             @php
                 $date = $evenement->date_debut;
-                 $showMinute = $date->minute >0 ? ($date->minute > 9 ?$date->minute  : '0' . $date->minute ) : '';
+                 $showMinute = $date->minute > 0 ? ($date->minute > 9 ?$date->minute  : '0' . $date->minute ) : '';
             @endphp
             @if($evenement->image)
                 <div class="col-md-4">
-
+                    <a href="{{$route}}">
                     <img src="{{asset("storage/images/".$evenement->image?->title)}}" alt="description" width="300"
                          height="250" class="img-thumbnail rounded-start"/>
+                    </a>
                 </div>
             @endif
             <div class="col-md-8">
@@ -64,10 +65,10 @@
                 <h4 class="card-subtitle mb-2 text-body-secondary">{{$evenement->showDate()}} à partir de {{$date->hour}}h{{$showMinute}}</h4>
 
                 <p class="card-text">
-                    @if(strlen($evenement->description) < 100)
+                    @if(strlen($evenement->description) < 300)
                         {{$evenement->description}}
                     @else
-                        {{substr($evenement->description, 0,100) . "..." }}
+                        {{substr($evenement->description, 0,300) . "..." }}
                     @endif
                 </p>
 

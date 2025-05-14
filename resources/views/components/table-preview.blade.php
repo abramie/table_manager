@@ -8,42 +8,42 @@
         <h3 class="card-title">
             <a href="{{route('events.one.creneau.table.show', ['evenement' => $table->creneaus->evenement->slug, 'creneau' => $table->creneaus, 'table' => $table])}}">{{$table->nom}}</a>
         </h3>
-        @if(!$isSansTable)
-            <h5 class="card-subtitle mb-2 text-body-secondary">MJ : {{$table->mjs->name}}
-                @if($showDate)
-                {{$table->creneaus->debut_creneau->toDateString()}}
-                {{$table->debut_table->toTimeString($unitPrecision ='minute')}}
-                @endif
-            </h5>
-            @if($table->jeu)
-                Jeu : {{$table->jeu?->nom}}
-            @endif
-
-            @if(!$table->tags->isEmpty())
-                <p>
-                    Tags :
-                    @foreach($table->tags as $tag )
-                        <span class=" card-text badge badge-pill badge-secondary">{{$tag->nom}}</span>
-                    @endforeach
-                </p>
-
-            @endif
-
-            @if(!$table->triggerwarnings->isEmpty())
-                <p>
-                    {{$settings->firstWhere('name','nom_trigger')->value}} :
-
-                    @foreach($table->triggerwarnings as $tw )
-                        <span class="badge bg-secondary">{{$tw->nom}}</span>
-                    @endforeach
-                </p>
-            @endif
-        @endif
-
         <div class="row align-items-start">
 
 
             <div class="col">
+                @if(!$isSansTable)
+                    <h5 class="card-subtitle mb-2 text-body-secondary">MJ : {{$table->mjs->name}}
+                        @if($showDate)
+                        {{$table->creneaus->debut_creneau->toDateString()}}
+                        {{$table->debut_table->toTimeString($unitPrecision ='minute')}}
+                        @endif
+                    </h5>
+                    @if($table->jeu)
+                        Jeu : {{$table->jeu?->nom}}
+                    @endif
+
+                    @if(!$table->tags->isEmpty())
+                        <p>
+                            Tags :
+                            @foreach($table->tags as $tag )
+                                <span class=" card-text badge badge-pill badge-secondary">{{$tag->nom}}</span>
+                            @endforeach
+                        </p>
+
+                    @endif
+
+                    @if(!$table->triggerwarnings->isEmpty())
+                        <p>
+                            {{$settings->firstWhere('name','nom_trigger')->value}} :
+
+                            @foreach($table->triggerwarnings as $tw )
+                                <span class="badge bg-secondary">{{$tw->nom}}</span>
+                            @endforeach
+                        </p>
+                    @endif
+                @endif
+
                 <p class="card-text">
                     @if(strlen($table->description) < 1000)
                         {{$table->description}}
@@ -53,23 +53,22 @@
                 </p>
             </div>
             <div class="col">
-
-
                 <a class="btn btn-link bt-xs" data-toggle="collapse" href="#collapseListInscrits{{$table->id}}"
-                   role="button" aria-expanded="false" aria-controls="collapseExample">
-                    Inscrits : {{$table->nb_inscrits()}} @if(!$isSansTable)
+                   role="button" aria-expanded="false" aria-controls="collapse">
+                    Inscrits : {{$table->nb_inscrits()}}
+                    @if(!$isSansTable)
                         / {{$table->nb_joueur_max}}
                     @endif
                     ⬇️
                 </a>
-                <div class="collapse card-body" id="collapseListInscrits{{$table->id}}">
-                    <ul class="list-group list-group-flush">
+                <div class="collapse" id="collapseListInscrits{{$table->id}}">
+                    <div class="d-flex flex-wrap">
                         @foreach($table->inscrits as $inscrit)
-                            <li class="list-group-item">
+                            <div class="p-2 px-3 border border-solid border-zinc-950 m-1">
                                 {{$inscrit->name}}
-                            </li>
+                            </div>
                         @endforeach
-                    </ul>
+                    </div>
                 </div>
             </div>
 

@@ -5,7 +5,7 @@
 
 @section('content')
 
-    <h1>Index event
+    <h1>Événements à venir
         @can('ajout_events')
             <button class="btn btn-xs btn-warning pull-right" type="button"
                     onclick="window.location='{{ route("events.add") }}'">

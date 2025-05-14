@@ -5,30 +5,43 @@
 
 @section('content')
     <h1>{{$evenement->nom_evenement}}</h1>
-    @if($evenement->image)
-        <img src="{{asset("storage/images/".$evenement->image?->title)}}" alt="description" width="300" height="250"/>
-    @endif
-    <p class="text-justify">
-        {{$evenement->description}}
-    </p>
     @can('ajout_events')
         <button class="btn btn-xs btn-warning pull-right" type="button"
                 onclick="window.location='{{ route("events.one.edit",['evenement'=> $evenement]) }}'">
             Edit
         </button>
     @endcan
+    <div class="d-flex">
+        @if($evenement->image)
+            <img src="{{asset("storage/images/".$evenement->image?->title)}}" alt="description" width="300" height="250"/>
+        @endif
+        <div class="ml-5">
+            <h3>{{$evenement->showDate()}} {{$evenement->date_debut->year}}</h3>
+
+            <p class="text-justify">
+                {{$evenement->description}}
+            </p>
+        </div>
+    </div>
+
+
+
     <table class="table">
         <thead>
-        <tr>
-            <th colspan="2">The table header</th>
+        <tr >
+            <th colspan="2" >Créneaux</th>
         </tr>
         </thead>
         <tbody>
         <tr>
-            <th scope="col">Nom creneau</th>
+            <th scope="col">Nom du créneau</th>
             <th scope="col">Début</th>
             <th scope="col">durée</th>
             <th scope="col">Nombre de tables</th>
+            @can('ajout_events')
+                <th></th>
+                <th></th>
+            @endcan
         </tr>
         @foreach($evenement->creneaus()->get() as $creneau)
             @php $date_creneau = $creneau->debut_creneau;
@@ -71,7 +84,7 @@
         <p>
             <button class="btn btn-xs btn-info " type="button"
                     onclick="window.location='{{ route("events.one.add",['evenement'=> $evenement]) }}'">
-                ajout d'un creneau
+                Ajout d'un creneau
             </button>
         </p>
     @endcan
