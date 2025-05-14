@@ -29,6 +29,6 @@ class TriggerwarningController extends Controller
             return redirect(session('links'))->withInput();
         }
         else
-            return redirect()->route('tags.add');
+            return redirect()->route('tw.add');
     }
 }
