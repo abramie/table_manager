@@ -86,7 +86,7 @@ Route::prefix('/admin')->name('admin.')->middleware('auth')->middleware('role:ad
         Route::get('/restore/{type}/{id}', [\App\Http\Controllers\GestionDeletedController::class, 'restore'])->name('.restore');
         Route::get('/delete/{type}/{id}', [\App\Http\Controllers\GestionDeletedController::class, 'delete'])->name('.delete');
     });
-    Route::get('/users', [\App\Http\Controllers\UserController::class, 'index'])->name('users');
+    Route::get('/users', [\App\Http\Controllers\CompteController::class, 'index'])->name('users');
     Route::prefix('/settings')->name('settings')->group(function(){
         Route::get('/', [\App\Http\Controllers\SettingsController::class, 'index']);
         Route::post('/{setting}', [\App\Http\Controllers\SettingsController::class, 'update'])->name(".update");
