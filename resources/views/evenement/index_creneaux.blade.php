@@ -38,6 +38,7 @@
             <th scope="col">Début</th>
             <th scope="col">durée</th>
             <th scope="col">Nombre de tables</th>
+            <th scope="col">Nombre de personnes inscrit.e.s</th>
             @can('ajout_events')
                 <th></th>
                 <th></th>
@@ -60,6 +61,7 @@
                 </td>
                 <td>{{$creneau->duree}}h</td>
                 <td>{{$creneau->tables_normal->count()}}</td>
+                <td>{{$creneau->tables()->withCount('inscrits')->get()->sum('inscrits_count')}}</td>
 
                 @can('ajout_events')
                     <td>

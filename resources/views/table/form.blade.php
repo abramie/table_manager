@@ -230,14 +230,11 @@
                 @foreach(App\Models\Profile::get() as $joueur)
                     @if((old('inscrits') ? collect(old('inscrits'))?->contains($joueur->name) : $users_name->contains($joueur->name)))
                         <option value="{{$joueur->name}}" selected>{{$joueur->name}}</option>
-
                     @else
                         @php
                             $users_non_inscrits[] = $joueur;
                         @endphp
-
                     @endif
-
                 @endforeach
                 @foreach($users_non_inscrits as $joueur)
                     <option value="{{$joueur->name}}">{{$joueur->name}}</option>

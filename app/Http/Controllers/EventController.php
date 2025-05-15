@@ -67,7 +67,7 @@ class EventController extends Controller
     public function show(Evenement $evenement, Request $request){
         return view('evenement.index_creneaux', [
             'evenement' => $evenement
-        ]);;
+        ]);
     }
 
     /*
