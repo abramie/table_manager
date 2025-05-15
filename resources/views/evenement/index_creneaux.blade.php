@@ -60,8 +60,8 @@
                     @endif {{$date_creneau->hour}}h{{ $showMinute }}
                 </td>
                 <td>{{$creneau->duree}}h</td>
-                <td>{{$creneau->tables_normal->count()}}</td>
-                <td>{{$creneau->tables()->withCount('inscrits')->get()->sum('inscrits_count')}}</td>
+                <td class="text-center">{{$creneau->tables_normal->count()}}</td>
+                <td class="text-center">{{$creneau->tables()->withCount('inscrits')->get()->sum('inscrits_count')}}</td>
 
                 @can('ajout_events')
                     <td>
