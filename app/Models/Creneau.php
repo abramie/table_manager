@@ -73,12 +73,12 @@ class Creneau extends Model
         return $list_inscrits;
     }
 
-    public function desinscrit_user($user){
+    public function desinscrit_user($profile){
         //return $this->through('tables')->has('inscrits');
         $values = 0;
         foreach ($this->tables as $table) {
             if($table->inscription_restrainte || $table->sans_table)
-                $values += $table->inscrits()->detach($user);
+                $values += $table->inscrits()->detach($profile);
         }
 
         return $values;

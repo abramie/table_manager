@@ -28,7 +28,7 @@ class FormTableRequest extends FormRequest
          * **/
         return ($table == null && $this->user()->can("ajout_tables"))
             || $this->user()->can('manage_tables_all')
-            || ($table && $this->user()->can('manage_tables_own') && $table->mjs->id == $this->user()->id) ;
+            || ($table && $this->user()->can('manage_tables_own') && $table->mjs->id == $this->user()->currentProfile->id) ;
 
     }
 
@@ -55,7 +55,7 @@ class FormTableRequest extends FormRequest
             'triggerwarnings' => ['array', 'exists:triggerwarnings,id'],
             'mj' => ['required'],
             'debut_table' => ['required', 'date', 'after_or_equal:debut_creneau'],
-            'inscrits' => ['array', 'exists:users,id'],
+            'inscrits' => ['array', 'exists:profiles,id'],
             'nom_jeu' => [''],
             'description_jeu' => [''],
             'max_preinscription' => ['required','regex:/^[0-9]+$/'],
@@ -78,7 +78,7 @@ class FormTableRequest extends FormRequest
               ]);
             }
         }else {
-            $mj = \Auth::user();
+            $mj = \Auth::user()->currentProfile;
         }
         $creneau = $this->route('creneau');
 

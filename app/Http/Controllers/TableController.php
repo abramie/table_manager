@@ -94,8 +94,8 @@ class TableController extends Controller
         $table->inscrits()->sync($request->validated('inscrits'));
         $table->tags()->sync($request->validated('tags'));
         //Desinscrit le mj de toute les tables où il est inscrit si il ouvre une table.
-        if($request->validated('mj') == Auth::user()->id){
-            $desincription = $creneau->desinscrit_user(Auth::user());
+        if($request->validated('mj') == Auth::user()->currentProfile->id){
+            $desincription = $creneau->desinscrit_user(Auth::user()->currentProfile);
         }else{
             $desincription = 0;
         }
@@ -119,8 +119,9 @@ class TableController extends Controller
 
     public function edit(Evenement $evenement,Creneau $creneau,Table $table){
 
-        if(!(auth()->user()->currentProfile && (auth()->user()?->can('manage_tables_all') ||
-                (auth()->user()?->can('manage_tables_own')&&  $table->mjs->name ==auth()->user()->currentProfile->name)))){
+        if(!(auth()->user()?->can('manage_tables_all') ||
+            (auth()->user()?->can('manage_tables_own') &&  $table->mjs == auth()->user()->currentProfile)
+        )){
             return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau->id])
                 ->with('echec', "Vous n'avez pas l'autorisation de modifier cette table");
         }
@@ -181,7 +182,7 @@ class TableController extends Controller
 
     public function delete(Evenement $evenement,Creneau $creneau,Table $table){
         if(!(auth()->user() && (auth()->user()?->can('manage_tables_all') ||
-                (auth()->user()?->can('manage_tables_own')&&  $table->mjs->name ==auth()->user()->name)))){
+                (auth()->user()?->can('manage_tables_own')&&  $table->mjs->name ==auth()->user()->currentProfile->name)))){
             return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau])
                 ->with('echec', "Vous n'avez pas l'autorisation de modifier cette table");
         }
