@@ -11,7 +11,6 @@ class ImportProd extends Seeder
         // Connect to production database
         $live_database = DB::connection('mysqlProd');
         // Get table data from production
-        $live_database->
         foreach($live_database->table('table_name')->get() as $data){
             // Save data to staging database - default db connection
             DB::table('table_name')->insert((array) $data);

@@ -39,7 +39,7 @@
                         {{$evenement->nom_evenement}}</a></h2>
 
                 @can('ajout_events')
-                    <div class="pull-right">
+                    <div class="pull-end">
                         <button class="btn btn-xs btn-danger " type="button"
                                 onclick="window.location='{{ route("events.one.delete",['evenement'=> $evenement]) }}'">
                             Delete
