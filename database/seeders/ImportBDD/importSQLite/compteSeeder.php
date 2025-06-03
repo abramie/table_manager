@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders\ImportBDD;
+namespace Database\Seeders\ImportBDD\importSQLite;
 
 use App\Models\Compte;
 use App\Models\Profile;

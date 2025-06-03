@@ -12,6 +12,7 @@
             <tr>
                 <th scope="col">Nom</th>
                 <th scope="col">Mail</th>
+                <th scope="col">nb profiles</th>
                 <th scope="col">Role</th>
             </tr>
             </thead>
@@ -21,6 +22,7 @@
                 <tr>
                     <td>{{$user->name}}</td>
                     <td>{{$user->email}}</td>
+                    <td>{{$user->profiles()->count()}}</td>
                     <td>
                         <form action="{{route('compte.change_role', $user)}}" method="post">
                             @csrf

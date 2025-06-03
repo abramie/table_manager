@@ -13,9 +13,11 @@
                     <a class="nav-link" href="{{route("profile.show", $compte)}}">Profiles</a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route("profile.mj",["compte" => $compte, "profile" => $compte->currentProfile])}}">MJ</a>
-                </li>
+                @if($compte->hasProfile())
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route("profile.mj",["compte" => $compte, "profile" => $compte->currentProfile])}}">MJ</a>
+                    </li>
+                @endif
             </ul>
         </div>
     </nav>

@@ -50,12 +50,24 @@ class Compte extends Authenticatable
     }
 
     public function currentProfile() : HasOne{
-        $currentProfile = \Session::get('currentProfile',$this->mainProfile()->select('name')->first()->name);
-        $relation = $this->profiles()->one()->ofMany( [],function (Builder $query) use($currentProfile){
-            $query->where('name', '=', $currentProfile);
-        });
+
+        $currentProfile = \Session::get('currentProfile');
+        if($currentProfile){
+            $relation = $this->profiles()->one()->ofMany( [],function (Builder $query) use($currentProfile){
+                $query->where('name', '=', $currentProfile);
+            });
+        }else{
+            return $this->mainProfile();
+        }
+
+
+
 
         return $relation->exists() ? $relation : $this->mainProfile();
+    }
+
+    public function hasProfile() : bool{
+        return $this->profiles()->exists();
     }
 }
 

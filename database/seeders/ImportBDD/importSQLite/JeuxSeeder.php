@@ -1,8 +1,7 @@
 <?php
 
-namespace Database\Seeders\ImportBDD;
+namespace Database\Seeders\ImportBDD\importSQLite;
 
-use App\Models\Profile;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
