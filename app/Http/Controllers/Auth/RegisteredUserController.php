@@ -35,6 +35,7 @@ class RegisteredUserController extends Controller
         $request->validate([
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.Compte::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            "name" =>['required', 'string'],
         ]);
 
         $user = Compte::create([
@@ -43,10 +44,11 @@ class RegisteredUserController extends Controller
         ]);
         $user->assignRole('joueur');
 
+        $profile = $user->mainProfile()->create(["name" => $request->name, "email" => $user->email, "order" => 1 ]);
         event(new Registered($user));
 
         Auth::login($user);
-        $request->session()->put('currentProfile', $user->mainProfile->name);
+        $request->session()->put('currentProfile', $profile);
         return redirect(RouteServiceProvider::HOME);
     }
 }

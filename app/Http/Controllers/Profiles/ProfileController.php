@@ -18,7 +18,7 @@ class ProfileController extends Controller
     public function show(Compte $compte){
 
         $profile = $compte->currentProfile;
-        return view('compte.profile.index', ['compte' =>$compte, 'profile'=> $profile ,'profiles' => $compte->profiles]);
+        return view('compte.profile.index', ['compte' =>$compte, 'profile'=> $profile ,'profiles' => $compte->profiles->sortBy('order')]);
     }
 
 
@@ -34,7 +34,9 @@ class ProfileController extends Controller
 
     public function store(ProfilRequest $request, Compte $compte){
 
-        $compte->profiles()->create($request->validated());
+        $profile = $compte->profiles()->create($request->validated());
+        $profile->order = $compte->profiles()->max('order') + 1;
+        $profile->save();
         return redirect()->route('profile.show', ['compte' => $compte]);
     }
 
