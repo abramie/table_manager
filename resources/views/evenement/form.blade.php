@@ -70,6 +70,10 @@
         @enderror
     </div>
 
+{{--    Ajouter selecteur :
+Ouverture d'inscription x <days/heures> avant <Debut event, debut creneau, debut table>
+Fermeture d'inscription x <days/heures> avant <Debut event, debut creneau, debut table>
+--}}
     <div class="form-group">
         <div class="input-group date">
             <label for="date_debut">Date de debut de l'evenement</label>

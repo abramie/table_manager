@@ -31,8 +31,14 @@
         <h1>{{$evenement->nom_evenement}} </h1>
     @endif
 
+    @php
+        $date_creneau = $creneau->debut_creneau;
+        $date_creneau->setTimezone('UTC');
+    $showMinute = $date_creneau->minute >0 ? ($date_creneau->minute > 9 ?$date_creneau->minute  : '0' . $date_creneau->minute ) : '';
+    @endphp
     <div>
-        Date : {{$evenement->showDate()}}
+        Date : Le {{$date_creneau->dayName}} {{$date_creneau->day}} à
+        {{$date_creneau->hour}}h{{ $showMinute }}
 
     </div>
     <div>
