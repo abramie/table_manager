@@ -25,6 +25,7 @@ return new class extends Migration
             $table->dateTime('debut_table');
             $table->boolean('inscription_restrainte')->default('1');
             $table->double('max_preinscription')->default(0);
+            $table->string('status')->default('published');
             $table->softDeletes();
 
             $table->foreignId('mj')->nullable()->constrained(table: 'profiles')->nullOnDelete();

@@ -139,6 +139,10 @@ Route::prefix('/events')->name('events.')->group(function () {
             Route::get('/add-table', [TableController::class, 'add'])->name('tables.add')->middleware('auth')->middleware('permission:ajout_tables');
             Route::post('/add-table', [TableController::class, 'store'])->middleware('auth')->middleware('permission:ajout_tables');;
 
+            Route::get('/add-table-test', [TableController::class, 'addTest'])->name('tables.addTest')->middleware('auth')->middleware('permission:ajout_tables');
+            Route::post('/add-table', [TableController::class, 'store'])->middleware('auth')->middleware('permission:ajout_tables');;
+
+
             Route::prefix('/table-{table}')->where(['table' => '[0-9]+'])->name('table.')->group(function () {
                 //Affiche une table specifique du creneau
                 Route::get('/edit', [TableController::class, 'edit'])->name('edit')->middleware('auth')->middleware('permission:manage_tables_all|manage_tables_own');

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\TimeCast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -14,6 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property mixed|string $nom
  * @property int|mixed $nb_joueur_max
  * @property float|mixed $duree
+ * @property string $status : plusieurs valeurs : {published, unpublished}
  * @method static find(\Illuminate\Routing\Route|object|string|null $route)
  */
 class Table extends Model
@@ -32,8 +34,11 @@ class Table extends Model
         'debut_table',
         'inscription_restrainte',
         'max_preinscription',
-        'open_preinscription'
+        'open_preinscription',
+        'status'
     ];
+
+
 
     /**
      * The attributes that should be cast.
@@ -41,7 +46,7 @@ class Table extends Model
      * @var array
      */
     protected $casts = [
-        'debut_table' => 'datetime:Y-m-d',
+        'debut_table' => TimeCast::class,
         'sans_table' => 'boolean',
     ];
 

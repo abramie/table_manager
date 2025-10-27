@@ -73,6 +73,11 @@
                     onclick="window.location='{{ route("events.one.creneau.tables.add",['evenement'=> $evenement, 'creneau' => $creneau]) }}'">
                 ajout d'une table
             </button>
+
+            <button class="btn btn-lg btn-info pull-right" type="button"
+                    onclick="window.location='{{ route("events.one.creneau.tables.addTest",['evenement'=> $evenement, 'creneau' => $creneau]) }}'">
+                ajout d'une table Nouveau formulaire
+            </button>
         </p>
     @endcan
     {{ $tables->links() }}

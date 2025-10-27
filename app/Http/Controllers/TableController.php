@@ -80,6 +80,16 @@ class TableController extends Controller
         ]);
     }
 
+    /** Methode controleur avec Livewire*/
+    public function addTest(Evenement $evenement,Creneau $creneau)
+    {
+        $descriptions = Description::whereIn('name',  ['trigger_warnings' ])->get();
+        $table = new Table();
+        return view('table.createTest', ['table' => $table,'evenement' => $evenement,
+            'creneau' => $creneau,'descriptions' => $descriptions]);
+
+    }
+
     /*
      * Sauvegarde un Creneau depuis un formulaire
      */
