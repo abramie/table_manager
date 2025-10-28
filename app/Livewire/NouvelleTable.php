@@ -45,7 +45,7 @@ class NouvelleTable extends Component
         $this->mj = $table->mj?->name ?? Auth::user()->mainProfile->name;
         $this->creneaux = $creneau;
         $this->debut_table = $table->debut_table ?? Carbon::parse($creneau->debut_creneau)->format('H:i');
-        $this->jeu = Jeu::first()->nom;
+        $this->jeu = Jeu::get()->first()->nom;
 
         $this->form->setTable($table);
 //        $this->debut_table = Carbon::now();

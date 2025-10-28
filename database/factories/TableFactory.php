@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Compte;
 use App\Models\Creneau;
+use App\Models\Jeu;
 use App\Models\Table;
 use App\Models\Profile;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -24,7 +25,7 @@ class TableFactory extends Factory
         $nom = $this->faker->sentence(2,true);
         return [
             'nom' =>$nom,
-            'description' => $this->faker->sentence(6,true),
+            'description' => $this->faker->sentence(40,true),
             'duree' => $this->faker->numberBetween(2,5),
             'debut_table' => $this->faker->dateTimeBetween('now', '+1 year'),
             'sans_table'=> false,
@@ -32,6 +33,7 @@ class TableFactory extends Factory
             'nb_joueur_max' => $this->faker->numberBetween(3,5),
             'mj' => Profile::factory()->mj(),
             'creneau_id' => Creneau::factory(),
+            'jeu_id' => Jeu::factory(),
         ];
     }
 

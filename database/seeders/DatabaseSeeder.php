@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use App\Models\Compte;
 use App\Models\Creneau;
 use App\Models\Evenement;
+use App\Models\Jeu;
 use App\Models\Table;
 use App\Models\Tag;
 use App\Models\Triggerwarning;
@@ -62,7 +63,7 @@ class DatabaseSeeder extends Seeder
             'email' => "jeremyrou@som.fr",
             'password' => Hash::make("test"),
         ]);
-        dump($jeremy);
+
 
         $mad = Compte::factory()->createProfile()->create([
             'email' => "mad@som.fr",
@@ -89,6 +90,8 @@ class DatabaseSeeder extends Seeder
             $item->assignRole('joueur','mj');
         });
 
+        $jeux = Jeu::factory(25)->create();
+
         /*
                 DB::table('evenements')->insert(
                     array(
@@ -101,8 +104,7 @@ class DatabaseSeeder extends Seeder
                         'description' => "La soirée crêpe annuel de la guilde ",
                     )
                 );*/
-        DB::table('evenements')->insert(
-            array(
+        $som = Evenement::factory()->create([
                 'nom_evenement' => 'Sous l\'oeil de melusine',
                 'slug' => 'som-24',
                 'date_debut' => \Carbon\Carbon::create(2025,05,11,10),
@@ -110,8 +112,7 @@ class DatabaseSeeder extends Seeder
                 'affichage_evenement' => \Carbon\Carbon::create(2025,01,01,21),
                 'fermeture_inscription'=> \Carbon\Carbon::create(2025,05,11,10),
                 'description' => "La convention annuelle de l'association La guilde, dans la salle du foyer du porteau à Poitiers. Buvette (options vegans), entrée gratuite, ouverte à tous. ",
-            )
-        );
+            ]);
         /*
                 DB::table('evenements')->insert(
                     array(
@@ -134,44 +135,41 @@ class DatabaseSeeder extends Seeder
                         'debut_creneau' => \Carbon\Carbon::create(2024,01,19,21)
                     )
                 );*/
-        DB::table('creneaux')->insert(
+        $creneau_matin = Creneau::factory()->recycle($som)->create(
             array(
                 'nom' => 'creneau du matin',
                 'duree' => '3',
-                'evenement_id' => 1,
                 'max_tables' => 8,
                 'nb_inscription_online_max' => 2,
                 'debut_creneau' => \Carbon\Carbon::create(2025,05,11,10),
             )
         );
 
-        DB::table('creneaux')->insert(
+        $creneau_aprem= Creneau::factory()->recycle($som)->create(
             array(
                 'nom' => 'creneau de l\'aprem',
                 'duree' => '5',
-                'evenement_id' => 1,
+
                 'max_tables' => 8,
                 'nb_inscription_online_max' => 2,
                 'debut_creneau' => \Carbon\Carbon::create(2025,05,11,14),
             )
         );
 
-        DB::table('creneaux')->insert(
+        $creneau_soir = Creneau::factory()->recycle($som)->create(
             array(
                 'nom' => 'creneau du soir',
                 'duree' => '5',
-                'evenement_id' => 1,
                 'max_tables' => 8,
                 'nb_inscription_online_max' => 2,
                 'debut_creneau' => \Carbon\Carbon::create(2025,05,11,21),
             )
         );
 
-        DB::table('creneaux')->insert(
+        $creneau_nuit =Creneau::factory()->recycle($som)->create(
             array(
                 'nom' => 'creneau de nuit',
                 'duree' => '5',
-                'evenement_id' => 1,
                 'max_tables' => 8,
                 'nb_inscription_online_max' => 2,
                 'debut_creneau' => \Carbon\Carbon::create(2025,05,12,03),
@@ -189,7 +187,7 @@ class DatabaseSeeder extends Seeder
                     )
                 );
         */
-        DB::table('tables')->insert(
+        Table::factory()->recycle($creneau_matin)->create(
             array(
                 'nom' => 'Le nom du scenario de pathfinder',
                 'duree' => '4',
@@ -203,11 +201,10 @@ class DatabaseSeeder extends Seeder
             )
         );
 
-        DB::table('tables')->insert(
+        Table::factory()->recycle($creneau_aprem)->create(
             array(
                 'nom' => 'Vous etes malade et recherché et tous le monde vous deteste',
                 'duree' => '4',
-                'creneau_id' => 2,
                 'tw' => 'racisme, dystopie',
                 'nb_joueur_min' => 2,
                 'nb_joueur_max'=> 4,
@@ -217,11 +214,10 @@ class DatabaseSeeder extends Seeder
             )
         );
 
-        DB::table('tables')->insert(
+        Table::factory()->recycle($creneau_aprem)->create(
             array(
                 'nom' => 'Sponsorisé par coca-cola',
                 'duree' => '4',
-                'creneau_id' => 2,
                 'tw' => 'fun',
                 'nb_joueur_min' => 2,
                 'nb_joueur_max'=> 4,
@@ -230,11 +226,10 @@ class DatabaseSeeder extends Seeder
                 'debut_table' => \Carbon\Carbon::create(2025,05,11,10)
             )
         );
-        DB::table('tables')->insert(
+        Table::factory()->recycle($creneau_soir)->create(
             array(
                 'nom' => 'Vous etes malade et recherché et tous le monde vous deteste',
                 'duree' => '4',
-                'creneau_id' => 3,
                 'tw' => 'racisme, dystopie',
                 'nb_joueur_min' => 2,
                 'nb_joueur_max'=> 4,
@@ -244,11 +239,10 @@ class DatabaseSeeder extends Seeder
             )
         );
 
-        DB::table('tables')->insert(
+        Table::factory()->recycle($creneau_soir)->create(
             array(
                 'nom' => 'un syndicat scélérat ',
                 'duree' => '4',
-                'creneau_id' => 3,
                 'tw' => 'fun',
                 'nb_joueur_min' => 3,
                 'nb_joueur_max'=> 5,
@@ -259,11 +253,10 @@ class DatabaseSeeder extends Seeder
         );
 
 
-        DB::table('tables')->insert(
+        Table::factory()->recycle($creneau_matin)->create(
             array(
                 'nom' => 'L\'attaque des crepes ',
                 'duree' => '4',
-                'creneau_id' => 1,
                 'tw' => 'fun',
                 'nb_joueur_min' => 3,
                 'nb_joueur_max'=> 5,
@@ -273,11 +266,10 @@ class DatabaseSeeder extends Seeder
             )
         );
 
-        DB::table('tables')->insert(
+        Table::factory()->recycle($creneau_matin)->create(
             array(
                 'nom' => 'L\'attaque des saucisses ',
                 'duree' => '4',
-                'creneau_id' => 1,
                 'tw' => 'fun',
                 'nb_joueur_min' => 3,
                 'nb_joueur_max'=> 5,
@@ -301,7 +293,7 @@ class DatabaseSeeder extends Seeder
         $creneaux = Creneau::factory(7)->recycle($events)->create();
 
 
-        $table = Table::factory(12)->recycle($creneaux)->create();
+        $table = Table::factory(12)->recycle($creneaux)->recycle($jeux)->create();
 
 
         $tags = Tag::factory(15)->create();
