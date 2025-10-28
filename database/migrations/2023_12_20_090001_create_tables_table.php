@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('nom');
-            $table->longText('description')->default('');
+            $table->longText('description')->nullable();
             $table->longText('tw')->nullable();
             $table->float('duree')->default('4');
             $table->double('nb_joueur_min')->default('2');
