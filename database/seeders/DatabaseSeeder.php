@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         if(Compte::where('email' ,'=', "admin@som.fr")->doesntExist()){
-            $admin = Compte::create([
+            $admin = Compte::factory()->createProfile()->create([
                 'email' => "admin@som.fr",
                 'password' => Hash::make('admin'),
             ]);
@@ -41,7 +41,7 @@ class DatabaseSeeder extends Seeder
         }
 
         if(Compte::where('email' ,'=', "test@example.com")->doesntExist()) {
-            $test_user = \App\Models\Compte::factory()->create([
+            $test_user = Compte::factory()->createProfile()->create([
                 'email' => 'test@example.com',
                 'password' => Hash::make('test'),
             ]);
@@ -50,18 +50,21 @@ class DatabaseSeeder extends Seeder
 
 
         if(Compte::where('email' ,'=', "modo@som.fr")->doesntExist()) {
-            $modo = Compte::create([
+            $modo = Compte::factory()->createProfile()->create([
                 'email' => "modo@som.fr",
                 'password' => Hash::make("modo"),
             ]);
             $modo->assignRole('joueur','mj', 'modo');
         }
 
-        $jeremy = Compte::create([
+
+        $jeremy = Compte::factory()->createProfile()->create([
             'email' => "jeremyrou@som.fr",
             'password' => Hash::make("test"),
         ]);
-        $mad = Compte::create([
+        dump($jeremy);
+
+        $mad = Compte::factory()->createProfile()->create([
             'email' => "mad@som.fr",
             'password' => Hash::make("mad"),
         ]);
