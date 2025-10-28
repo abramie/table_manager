@@ -3,15 +3,14 @@
 
         @can('manage_tables_all')
             <div class="form-group">
-                <label for="mj_name">Le nom du MJ</label>
-                <select wire:model="mj" class=" form-control form-select" @error("mj_name") is-invalid @enderror id="mj_name" name="mj_name"
-                        data-live-search="true">
+                <label for="mj">Le nom du MJ</label>
+                <select wire:model="mj" class=" form-control form-select" @error("mj") is-invalid @enderror id="mj" name="mj">
 
                     @foreach(App\Models\Compte::role('mj')->get() as $mj)
                         <option value="{{$mj->mainProfile->name}}">{{$mj->mainProfile->name}}</option>
                     @endforeach
                 </select>
-                @error("mj_name")
+                @error("mj")
                 <div class="invalid-feedback">
                     {{ $message }}
                 </div>
@@ -100,31 +99,31 @@
         </div>
 
 
-            <div class="form-group">
-                <label for="mj_name">Jeu</label>
-                <select wire:model="jeu" class=" form-control form-select" @error("jeu") is-invalid @enderror id="mj_name" name="mj_name"
-                        data-live-search="true">
+        <div class="form-group">
+            <label for="mj_name">Jeu</label>
+            <select wire:model="jeu" class=" form-control form-select" @error("jeu") is-invalid @enderror id="mj_name" name="mj_name"
+                    data-live-search="true">
 
-                    @foreach(App\Models\Jeu::all() as $jeu_select)
-                        <option value="{{$jeu_select->nom}}">{{$jeu_select->nom}}</option>
-                    @endforeach
-                </select>
-                @error("jeu")
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
-                @enderror
-
+                @foreach(App\Models\Jeu::all() as $jeu_select)
+                    <option value="{{$jeu_select->nom}}">{{$jeu_select->nom}}</option>
+                @endforeach
+            </select>
+            @error("jeu")
+            <div class="invalid-feedback">
+                {{ $message }}
             </div>
+            @enderror
 
-            <button class="btn btn-primary" type="submit" name="action" value="save">
+        </div>
 
-                @if($table->id)
-                    Modifier
-                @else
-                    Créer
-                @endif
-            </button>
+        <button class="btn btn-primary" type="submit" name="action" value="save">
+
+            @if($table->id)
+                Modifier
+            @else
+                Créer
+            @endif
+        </button>
     </form>
 
 

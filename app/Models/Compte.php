@@ -14,7 +14,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class Compte extends Authenticatable
 {
-    use HasApiTokens, Notifiable;
+    use HasApiTokens,HasFactory, Notifiable;
     // The Profile model requires this trait
     use HasRoles;
     /**
@@ -69,5 +69,10 @@ class Compte extends Authenticatable
     public function hasProfile() : bool{
         return $this->profiles()->exists();
     }
+    /**
+     * The "booted" method of the model.
+     */
+
+
 }
 

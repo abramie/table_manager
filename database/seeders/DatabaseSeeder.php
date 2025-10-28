@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Compte;
 use App\Models\Creneau;
 use App\Models\Evenement;
 use App\Models\Table;
@@ -30,59 +31,57 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        if(Profile::where('email' ,'=', "admin@som.fr")->doesntExist()){
-            $admin = Profile::create([
-                'name' => "admin",
+        if(Compte::where('email' ,'=', "admin@som.fr")->doesntExist()){
+            $admin = Compte::create([
                 'email' => "admin@som.fr",
                 'password' => Hash::make('admin'),
             ]);
             $admin->assignRole('admin');
+
         }
 
-        if(Profile::where('email' ,'=', "test@example.com")->doesntExist()) {
-            $test_user = \App\Models\Profile::factory()->create([
-                'name' => 'Test Profile',
+        if(Compte::where('email' ,'=', "test@example.com")->doesntExist()) {
+            $test_user = \App\Models\Compte::factory()->create([
                 'email' => 'test@example.com',
                 'password' => Hash::make('test'),
             ]);
+            $test_user->assignRole('joueur','mj');
         }
 
 
-        if(Profile::where('email' ,'=', "modo@som.fr")->doesntExist()) {
-            $modo = Profile::create([
-                'name' => "modo",
+        if(Compte::where('email' ,'=', "modo@som.fr")->doesntExist()) {
+            $modo = Compte::create([
                 'email' => "modo@som.fr",
                 'password' => Hash::make("modo"),
             ]);
+            $modo->assignRole('joueur','mj', 'modo');
         }
 
-        $jeremy = Profile::create([
-            'name' => "jeremy",
+        $jeremy = Compte::create([
             'email' => "jeremyrou@som.fr",
             'password' => Hash::make("test"),
         ]);
-        $mad = Profile::create([
-            'name' => "mad",
+        $mad = Compte::create([
             'email' => "mad@som.fr",
             'password' => Hash::make("mad"),
         ]);
 
 
-        $test_user->assignRole('joueur','mj');
+
         $jeremy->assignRole('joueur','mj');
         $mad->assignRole('joueur','mj');
 
-        $modo->assignRole('joueur','mj', 'modo');
 
-        $Random_user = Profile::factory(50)->create();
 
-        $Random_user->each(function (Profile $item, int $key) {
+        $Random_user = Compte::factory(50)->createProfile()->create();
+
+        $Random_user->each(function (Compte $item, int $key) {
             // ...
             $item->assignRole('joueur');
         });
-        $Random_user_mj = Profile::factory(15)->create();
+        $Random_user_mj = Compte::factory(5)->createProfile()->create();
 
-        $Random_user_mj->each(function (Profile $item, int $key) {
+        $Random_user_mj->each(function (Compte $item, int $key) {
             // ...
             $item->assignRole('joueur','mj');
         });
@@ -275,7 +274,7 @@ class DatabaseSeeder extends Seeder
             array(
                 'nom' => 'L\'attaque des saucisses ',
                 'duree' => '4',
-                'creneau_id' => 6,
+                'creneau_id' => 1,
                 'tw' => 'fun',
                 'nb_joueur_min' => 3,
                 'nb_joueur_max'=> 5,
@@ -299,7 +298,7 @@ class DatabaseSeeder extends Seeder
         $creneaux = Creneau::factory(7)->recycle($events)->create();
 
 
-        $table = Table::factory(12)->recycle($creneaux)->recycle($Random_user_mj)->create();
+        $table = Table::factory(12)->recycle($creneaux)->create();
 
 
         $tags = Tag::factory(15)->create();

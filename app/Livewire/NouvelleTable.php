@@ -2,12 +2,17 @@
 
 namespace App\Livewire;
 
+use App\Livewire\Forms\TableForm;
+use App\Models\Jeu;
+use App\Models\Profile;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class NouvelleTable extends Component
 {
+
+    public TableForm $form;
     public $table;
     public $descriptions;
 
@@ -37,10 +42,12 @@ class NouvelleTable extends Component
     public function mount($table, $creneau){
         $this->table = $table;
         $this->titre = "Nom de la table ";
-        $this->mj = $table->mj ?? Auth::user()->mainProfile;
+        $this->mj = $table->mj?->name ?? Auth::user()->mainProfile->name;
         $this->creneaux = $creneau;
         $this->debut_table = $table->debut_table ?? Carbon::parse($creneau->debut_creneau)->format('H:i');
+        $this->jeu = Jeu::first()->nom;
 
+        $this->form->setTable($table);
 //        $this->debut_table = Carbon::now();
     }
     public function render()
@@ -48,9 +55,15 @@ class NouvelleTable extends Component
         return view('livewire.nouvelle-table');
     }
 
+    public function updated($name, $value)
+    {
+        $this->form->update($name);
+    }
+
 
     public function save(){
         //Créer la table and everything
+
     }
     public function new_tw()
     {

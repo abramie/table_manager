@@ -38,16 +38,16 @@ class RegisteredUserController extends Controller
             "name" =>['required', 'string'],
         ]);
 
-        $user = Compte::create([
+        $compte = Compte::create([
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
-        $user->assignRole('joueur');
+        $compte->assignRole('joueur');
 
-        $profile = $user->mainProfile()->create(["name" => $request->name, "email" => $user->email, "order" => 1 ]);
-        event(new Registered($user));
+        $profile = $compte->mainProfile()->create(["name" => $request->name, "email" => $compte->email, "order" => 1 ]);
+        event(new Registered($compte));
 
-        Auth::login($user);
+        Auth::login($compte);
         $request->session()->put('currentProfile', $profile);
         return redirect(RouteServiceProvider::HOME);
     }
