@@ -46,7 +46,7 @@ class Table extends Model
      * @var array
      */
     protected $casts = [
-        'debut_table' => TimeCast::class,
+        'debut_table' => 'datetime:Y-m-d',
         'sans_table' => 'boolean',
     ];
 

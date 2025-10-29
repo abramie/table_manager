@@ -19,6 +19,7 @@ use App\Models\Profile;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
@@ -85,6 +86,13 @@ class TableController extends Controller
     {
         $descriptions = Description::whereIn('name',  ['trigger_warnings' ])->get();
         $table = new Table();
+        $table->nom = "le nom de la table";
+        $table->nb_joueur_min = 3;
+        $table->nb_joueur_max = 3;
+        $table->max_preinscription = $creneau->nb_inscription_online_max;
+
+        $table->duree = $creneau->duree;
+        $table->debut_table = $creneau->debut_creneau;
         return view('table.createTest', ['table' => $table,'evenement' => $evenement,
             'creneau' => $creneau,'descriptions' => $descriptions]);
 

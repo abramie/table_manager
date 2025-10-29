@@ -72,10 +72,10 @@ class FormTableRequest extends FormRequest
         if( $this->mj_name && \Auth::user()->can('manage_tables_all') ){
             $mj = Profile::get()->where('name', $this->mj_name)->first();
             if($mj == null){
-              throw ValidationException::withMessages([
-                  'mj_name' => "Le Mj n'existe pas",
+                throw ValidationException::withMessages([
+                    'mj_name' => "Le Mj n'existe pas",
 
-              ]);
+                ]);
             }
         }else {
             $mj = \Auth::user()->currentProfile;

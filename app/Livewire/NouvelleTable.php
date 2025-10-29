@@ -27,7 +27,7 @@ class NouvelleTable extends Component
 
     //Attributs form
     public $mj; //Profile
-    public $titre;
+    public $nom;
     public $table_description;
     public $jeu;
     public $duree;
@@ -41,13 +41,10 @@ class NouvelleTable extends Component
 
     public function mount($table, $creneau){
         $this->table = $table;
-        $this->titre = "Nom de la table ";
-        $this->mj = $table->mj?->name ?? Auth::user()->mainProfile->name;
-        $this->creneaux = $creneau;
-        $this->debut_table = $table->debut_table ?? Carbon::parse($creneau->debut_creneau)->format('H:i');
+        $this->form->mj_name = $table->mj?->name ?? Auth::user()->mainProfile->name;
         $this->jeu = Jeu::get()->first()->nom;
-
-        $this->form->setTable($table);
+        $this->form->creneau = $creneau;
+        $this->form->setTable($this->table);
 //        $this->debut_table = Carbon::now();
     }
     public function render()
@@ -63,7 +60,14 @@ class NouvelleTable extends Component
 
     public function save(){
         //Créer la table and everything
-
+        $this->form->store();
+        if($this->form->table->mjs == Auth::user()->currentProfile){
+            $desincription = $this->form->table->creneaus->desinscrit_user(Auth::user()->currentProfile);
+        }else{
+            $desincription = 0;
+        }
+        return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $this->form->table->creneaus->evenement,'creneau' => $this->form->table->creneaus])
+            ->with('success', "La table a bien été ajouté." . ($desincription>0 ? "Et vous avez était desinscrit de vos tables" : "" ));
     }
     public function new_tw()
     {

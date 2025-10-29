@@ -1,16 +1,18 @@
 <div>
     <form wire:submit="save">
-
+        @if($errors->any())
+            {{ implode('', $errors->all('<div>:message</div>')) }}
+        @endif
         @can('manage_tables_all')
             <div class="form-group">
-                <label for="mj">Le nom du MJ</label>
-                <select wire:model="mj" class=" form-control form-select" @error("mj") is-invalid @enderror id="mj" name="mj">
+                <label for="mj_name">Le nom du MJ</label>
+                <select wire:model="form.mj_name" class=" form-control form-select" @error("form.mj") is-invalid @enderror id="mj_name" name="mj_name">
 
                     @foreach(App\Models\Compte::role('mj')->get() as $mj)
                         <option value="{{$mj->mainProfile->name}}">{{$mj->mainProfile->name}}</option>
                     @endforeach
                 </select>
-                @error("mj")
+                @error("form.mj")
                 <div class="invalid-feedback">
                     {{ $message }}
                 </div>
@@ -20,19 +22,20 @@
         @endcan
 
             <div class="form-group">
-                <label for="title">Titre</label>
-                <input wire:model="titre" type="text" class="form-control @error("nom") is-invalid @enderror" id="nom" name="nom">
+                <label for="form.nom">Titre</label>
+                <input wire:model="form.nom" type="text" class="form-control @error("form.nom") is-invalid @enderror" id="nom" name="nom">
+                @error("form.nom")
+                    <span class="error text-danger">{{ $message }}</span>
+                @enderror
             </div>
 
 
         <div class="form-group">
             <label for="description">description</label>
-            <input wire:model="table_description" type="text" class="form-control @error("description") is-invalid @enderror" id="description"
+            <input wire:model="form.table_description" type="text" class="form-control @error("form.table_description") is-invalid @enderror" id="description"
                    name="description" >
-            @error("description")
-            <div class="invalid-feedback">
-                {{ $message }}
-            </div>
+            @error("form.table_description")
+                <span class="error">{{ $message }}</span>
             @enderror
         </div>
 
@@ -43,57 +46,58 @@
 
         <div class="form-group">
             <label for="nb_joueur_min">nb_joueur_min</label>
-            <input wire:model="nb_joueur_min" type="number" class="form-control @error("nb_joueur_min") is-invalid @enderror" id="nb_joueur_min"
+            <input wire:model="form.nb_joueur_min" type="number" class="form-control @error("form.nb_joueur_min") is-invalid @enderror" id="nb_joueur_min"
                    name="nb_joueur_min">
-            @error("nb_joueur_min")
-            <div class="invalid-feedback">
-                {{ $message }}
-            </div>
+            @error("form.nb_joueur_min")
+                <span class="error">{{ $message }}</span>
             @enderror
         </div>
 
         <div class="form-group">
             <label for="nb_joueur_max">nb_joueur_max</label>
-            <input wire:model="nb_joueur_max" type="number" class="form-control @error("nb_joueur_max") is-invalid @enderror" id="nb_joueur_max"
+            <input wire:model="form.nb_joueur_max" type="number" class="form-control @error("form.nb_joueur_max") is-invalid @enderror" id="nb_joueur_max"
                    name="nb_joueur_max" >
-            @error("nb_joueur_max")
-            <div class="invalid-feedback">
-                {{ $message }}
-            </div>
+            @error("form.nb_joueur_max")
+                <span class="error">{{ $message }}</span>
             @enderror
         </div>
 
 {{--            Ajouter le controle de permission sur les préinscritions--}}
         <div class="form-group" id="open_preinscription_div">
             <label for="max_preinscription">Nombre de pré-inscription maximum sur la table</label>
-            <input wire:model="max_preinscription" type="number" class="form-control @error("max_preinscription") is-invalid @enderror"
+            <input wire:model="form.max_preinscription" type="number" class="form-control @error("form.max_preinscription") is-invalid @enderror"
                    id="max_preinscription"
                    name="max_preinscription" >
 
-            @error("max_preinscription")
-            <div class="invalid-feedback">
-                {{ $message }}
-            </div>
+            @error("form.max_preinscription")
+            <span class="error">{{ $message }}</span>
             @enderror
+
         </div>
 
-        <x-date-picker label="Debut de la table" wire:model="debut_table" options='{enableTime: true,
+        <x-date-picker label="Debut de la table" wire:model="form.debut_table" options='{enableTime: true,
                         noCalendar: true,
                         dateFormat: "H:i",
                         time_24hr: true
                         }'>
 
         </x-date-picker>
+            @error("form.date_debut")
+            <span class="error">{{ $message }}</span>
+            @enderror
 {{--Ajouter min Time et maxTime au picker https://flatpickr.js.org/examples/#time-picker--}}
 
 
         <div class="form-group">
             <label for="duree">Durée</label>
-            <input wire:model="duree" type="number" class="form-control @error("duree") is-invalid @enderror" id="duree" name="duree"
+            <input wire:model="form.duree" type="number" class="form-control @error("form.duree") is-invalid @enderror" id="duree" name="duree"
                    >
-            @error("duree")
+            @error("form.duree")
             <div class="invalid-feedback">
                 {{ $message }}
+            </div>
+            <div>
+                @error('duree') <span class="error">{{ $message }}</span> @enderror
             </div>
             @enderror
         </div>
@@ -101,7 +105,7 @@
 
         <div class="form-group">
             <label for="mj_name">Jeu</label>
-            <select wire:model="jeu" class=" form-control form-select" @error("jeu") is-invalid @enderror id="mj_name" name="mj_name"
+            <select wire:model="form.jeu" class=" form-control form-select" @error("jeu") is-invalid @enderror id="mj_name" name="mj_name"
                     data-live-search="true">
 
                 @foreach(App\Models\Jeu::all() as $jeu_select)
@@ -111,6 +115,9 @@
             @error("jeu")
             <div class="invalid-feedback">
                 {{ $message }}
+            </div>
+            <div>
+                @error('jeu') <span class="error">{{ $message }}</span> @enderror
             </div>
             @enderror
 
@@ -125,7 +132,6 @@
             @endif
         </button>
     </form>
-
 
 
 </div>
