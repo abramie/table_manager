@@ -50,19 +50,22 @@
                     $tag->value = $tag->id;
                 @endphp
             @endforeach
-            <div>
-                <x-virtual-select
-                    wire:model="form.tags_selected"
-                    :options="[
-                   'options' => $tags ,
-                   'selectedValue' => ['admin'],
-                   'multiple' => true,
-                   'showValueAsTags' => true,
-                ]"
-                />
-                <div>
-                    <label> Ajouter un tag</label>
-                    <input type="text" wire:model="newTag"/>
+            <div class="form-group">
+
+                <Label>Tags </Label>
+{{--                Ajouter le fait que les champs soit aligner.--}}
+                <div class="col-auto">
+                        <x-virtual-select
+                            wire:model="form.tags_selected"
+                            :options="[
+                       'options' => $tags ,
+                       'selectedValue' => $form->tags_selected,
+                       'multiple' => true,
+                       'showValueAsTags' => true,
+                    ]"
+                        />
+
+                    <input type="text" wire:model="newTag" wire:keydown.enter.prevent="addNewTag()"/>
                     {{$newTag}}
                     <a href="#" wire:click.prevent="addNewTag()">Ajouter le tag </a>
                 </div>

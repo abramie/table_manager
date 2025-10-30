@@ -27,7 +27,7 @@
         x-ref="virtualSelect"
         x-init="initVirtualSelect()"
         x-cloak
-        x-on:change="select = event.target.value"
+        x-on:change="select = event.target.value;"
     ></div>
 </div>
 

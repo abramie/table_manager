@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Livewire\Forms\TableForm;
 use App\Models\Jeu;
+use App\Models\Log;
 use App\Models\Profile;
 use App\Models\Tag;
 use Illuminate\Support\Carbon;
@@ -23,6 +24,7 @@ class NouvelleTable extends Component
     public $creneaux;
     public $triggerwarnings = [];
     public $tags_selected = [];
+    public $old_tags = [];
     public $newTag;
     public $new_tw;
 
@@ -39,17 +41,18 @@ class NouvelleTable extends Component
     public $tw;
 
     public $test=0;
-
     public function mount($table, $creneau){
         $this->table = $table;
         $this->form->mj_name = $table->mj?->name ?? Auth::user()->mainProfile->name;
         $this->jeu = Jeu::get()->first()->nom;
         $this->form->creneau = $creneau;
         $this->form->setTable($this->table);
+
 //        $this->debut_table = Carbon::now();
     }
     public function render()
     {
+
         $tags = Tag::query()->get();
         return view('livewire.nouvelle-table')->with('tags', $tags);
     }
@@ -62,12 +65,20 @@ class NouvelleTable extends Component
     public function addNewTag(){
 
         $newTag = $this->pull('newTag');
+        if($newTag){
+            if($tag = Tag::where('nom', $newTag)->first()){
+                //Message tag existe
+                $this->form->tags_selected[] = $tag->id;
+            }else{
+                $tag = Tag::create(['nom' => $newTag]);
+                Log::log(profile: Auth::user()->currentProfile,code: "TAG-ADD", objet: $tag);
+                $this->form->tags_selected[] = $tag->id;
 
-        if(Tag::where('nom', $newTag)->exists()){
-            //Message tag existe
+            }
         }else{
-            Tag::create(['nom' => $newTag]);
+            //Message erreur
         }
+
 
     }
 
