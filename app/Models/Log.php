@@ -19,7 +19,7 @@ class Log extends Model
     public function type_log() : BelongsTo{
         return $this->belongsTo(TypeLog::class);
     }
-    public function profil(): BelongsTo{
+    public function profile(): BelongsTo{
         return $this->belongsTo(Profile::class);
     }
 
@@ -30,14 +30,14 @@ class Log extends Model
      * @param $save : Si le log est sauvegarder dans la base de donnée ou non
      * @return Log
      */
-    static public function log(Profile|null $profile = null, $code = 'DEFAULT', Tag|Triggerwarning|Table|null $objet = null, $detail = "", $save = true){
+    static public function log(Profile|null $profile = null,string $code = 'DEFAULT', Tag|Triggerwarning|Table|null $objet = null, string $detail = "", bool $save = true) : Log{
 
         $log = new Log();
         $log->details = $detail;
         if($profile){
-            $log->profil()->associate($profile);
+            $log->profile()->associate($profile);
         }else{
-            $log->profil()->associate(Auth::user()->currentProfile());
+            $log->profile()->associate(Auth::user()->currentProfile());
         }
         $log->loggable()->associate($objet);
         $log->type_log()->associate(TypeLog::findCode($code));

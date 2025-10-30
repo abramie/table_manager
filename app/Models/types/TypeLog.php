@@ -4,7 +4,7 @@ namespace App\Models\types;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Typelog extends Model
+class TypeLog extends Model
 {
     //
     protected $fillable = [
@@ -12,4 +12,8 @@ class Typelog extends Model
         'code',
 
     ];
+
+    static public function findCode($code){
+        return TypeLog::where('code', '=', $code)->firstOrFail();
+    }
 }
