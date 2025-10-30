@@ -1,4 +1,5 @@
 <div>
+
     <form wire:submit="save">
         @if($errors->any())
             {{ implode('', $errors->all('<div>:message</div>')) }}
@@ -41,7 +42,32 @@
 
 {{--            Toute la partie TW--}}
 
+
 {{--            Toute la partie Tags --}}
+            @foreach ($tags as $tag)
+                @php
+                    $tag->label = $tag->nom;
+                    $tag->value = $tag->id;
+                @endphp
+            @endforeach
+            <div>
+                <x-virtual-select
+                    wire:model="form.tags_selected"
+                    :options="[
+                   'options' => $tags ,
+                   'selectedValue' => ['admin'],
+                   'multiple' => true,
+                   'showValueAsTags' => true,
+                ]"
+                />
+                <div>
+                    <label> Ajouter un tag</label>
+                    <input type="text" wire:model="newTag"/>
+                    {{$newTag}}
+                    <a href="#" wire:click.prevent="addNewTag()">Ajouter le tag </a>
+                </div>
+            </div>
+
 
 
         <div class="form-group">
@@ -131,6 +157,8 @@
                 Créer
             @endif
         </button>
+
+            <span wire:loading>Saving...</span>
     </form>
 
 

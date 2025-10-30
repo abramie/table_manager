@@ -2,6 +2,7 @@
 
 @yield('navigation_bonus')
 @livewireStyles
+@stack('styles')
 <a  href="{{ url()->previous() }}" class="btn btn-primary">
     <i class="fa fa-arrow-circle-o-left"></i>
     <span>Back</span>
@@ -35,4 +36,5 @@
 
 </body>
 @livewireScripts
+@stack('scripts')
 @include('layouts.foot')

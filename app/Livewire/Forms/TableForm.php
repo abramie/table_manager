@@ -20,7 +20,7 @@ class TableForm extends Form
     public $mj_name;
     #[Validate]
     public $nom;
-    #[Validate(message: 'La description doit faire au moins dix caracteres')]
+    #[Validate(message: 'La description doit faire au moins dix caractères')]
     public $table_description;
     public $jeu;
     public $duree;
@@ -35,6 +35,8 @@ class TableForm extends Form
     public $triggerwarnings;
     public $inscrits;
     public float $max_duree = 0;
+
+    public $tags_selected = [];
 
     public $creneau;
     public function setTable(Table $table)
@@ -86,7 +88,7 @@ class TableForm extends Form
         $this->table->debut_table = $this->date_debut;
         $this->table->nom = $this->nom;
         $this->table->mj = $this->mj->id;
-        //$this->table->jeu = Jeu::where('nom', '=', $this->mj)->first()->id;
+        $this->table->jeu_id = Jeu::where('nom', '=', $this->jeu)->first()?->id;
         $this->table->status = "published";
 
         $this->creneau->tables()->save($this->table);
@@ -104,7 +106,7 @@ class TableForm extends Form
             'nom' => ['required', 'min:4'],
             'duree' => ['regex:/^[0-9]+$/' , 'lte:max_duree'],
             'nb_joueur_min' => ['regex:/^[0-9]+$/', 'min:1' ],
-            'nb_joueur_max' => ['regex:/^[0-9]+$/', 'min:1' ],
+            'nb_joueur_max' => ['regex:/^[0-9]+$/', 'min:1', 'gte:nb_joueur_min' ],
             'table_description' => ['min:4'],
             //'tags' => ['array', 'exists:tags,id'],
             //'triggerwarnings' => ['array', 'exists:triggerwarnings,id'],

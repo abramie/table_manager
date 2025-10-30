@@ -22,7 +22,6 @@
                 options: options,
                 value: model,
                 init(){
-                    console.log(this.options);
                     this.pickr = flatpickr(this.$refs.myDatepicker, options)
                     this.$watch('value', function(newValue){
                         this.pickr.setDate(newValue);

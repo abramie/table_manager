@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Livewire\Forms\TableForm;
 use App\Models\Jeu;
 use App\Models\Profile;
+use App\Models\Tag;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -21,8 +22,8 @@ class NouvelleTable extends Component
     public $creneau;
     public $creneaux;
     public $triggerwarnings = [];
-    public $tags;
-    public $new_tag;
+    public $tags_selected = [];
+    public $newTag;
     public $new_tw;
 
     //Attributs form
@@ -49,12 +50,25 @@ class NouvelleTable extends Component
     }
     public function render()
     {
-        return view('livewire.nouvelle-table');
+        $tags = Tag::query()->get();
+        return view('livewire.nouvelle-table')->with('tags', $tags);
     }
 
     public function updated($name, $value)
     {
-        $this->form->update($name);
+       // $this->form->update($name);
+    }
+
+    public function addNewTag(){
+
+        $newTag = $this->pull('newTag');
+
+        if(Tag::where('nom', $newTag)->exists()){
+            //Message tag existe
+        }else{
+            Tag::create(['nom' => $newTag]);
+        }
+
     }
 
 
