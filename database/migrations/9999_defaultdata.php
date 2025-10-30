@@ -43,6 +43,8 @@ return new class extends Migration
                 )
             );
 
+            TypeLog::create(['name' => 'Default', 'code' => 'DEFAULT']);
+
             TypeLog::create(['name' => 'Nouveau Tag', 'code' => 'TAG-ADD']);
             TypeLog::create(['name' => 'Edition Tag', 'code' => 'TAG-EDIT']);
             TypeLog::create(['name' => 'Suppression Tag', 'code' => 'TAG-DEL']);
