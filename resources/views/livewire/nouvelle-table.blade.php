@@ -41,7 +41,32 @@
         </div>
 
 {{--            Toute la partie TW--}}
+            @foreach ($tws as $tw)
+                @php
+                    $tw->label = $tw->nom;
+                    $tw->value = $tw->id;
+                @endphp
+            @endforeach
+            <div class="form-group">
 
+                <Label>Tws </Label>
+                {{--                Ajouter le fait que les champs soit aligner.--}}
+                <div class="col-auto">
+                    <x-virtual-select
+                        wire:model="form.triggerwarnings"
+                        :options="[
+                       'options' => $tws ,
+                       'selectedValue' => $form->triggerwarnings,
+                       'multiple' => true,
+                       'showValueAsTags' => true,
+                    ]"
+                    />
+
+                    <input type="text" wire:model="new_tw" wire:keydown.enter.prevent="addNewTw()"/>
+                    {{$new_tw}}
+                    <a href="#" wire:click.prevent="addNewTw()">Ajouter le TW </a>
+                </div>
+            </div>
 
 {{--            Toute la partie Tags --}}
             @foreach ($tags as $tag)
@@ -65,8 +90,8 @@
                     ]"
                         />
 
-                    <input type="text" wire:model="newTag" wire:keydown.enter.prevent="addNewTag()"/>
-                    {{$newTag}}
+                    <input type="text" wire:model="new_tag" wire:keydown.enter.prevent="addNewTag()"/>
+                    {{$new_tag}}
                     <a href="#" wire:click.prevent="addNewTag()">Ajouter le tag </a>
                 </div>
             </div>
@@ -151,6 +176,35 @@
             @enderror
 
         </div>
+
+            @can('manage_tables_all')
+                @foreach ($profiles as $profile)
+                    @php
+                        $profile->label = $profile->name;
+                        $profile->value = $profile->name;
+                    @endphp
+                @endforeach
+                <div class="form-group">
+
+                    <Label>Inscrits </Label>
+                    {{--                Ajouter le fait que les champs soit aligner.--}}
+                    <div class="col-auto">
+                        <x-virtual-select
+                            wire:model="form.inscrits"
+                            :options="[
+                           'options' => $profiles ,
+                           'selectedValue' => $form->inscrits,
+                           'multiple' => true,
+                           'showValueAsTags' => true,
+                        ]"
+                        />
+
+                        <input type="text" wire:model="new_tw" wire:keydown.enter.prevent="addNewProfile()"/>
+                        {{$new_tw}}
+                        <a href="#" wire:click.prevent="addNewProfile()">Ajouter le TW </a>
+                    </div>
+                </div>
+            @endcan
 
         <button class="btn btn-primary" type="submit" name="action" value="save">
 

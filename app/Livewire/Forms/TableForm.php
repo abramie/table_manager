@@ -49,14 +49,23 @@ class TableForm extends Form
         $this->debut_table = Carbon::parse($table->debut_table)->format('H:i');
         $this->duree = $table->duree;
         $this->max_duree = floatval($this->creneau->duree);
+        $this->inscrits = $table->inscrits()->pluck('name');
     }
 
     public function update($name)
     {
         $this->validate();
-
-        $this->table->update($this->only([$name]));
-
+        if($name == "inscrits" ){
+            $this->table->inscrits()->sync($this->inscrits);
+        }elseif ($name == "tags_selected"){
+            $this->table->tags()->sync($this->tags_selected);
+        }elseif ($name == "jeu"){
+            $this->table->jeu()->associate($this->jeu);
+        }elseif($name == "triggerwarnings"){
+            $this->table->triggerwarnings()->sync($this->triggerwarnings);
+        }else{
+            $this->table->update($this->only([$name]));
+        }
         $this->reset();
     }
 
@@ -74,11 +83,9 @@ class TableForm extends Form
             $this->mj = \Auth::user()->currentProfile;
         }
 
-        $this->date_debut =  $this->debut_table ?
-            $this->creneau->debut_creneau->setTimeFromTimeString($this->debut_table) : null;
 
 
-
+        $this->date_debut =  $this->debut_table ? $this->creneau->debut_creneau->setTimeFromTimeString($this->debut_table) : null;
 
         $this->validate();
         $this->table->description = $this->table_description;
@@ -93,6 +100,16 @@ class TableForm extends Form
 
         $this->creneau->tables()->save($this->table);
 
+        //En vrai pour les inscrits, ajouter une fonction, ça devrait pas marcher comme ça ...
+        if($this->inscrits) {
+            $inscrits_id = Profile::whereIn('name', $this->inscrits)->pluck('id')->toArray();
+            $this->table->inscrits()->sync($inscrits_id);
+        }
+
+
+        $this->table->triggerwarnings()->sync($this->triggerwarnings);
+        $this->table->tags()->sync($this->tags_selected);
+        $this->table->jeu()->associate($this->jeu);
 
     }
 

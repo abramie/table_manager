@@ -7,6 +7,7 @@ use App\Models\Jeu;
 use App\Models\Log;
 use App\Models\Profile;
 use App\Models\Tag;
+use App\Models\Triggerwarning;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -25,7 +26,7 @@ class NouvelleTable extends Component
     public $triggerwarnings = [];
     public $tags_selected = [];
     public $old_tags = [];
-    public $newTag;
+    public $new_tag;
     public $new_tw;
 
     //Attributs form
@@ -40,7 +41,6 @@ class NouvelleTable extends Component
     public $nb_joueur_min;
     public $tw;
 
-    public $test=0;
     public function mount($table, $creneau){
         $this->table = $table;
         $this->form->mj_name = $table->mj?->name ?? Auth::user()->mainProfile->name;
@@ -54,17 +54,19 @@ class NouvelleTable extends Component
     {
 
         $tags = Tag::query()->get();
-        return view('livewire.nouvelle-table')->with('tags', $tags);
+        $tws = Triggerwarning::query()->get();
+        $profiles = Profile::get();
+        return view('livewire.nouvelle-table')->with(['tags'=> $tags, "tws" => $tws, "profiles" => $profiles]);
     }
 
     public function updated($name, $value)
     {
-       // $this->form->update($name);
+       $this->form->update($name);
     }
 
     public function addNewTag(){
 
-        $newTag = $this->pull('newTag');
+        $newTag = $this->pull('new_tag');
         if($newTag){
             if($tag = Tag::where('nom', $newTag)->first()){
                 //Message tag existe
@@ -73,6 +75,46 @@ class NouvelleTable extends Component
                 $tag = Tag::create(['nom' => $newTag]);
                 Log::log(profile: Auth::user()->currentProfile,code: "TAG-ADD", objet: $tag);
                 $this->form->tags_selected[] = $tag->id;
+
+            }
+        }else{
+            //Message erreur
+        }
+
+
+    }
+
+    public function addNewTw(){
+
+        $newTw = $this->pull('newTw');
+        if($newTw){
+            if($tw = Triggerwarning::where('nom', $newTw)->first()){
+                //Message tag existe
+                $this->form->tw_selected[] = $tw->id;
+            }else{
+                $tw = Tag::create(['nom' => $newTw]);
+                Log::log(profile: Auth::user()->currentProfile,code: "TW-ADD", objet: $tw);
+                $this->form->tw_selected[] = $tw->id;
+
+            }
+        }else{
+            //Message erreur
+        }
+
+
+    }
+
+    public function addNewProfile(){
+
+        $new_profile = $this->pull('new_profile');
+        if($new_profile){
+            if($profile = Profile::where('nom', $new_profile)->first()){
+                //Message tag existe
+                $this->form->inscrits[] = $profile->id;
+            }else{
+                $profile = Profile::create(['name' => $new_profile]);
+                Log::log(profile: Auth::user()->currentProfile,code: "PROF-ADD", objet: $profile);
+                $this->form->inscrits[] = $profile->id;
 
             }
         }else{
@@ -94,11 +136,5 @@ class NouvelleTable extends Component
         return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $this->form->table->creneaus->evenement,'creneau' => $this->form->table->creneaus])
             ->with('success', "La table a bien été ajouté." . ($desincription>0 ? "Et vous avez était desinscrit de vos tables" : "" ));
     }
-    public function new_tw()
-    {
-        //$this->triggerwarnings->prepend(['id'=> 0, 'nom'=> 'test']);
 
-        $this->test ++;
-        dd('test');
-    }
 }
