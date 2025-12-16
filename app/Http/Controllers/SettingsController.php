@@ -6,6 +6,7 @@ use App\Http\Requests\FormTableRequest;
 use App\Models\Settings;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 class SettingsController extends Controller
@@ -36,5 +37,14 @@ class SettingsController extends Controller
         return view('admin.settings', [
             'settings' => Settings::paginate(5)
         ]);
+    }
+
+    static function get($parameter){
+
+        $setting = Cache::rememberForever($parameter, function() use ($parameter){
+
+            return Settings::whereIn('name',  [$parameter])->get();
+        });
+        return $setting;
     }
 }
