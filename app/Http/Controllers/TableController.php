@@ -37,52 +37,8 @@ class TableController extends Controller
 
     }
 
-    public function add(Evenement $evenement,Creneau $creneau){
-
-        //Ajouter une regle qui verifie que le nombre de table ne depasse pas le maximum
-        $table = new Table();
-        $table->nom = "le nom de la table";
-        $table->nb_joueur_min = 3;
-        $table->nb_joueur_max = 3;
-        $table->max_preinscription = $creneau->nb_inscription_online_max;
-
-        $table->duree = $creneau->duree;
-        $table->debut_table = $creneau->debut_creneau;
-        if(session()->has('saved_table_input') ){
-            session()->flash('_old_input', session("saved_table_input"));
-            session()->forget('saved_table_input');
-            //Ajout suppression de la valeur de session
-        }
-        $descriptions = Description::whereIn('name',  ['trigger_warnings' ])->get();
-
-        //Quand un tag ou un tw est ajouter pendant le process de creation d'une table, il est automatiquement ajouter à la table
-        $new_tag = $new_tw = null;
-        if(session()->has('new_tag') ){
-            $new_tag = session('new_tw');
-            session()->forget('new_tag');
-            //Ajout suppression de la valeur de session
-        }
-        if(session()->has('new_tw') ){
-            $new_tw = session('new_tw');
-            session()->forget('new_tw');
-            //Ajout suppression de la valeur de session
-        }
-        //return "formulaire ajout d'evenement";
-        return view('table.create', [
-            'table' => $table,
-            'evenement' => $evenement,
-            'creneau' => $creneau,
-            'creneaux' => Creneau::get(),
-            'triggerwarnings' => Triggerwarning::select('id', 'nom')->get(),
-            'tags' => Tag::select('id', 'nom')->get(),
-            'new_tag' => $new_tag ,
-            'new_tw' => $new_tw ,
-            'descriptions' => $descriptions
-        ]);
-    }
-
     /** Methode controleur avec Livewire*/
-    public function addTest(Evenement $evenement,Creneau $creneau)
+    public function add(Evenement $evenement,Creneau $creneau)
     {
         $descriptions = Description::whereIn('name',  ['trigger_warnings' ])->get();
         $table = new Table();
@@ -103,9 +59,6 @@ class TableController extends Controller
      */
     public function store(Evenement $evenement,Creneau $creneau, FormTableRequest $request){
 
-        if($request->get('action') != 'save'){
-            return $this->redirect_action($request);
-        }
         $table = Table::create($request->validated());
         $creneau->tables()->save($table);
         $table->inscrits()->sync($request->validated('inscrits'));
@@ -164,10 +117,6 @@ class TableController extends Controller
      */
     public function update(Evenement $evenement,Creneau $creneau,Table $table,FormTableRequest $request){
 
-        if($request->get('action') != 'save'){
-            return $this->redirect_action($request);
-        }
-
         $table->update($request->validated());
         $table->tags()->sync($request->validated('tags'));
 
@@ -190,14 +139,6 @@ class TableController extends Controller
             ->with('success', "La table a bien été supprimé");
     }
 
-    private function redirect_action(FormTableRequest $request){
-        if($request->get('action') == 'add_tag'){
-            return redirect()->route('tags.add')->withInput();
-        }
-        if($request->get('action') == 'add_tw'){
-            return redirect()->route('tw.add')->withInput();
-        }
-    }
 
     public function inscription_table(Evenement $evenement,Creneau $creneau,Table $table, Profile|null $profile = null){
         //Do the attach

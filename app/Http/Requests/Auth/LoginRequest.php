@@ -5,6 +5,8 @@ namespace App\Http\Requests\Auth;
 use App\Models\Compte;
 use App\Models\Profile;
 use Illuminate\Auth\Events\Lockout;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\RecordNotFoundException;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
@@ -63,7 +65,14 @@ class LoginRequest extends FormRequest
         $this->ensureIsNotRateLimited();
 
         if(config('app.env') == 'local') {
-            Auth::login(Compte::where('email', '=', $this->only('email'))->first());
+            try{
+                Auth::login(Compte::where('email', '=', $this->only('email'))->firstOrFail());
+            }catch(ModelNotFoundException $e){
+                throw ValidationException::withMessages([
+                    'email' => trans('auth.failed'),
+                ]);
+            }
+
         }else{
             if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
                 RateLimiter::hit($this->throttleKey());
