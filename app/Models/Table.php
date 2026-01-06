@@ -71,7 +71,7 @@ class Table extends Model
      * @return int
      */
     public function nb_inscrits() : int {
-        return $this->inscrits->count();
+        return $this->inscrits()->wherePivot('prend_une_place', '=', true)->count();
     }
     public function tags(): MorphToMany
     {

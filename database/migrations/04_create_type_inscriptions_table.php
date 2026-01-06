@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('code')->unique();
             $table->string('bs_class')->nullable();
+            $table->boolean('prend_une_place')->default(true);
         });
     }
 
