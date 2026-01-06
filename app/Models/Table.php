@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Casts\TimeCast;
+use App\Models\types\TypeInscription;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -62,7 +63,7 @@ class Table extends Model
     }
 
     public function inscrits() : BelongsToMany{
-        return $this->belongsToMany(Profile::class, 'inscrits');
+        return $this->belongsToMany(Profile::class, 'inscrits')->using(TypeInscription::class);
     }
 
     /**
@@ -71,12 +72,6 @@ class Table extends Model
     public function nb_inscrits() : int {
         return $this->inscrits->count();
     }
-
-    public function triggerwarnings(): BelongsToMany
-    {
-        return $this->belongsToMany(Triggerwarning::class);
-    }
-
     public function tags(): MorphToMany
     {
         //return $this->belongsToMany(Tag::class);

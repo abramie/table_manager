@@ -7,6 +7,7 @@ use App\Models\Creneau;
 use App\Models\Jeu;
 use App\Models\Table;
 use App\Models\Profile;
+use App\Models\types\TypeInscription;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -47,7 +48,7 @@ class TableFactory extends Factory
         })->afterCreating(function (Table $table) {
             // ...
             $users = Profile::get()->random(rand($table->nb_joueur_min,$table->nb_joueur_max));
-            $table->inscrits()->sync($users);
+            $table->inscrits()->syncWithPivotValues($users ,[ 'type_inscription_id' => TypeInscription::findCode('INS')->id]);
 
         });
     }

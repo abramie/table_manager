@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('logs', function(Blueprint $table){
-            $table->foreignIdFor(\App\Models\Profile::class)->nullable()->constrained();
-            $table->nullableMorphs('loggable');
-            $table->foreignIdFor(\App\Models\types\TypeLog::class)->nullable()->constrained();
+        Schema::create('type_tags', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+            $table->string('name');
+            $table->string('code')->unique();
+            $table->string('bs_class')->nullable();
         });
-
     }
 
     /**
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-
+        Schema::dropIfExists('type_tags');
     }
 };

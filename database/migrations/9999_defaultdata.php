@@ -2,7 +2,9 @@
 
 use App\Models\Compte;
 use App\Models\Profile;
+use App\Models\types\TypeInscription;
 use App\Models\types\TypeLog;
+use App\Models\types\TypeTag;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Hash;
@@ -27,6 +29,14 @@ return new class extends Migration
         TypeLog::create(['name' => 'Nouvelle Table', 'code' => 'TABLE-ADD']);
         TypeLog::create(['name' => 'Edition Table', 'code' => 'TABLE-EDIT']);
         TypeLog::create(['name' => 'Suppression Table', 'code' => 'TABLE-DEL']);
+
+        TypeInscription::create(['name' => 'Inscrit', 'code' => 'INS', 'bs_class' => '']);
+        TypeInscription::create(['name' => 'Pré-Inscrit', 'code' => 'PRE-INS', 'bs_class' => 'fst-italic']);
+        TypeInscription::create(['name' => 'Désinscrit', 'code' => 'DES-INS', 'bs_class' => 'text-decoration-line-through']);
+
+        TypeTag::create(['name' => 'Commun', 'code' => 'BASE', 'bs_class' => 'badge bg-secondary']);
+        TypeTag::create(['name' => 'TW', 'code' => 'TW', 'bs_class' => 'badge bg-danger']);
+        TypeTag::create(['name' => 'Type', 'code' => 'TYPE', 'bs_class' => 'badge bg-primary']);
 
         if (DB::table('evenements')->count() == 0 && config('app.env') == "local"){
 

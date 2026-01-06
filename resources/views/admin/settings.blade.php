@@ -10,7 +10,7 @@
         <form action="{{route('admin.settings.update', ['setting' => $setting])}}" method="post" class="vstack gap-2">
             @csrf
             <div class="form-group" title="{{$setting->description}}">
-                <label  for="value">{{$setting->name}}</label>
+                <label for="value">{{$setting->name}}</label>
                 <input type="text" class="form-control" id="value" @error($setting->name) is-invalid @enderror name="value" value="{{old("value",$setting->value)}}">
 
                 @error($setting->name)

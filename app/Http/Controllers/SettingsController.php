@@ -30,7 +30,7 @@ class SettingsController extends Controller
 
         $setting->fill($request->all())->save();
         return redirect()->back()
-            ->with('success', "LE settings a bien était modifier");
+            ->with('success', "Le settings a bien était modifier");
     }
 
     public function index(){

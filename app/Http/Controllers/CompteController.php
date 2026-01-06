@@ -17,6 +17,7 @@ class CompteController extends Controller
 
     public function index()
     {
+
         $users = Compte::paginate('20') ;
         return view('admin.users', ['users' => $users]);
     }

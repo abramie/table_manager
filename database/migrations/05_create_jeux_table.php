@@ -18,9 +18,6 @@ return new class extends Migration
             $table->string('nom');
             $table->longText('description');
         });
-        Schema::table('tables', function(Blueprint $table){
-            $table->foreignIdFor(\App\Models\Jeu::class)->nullable()->constrained('jeux')->cascadeOnDelete();
-        });
     }
 
     /**

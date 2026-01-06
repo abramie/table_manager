@@ -297,12 +297,12 @@ class DatabaseSeeder extends Seeder
 
 
         $tags = Tag::factory(15)->create();
-        $triggerwarning = Triggerwarning::factory(15)->create();
+        $triggerwarning = Tag::factory(15)->tw()->create();
 
         $table->each(function (Table $item, int $key, ) use ($tags,$triggerwarning) {
             // ...
-            $item->tags()->sync($tags->random(rand(0,15)));
-            $item->triggerwarnings()->sync($triggerwarning->random(rand(0,15)));
+            $item->tags()->attach($tags->random(rand(0,15)));
+            $item->tags()->attach($triggerwarning->random(rand(0,15)));
         });
 /*
         DB::table('triggerwarnings')->insert(

@@ -99,7 +99,7 @@ class TableController extends Controller
     }
 
     /*
-     * Sauvegarde un Creneau depuis un formulaire
+     * Sauvegarde une Table depuis un formulaire
      */
     public function store(Evenement $evenement,Creneau $creneau, FormTableRequest $request){
 
@@ -108,7 +108,6 @@ class TableController extends Controller
         }
         $table = Table::create($request->validated());
         $creneau->tables()->save($table);
-        $table->triggerwarnings()->sync($request->validated('triggerwarnings'));
         $table->inscrits()->sync($request->validated('inscrits'));
         $table->tags()->sync($request->validated('tags'));
         //Desinscrit le mj de toute les tables où il est inscrit si il ouvre une table.
@@ -144,25 +143,8 @@ class TableController extends Controller
                 ->with('echec', "Vous n'avez pas l'autorisation de modifier cette table");
         }
         $descriptions = Description::whereIn('name',  ['trigger_warnings' ])->get();
-        if(session()->has('saved_table_input') ){
-            session()->flash('_old_input', session("saved_table_input"));
-            session()->forget('saved_table_input');
-            //Ajout suppression de la valeur de session
-        }
-        $links =  [];
-        $currentLink = request()->path(); // Getting current URI like 'category/books/'
-        array_unshift($links, $currentLink); // Putting it in the beginning of links array
-        $new_tag = $new_tw = null;
-        if(session()->has('new_tag') ){
-            $new_tag = session('new_tw');
-            session()->forget('new_tag');
-            //Ajout suppression de la valeur de session
-        }
-        if(session()->has('new_tw') ){
-            $new_tw = session('new_tw');
-            session()->forget('new_tw');
-            //Ajout suppression de la valeur de session
-        }
+
+
 
         return view('table.edit', [
             'table' => $table,
@@ -187,7 +169,6 @@ class TableController extends Controller
         }
 
         $table->update($request->validated());
-        $table->triggerwarnings()->sync($request->validated('triggerwarnings'));
         $table->tags()->sync($request->validated('tags'));
 
         if($request->validated('inscrits'))

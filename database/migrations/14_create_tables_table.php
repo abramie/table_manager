@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\types\TypeInscription;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,6 +16,11 @@ return new class extends Migration
         Schema::create('tables', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+
+
+            $table->foreignIdFor(\App\Models\Jeu::class)->nullable()->constrained('jeux')->cascadeOnDelete();
+            $table->foreignId('mj')->nullable()->constrained(table: 'profiles')->nullOnDelete();
+
             $table->string('nom');
             $table->longText('description')->nullable();
             $table->longText('tw')->nullable();
@@ -28,20 +34,8 @@ return new class extends Migration
             $table->string('status')->default('published');
             $table->softDeletes();
 
-            $table->foreignId('mj')->nullable()->constrained(table: 'profiles')->nullOnDelete();
+
         });
-
-
-
-        Schema::create('inscrits',function (Blueprint $table) {
-            $table->foreignIdFor(\App\Models\Profile::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(\App\Models\Table::class)->constrained()->cascadeOnDelete();
-            $table->string('status')->default('inscrit');
-            $table->softDeletes();
-        });
-
-
-
     }
 
     /**
