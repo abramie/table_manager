@@ -12,7 +12,7 @@ class TypeInscription extends Pivot
         'name',
         'code',
         'bs_class',
-        'compte',
+        'prend_une_place',
     ];
 
     static public function findCode($code){

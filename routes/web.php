@@ -92,6 +92,9 @@ Route::prefix('/admin')->name('admin.')->middleware('auth')->middleware('role:ad
         Route::post('/{setting}', [\App\Http\Controllers\SettingsController::class, 'update'])->name(".update");
     });
 
+    Route::get('/type_inscriptions', [\App\Http\Controllers\AdminController::class, 'indexTypeInscriptions'])->name("type_inscriptions.index");
+    Route::get('/type_inscriptions/{type_inscription}', [\App\Http\Controllers\AdminController::class, 'updateTypeInscription'])->name("type_inscriptions.update");
+
     route::get('/reset/{user}', [\App\Http\Controllers\Auth\PasswordResetLinkController::class, 'generateResetLink'])->name('generate_reset_link');
     });
 /*
