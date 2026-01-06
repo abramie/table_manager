@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Casts\TimeCast;
 use App\Models\types\TypeInscription;
+use App\Models\types\TypeTag;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -76,5 +77,17 @@ class Table extends Model
     {
         //return $this->belongsToMany(Tag::class);
         return $this->morphToMany(Tag::class, 'taggable');
+    }
+
+    public function triggerwarnings(): MorphToMany
+    {
+        //return $this->belongsToMany(Tag::class);
+        return $this->morphToMany(Tag::class, 'taggable')->where('type_tag_id', TypeTag::findCode('TW')->id);
+    }
+
+    public function types(): MorphToMany
+    {
+        //return $this->belongsToMany(Tag::class);
+        return $this->morphToMany(Tag::class, 'taggable')->wherePivot('type_tag_id', TypeTag::findCode('TYPE')->id);
     }
 }

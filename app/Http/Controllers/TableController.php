@@ -106,8 +106,6 @@ class TableController extends Controller
             'creneaux' => Creneau::get(),
             'triggerwarnings' => Triggerwarning::select('id', 'nom')->get(),
             'tags' => Tag::select('id', 'nom')->get(),
-            'new_tag' => $new_tag ,
-            'new_tw' => $new_tw ,
             'descriptions' => $descriptions
         ]);
     }

@@ -21,7 +21,7 @@ class CreneauController extends Controller
         $settings = Settings::whereIn('name',  ['nom_trigger'])->get();
         return view('creneau.index_tables', [
             'creneau' => $creneau,
-            'tables' => $creneau->tables()->with('tags', 'triggerwarnings')->orderByDesc("sans_table")->paginate(10),
+            'tables' => $creneau->tables()->with('tags')->orderByDesc("sans_table")->paginate(10),
             'evenement' => $evenement,
             'settings' => $settings,
         ]);

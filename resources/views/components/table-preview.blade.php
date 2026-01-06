@@ -27,18 +27,18 @@
                         <p>
                             Tags :
                             @foreach($table->tags as $tag )
-                                <span class=" card-text badge badge-pill badge-secondary">{{$tag->nom}}</span>
+                                <span class=" card-text badge-pill {{\App\Models\types\TypeTag::findCode('BASE')->bs_class}}">{{$tag->nom}}</span>
                             @endforeach
                         </p>
 
                     @endif
 
-                    @if(!$table->triggerwarnings->isEmpty())
+                    @if(!$table->tags->isEmpty())
                         <p>
                             {{$settings->firstWhere('name','nom_trigger')->value}} :
 
                             @foreach($table->triggerwarnings as $tw )
-                                <span class="badge bg-secondary">{{$tw->nom}}</span>
+                                <span class="{{\App\Models\types\TypeTag::findCode('TW')->bs_class}}">{{$tw->nom}}</span>
                             @endforeach
                         </p>
                     @endif
