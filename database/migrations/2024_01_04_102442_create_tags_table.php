@@ -16,6 +16,7 @@ return new class extends Migration
             $table->timestamps();
             $table->string('nom')->unique();
             $table->foreignId('type_tag_id')->constrained('type_tags');
+            $table->foreignId('created_by')->default(1)->constrained('comptes');
         });
         Schema::create('taggables',function (Blueprint $table) {
             $table->foreignIdFor(\App\Models\Tag::class)->constrained();

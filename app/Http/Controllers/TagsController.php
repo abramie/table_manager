@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\FormTableRequest;
 use App\Models\Tag;
+use App\Models\types\TypeTag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -32,5 +33,18 @@ class TagsController extends Controller
         }
         else
             return redirect()->route('tags.add');
+    }
+
+    public function indexTags()
+    {
+        return view('table.tag.index_tags', [
+            'tags' => Tag::with('typeTag')->paginate(10),
+            'typeTags' => TypeTag::all()
+        ]);
+    }
+
+    public function update(Request $request, Tag $tag)
+    {
+
     }
 }

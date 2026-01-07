@@ -169,12 +169,10 @@ Route::prefix('/events')->name('events.')->group(function () {
 Route::prefix('/tags')->name('tags.')->group(function () {
     Route::get('/add', [TagsController::class, 'add'])->name('add')->middleware('auth')->middleware('permission:ajout_tags');
     Route::post('/add', [TagsController::class, 'store'])->middleware('auth')->middleware('permission:ajout_tags');
+    Route::post('/update/{tag}', [TagsController::class, 'update'])->name('update')->middleware('auth')->middleware('permission:change_tags');
+    Route::get('/', [TagsController::class, 'indexTags'])->name('index')->middleware('auth');
 });
 
-Route::prefix('/triggerwarning')->name('tw.')->group(function () {
-    Route::get('/add', [TriggerwarningController::class, 'add'])->name('add')->middleware('auth')->middleware('permission:ajout_tws');
-    Route::post('/add', [TriggerwarningController::class, 'store'])->middleware('auth')->middleware('permission:ajout_tws');
-});
 /*
  * Pages relatives aux jeux
  */

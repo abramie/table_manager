@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Models\types\TypeTag;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Tag extends Model
@@ -19,5 +21,9 @@ class Tag extends Model
     {
         //return $this->belongsToMany(Table::class);
         return $this->morphedByMany(Table::class, 'taggable');
+    }
+
+    public function typeTag(): HasOne{
+        return $this->hasOne(TypeTag::class,'id', 'type_tag_id');
     }
 }

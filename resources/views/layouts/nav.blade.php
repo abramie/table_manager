@@ -26,9 +26,6 @@
                 @can('ajout_tags')
                     <x-navigation-item routeName="tags.add" contain="tags" >Ajout Tag</x-navigation-item>
                 @endcan
-                @can('ajout_tws')
-                    <x-navigation-item routeName="tw.add" contain="tw" >Ajout TW</x-navigation-item>
-                @endcan
 
                 @role('joueur')
                     <x-navigation-item routeName="profile.show" :parameter="[$authCompte]" contain="joueur" >Profiles</x-navigation-item>
