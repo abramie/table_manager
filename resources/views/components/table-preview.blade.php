@@ -27,7 +27,7 @@
                         <p>
                             Tags :
                             @foreach($table->tags as $tag )
-                                <span class=" card-text badge-pill {{\App\Models\types\TypeTag::findCode('BASE')->bs_class}}">{{$tag->nom}}</span>
+                                <span class=" card-text badge-pill {{\App\Models\types\TypeTag::findCode('BASE')->bs_class}}">{{$tag->name}}</span>
                             @endforeach
                         </p>
 
@@ -38,7 +38,7 @@
                             {{$settings->firstWhere('name','nom_trigger')->value}} :
 
                             @foreach($table->triggerwarnings as $tw )
-                                <span class="{{\App\Models\types\TypeTag::findCode('TW')->bs_class}}">{{$tw->nom}}</span>
+                                <span class="{{\App\Models\types\TypeTag::findCode('TW')->bs_class}}">{{$tw->name}}</span>
                             @endforeach
                         </p>
                     @endif

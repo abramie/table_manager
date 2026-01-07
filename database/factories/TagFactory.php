@@ -23,15 +23,15 @@ class TagFactory extends Factory
     {
 
         return [
-            'nom' =>$this->faker->sentence(2,true),
-            'type_tag_id' => TypeTag::findCode('BASE')->id,
+            'name' =>$this->faker->sentence(2,true),
+            'type_tag_code' => 'BASE',
         ];
     }
 
     public function tw(): static
     {
         return $this->state(fn (array $attributes) => [
-            'type_tag_id' => TypeTag::findCode('TW')->id,
+            'type_tag_code' => 'TW',
         ]);
     }
 

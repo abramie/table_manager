@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('tags', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('nom')->unique();
-            $table->foreignId('type_tag_id')->constrained('type_tags');
+            $table->string('name')->unique();
+            $table->string('type_tag_code');
+            $table->foreign('type_tag_code')->references('code')->on('type_tags');
             $table->foreignId('created_by')->default(1)->constrained('comptes');
         });
         Schema::create('taggables',function (Blueprint $table) {
@@ -30,6 +31,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('tags');
-        Schema::dropIfExists('table_tag');
+        Schema::dropIfExists('taggables');
     }
 };

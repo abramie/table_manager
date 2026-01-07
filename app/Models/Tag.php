@@ -14,7 +14,8 @@ class Tag extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nom'
+        'name',
+        'type_tag_code',
     ];
 
     public function tables(): MorphToMany
@@ -24,6 +25,6 @@ class Tag extends Model
     }
 
     public function typeTag(): HasOne{
-        return $this->hasOne(TypeTag::class,'id', 'type_tag_id');
+        return $this->hasOne(TypeTag::class,'code', 'type_tag_code');
     }
 }

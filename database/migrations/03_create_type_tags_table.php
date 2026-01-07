@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name');
-            $table->string('code')->unique();
+            $table->string('code')->index()->unique();
             $table->string('bs_class')->nullable();
         });
     }

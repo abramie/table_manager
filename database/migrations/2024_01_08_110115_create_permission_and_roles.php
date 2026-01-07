@@ -29,9 +29,10 @@ return new class extends Migration
         $manage_descriptions = Permission::create(['name' => 'manage_descriptions']);
 
         $ajout_tags = Permission::create(['name' => 'ajout_tags']);
+        $change_tags = Permission::create(['name' => 'change_tags']);
         $ajout_tws = Permission::create(['name' => 'ajout_tws']);
         $permissions_mj = [$ajout_tables,$manage_tables_own,$ajout_tags,$ajout_tws];
-        $permissions_modo = [$manage_tables_all,$ajout_events,$ajout_tags,$ajout_tws];
+        $permissions_modo = [$manage_tables_all,$ajout_events,$ajout_tags,$ajout_tws, $change_tags];
 
         $permissions_admin = [$manage_roles,$manage_descriptions];
 

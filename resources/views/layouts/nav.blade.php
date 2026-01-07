@@ -23,9 +23,8 @@
                     <x-navigation-item routeName="admin.index" contain="admin" >Admin</x-navigation-item>
                 @endrole
 
-                @can('ajout_tags')
-                    <x-navigation-item routeName="tags.add" contain="tags" >Ajout Tag</x-navigation-item>
-                @endcan
+                <x-navigation-item routeName="tags.index" contain="tags" >Tags</x-navigation-item>
+
 
                 @role('joueur')
                     <x-navigation-item routeName="profile.show" :parameter="[$authCompte]" contain="joueur" >Profiles</x-navigation-item>
