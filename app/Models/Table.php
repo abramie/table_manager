@@ -64,14 +64,20 @@ class Table extends Model
     }
 
     public function inscrits() : BelongsToMany{
-        return $this->belongsToMany(Profile::class, 'inscrits')->using(TypeInscription::class);
+        return $this->belongsToMany(Profile::class, 'inscrits')->withPivot('type_inscription_id');
+    }
+
+    public function inscritsPrenantUnePlace() : BelongsToMany{
+        return $this->inscrits()->join('type_inscriptions', 'type_inscriptions.id', '=', 'inscrits.type_inscription_id')
+            ->where('type_inscriptions.prend_une_place', '=', true);
     }
 
     /**
      * @return int
      */
     public function nb_inscrits() : int {
-        return $this->inscrits()->wherePivot('prend_une_place', '=', true)->count();
+        //return $this->inscrits()->wherePivot('prend_une_place', '=', true)->count();
+        return $this->inscritsPrenantUnePlace()->count();
     }
     public function tags(): MorphToMany
     {
