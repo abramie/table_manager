@@ -8,6 +8,7 @@ use App\Models\Log;
 use App\Models\Profile;
 use App\Models\Tag;
 use App\Models\Triggerwarning;
+use App\Models\types\TypeInscription;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -54,9 +55,10 @@ class NouvelleTable extends Component
     {
 
         $tags = Tag::query()->get();
-        $tws = Triggerwarning::query()->get();
+        $tws = Tag::where('tags.type_tag_code', '=', 'TW')->get();
         $profiles = Profile::get();
-        return view('livewire.nouvelle-table')->with(['tags'=> $tags, "tws" => $tws, "profiles" => $profiles]);
+        $type_inscriptions = TypeInscription::get();
+        return view('livewire.nouvelle-table')->with(['tags'=> $tags,'tws'=>$tws, "profiles" => $profiles, "type_inscriptions" => $type_inscriptions]);
     }
 
     public function updated($name, $value)
@@ -68,11 +70,11 @@ class NouvelleTable extends Component
 
         $newTag = $this->pull('new_tag');
         if($newTag){
-            if($tag = Tag::where('nom', $newTag)->first()){
+            if($tag = Tag::where('name', $newTag)->first()){
                 //Message tag existe
                 $this->form->tags_selected[] = $tag->id;
             }else{
-                $tag = Tag::create(['nom' => $newTag]);
+                $tag = Tag::create(['name' => $newTag, 'type_tag_code' => 'BASE']);
                 Log::log(profile: Auth::user()->currentProfile,code: "TAG-ADD", objet: $tag);
                 $this->form->tags_selected[] = $tag->id;
 
@@ -86,15 +88,16 @@ class NouvelleTable extends Component
 
     public function addNewTw(){
 
-        $newTw = $this->pull('newTw');
-        if($newTw){
-            if($tw = Triggerwarning::where('nom', $newTw)->first()){
+        $newTag = $this->pull('newTw');
+
+        if($newTag){
+            if($tag = Tag::where('name', $newTag)->first()){
                 //Message tag existe
-                $this->form->tw_selected[] = $tw->id;
+                $this->form->triggerwarnings[] = $tag->id;
             }else{
-                $tw = Tag::create(['nom' => $newTw]);
-                Log::log(profile: Auth::user()->currentProfile,code: "TW-ADD", objet: $tw);
-                $this->form->tw_selected[] = $tw->id;
+                $tag = Tag::create(['name' => $newTag, 'type_tag_code' => 'TW']);
+                Log::log(profile: Auth::user()->currentProfile,code: "TAG-ADD", objet: $tag);
+                $this->form->triggerwarnings[] = $tag->id;
 
             }
         }else{

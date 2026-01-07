@@ -43,7 +43,7 @@
 {{--            Toute la partie TW--}}
             @foreach ($tws as $tw)
                 @php
-                    $tw->label = $tw->nom;
+                    $tw->label = $tw->name;
                     $tw->value = $tw->id;
                 @endphp
             @endforeach
@@ -71,7 +71,7 @@
 {{--            Toute la partie Tags --}}
             @foreach ($tags as $tag)
                 @php
-                    $tag->label = $tag->nom;
+                    $tag->label = $tag->name;
                     $tag->value = $tag->id;
                 @endphp
             @endforeach

@@ -27,4 +27,10 @@ class Tag extends Model
     public function typeTag(): HasOne{
         return $this->hasOne(TypeTag::class,'code', 'type_tag_code');
     }
+
+    public function logs() : MorphToMany
+    {
+        return $this->morphToMany(Log::class, 'loggable');
+    }
+
 }

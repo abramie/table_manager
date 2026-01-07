@@ -33,7 +33,7 @@
 
                     @endif
 
-                    @if(!$table->tags->isEmpty())
+                    @if(!$table->triggerwarnings->isEmpty())
                         <p>
                             {{$settings->firstWhere('name','nom_trigger')->value}} :
 
