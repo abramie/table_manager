@@ -56,9 +56,10 @@ class NouvelleTable extends Component
 
         $tags = Tag::query()->get();
         $tws = Tag::where('tags.type_tag_code', '=', 'TW')->get();
+        $types = Tag::where('tags.type_tag_code', '=', 'TYPE')->get();
         $profiles = Profile::get();
         $type_inscriptions = TypeInscription::get();
-        return view('livewire.nouvelle-table')->with(['tags'=> $tags,'tws'=>$tws, "profiles" => $profiles, "type_inscriptions" => $type_inscriptions]);
+        return view('livewire.nouvelle-table')->with(['tags'=> $tags,'tws'=>$tws, 'types' => $types, "profiles" => $profiles, "type_inscriptions" => $type_inscriptions]);
     }
 
     public function updated($name, $value)

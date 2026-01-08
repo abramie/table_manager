@@ -32,12 +32,13 @@ class TableForm extends Form
     #[Validate]
     public $nb_joueur_min;
     public $tags;
-    public $triggerwarnings;
+
     public $inscrits;
     public float $max_duree = 0;
 
     public $tags_selected = [];
-
+    public $triggerwarnings;
+    public $type;
     public $creneau;
     public function setTable(Table $table)
     {
@@ -106,9 +107,8 @@ class TableForm extends Form
             $this->table->inscrits()->sync($inscrits_id);
         }
 
-
-        $this->table->triggerwarnings()->sync($this->triggerwarnings);
-        $this->table->tags()->sync($this->tags_selected);
+        $tags = $this->tags_selected + $this->triggerwarnings + $this->type;
+        $this->table->tags()->sync($tags);
         $this->table->jeu()->associate($this->jeu);
 
     }
@@ -127,7 +127,8 @@ class TableForm extends Form
             'table_description' => ['min:4'],
             'tags_selected' => ['array'],
 //            'tags_selected' => ['array', 'exists:tags,id'],
-            //'triggerwarnings' => ['array', 'exists:triggerwarnings,id'],
+            'triggerwarnings' => ['array'],
+            'type' => [],
             'mj' => ['required'],
             'date_debut' => ['required', 'date', 'after_or_equal:debut_creneau'],
             //'inscrits' => ['array', 'exists:profiles,id'],

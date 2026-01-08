@@ -2,6 +2,7 @@
 
 use App\Models\Compte;
 use App\Models\Profile;
+use App\Models\Tag;
 use App\Models\types\TypeInscription;
 use App\Models\types\TypeLog;
 use App\Models\types\TypeTag;
@@ -38,6 +39,8 @@ return new class extends Migration
         TypeTag::create(['name' => 'TW', 'code' => 'TW', 'bs_class' => 'badge bg-danger']);
         TypeTag::create(['name' => 'Type', 'code' => 'TYPE', 'bs_class' => 'badge bg-primary']);
 
+
+
         if (DB::table('evenements')->count() == 0 && config('app.env') == "local"){
 
 
@@ -50,18 +53,18 @@ return new class extends Migration
 
             DB::table('triggerwarnings')->insert(
                 array(
-                    'nom' => 'mort',
+                    'name' => 'mort',
                 )
             );
 
             DB::table('tags')->insert(
                 array(
-                    'nom' => 'horreur',
+                    'name' => 'horreur',
                 )
             );
             DB::table('tags')->insert(
                 array(
-                    'nom' => 'magie',
+                    'name' => 'magie',
                 )
             );
 

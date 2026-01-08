@@ -40,6 +40,17 @@
             @enderror
         </div>
 
+            @if($types->isNotEmpty())
+                <div class="form-group">
+                    <label for="type_table">Type de table : </label>
+                    <select name="type_table">
+                        @foreach($types as $type)
+                            <option value="{{$type->code}}" >{{$type->name}}</option>
+
+                        @endforeach
+                    </select>
+                </div>
+            @endif
 {{--            Toute la partie TW--}}
             @foreach ($tws as $tw)
                 @php
@@ -67,6 +78,7 @@
                     <a href="#" wire:click.prevent="addNewTw()">Ajouter le TW </a>
                 </div>
             </div>
+
 
 {{--            Toute la partie Tags --}}
             @foreach ($tags as $tag)

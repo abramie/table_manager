@@ -299,6 +299,11 @@ class DatabaseSeeder extends Seeder
         $tags = Tag::factory(15)->create();
         $triggerwarning = Tag::factory(15)->tw()->create();
 
+        Tag::create(['name' => 'Campagne', "type_tag_code" => 'TYPE']);
+        Tag::create(['name' => 'One-shot', "type_tag_code" => 'TYPE']);
+        Tag::create(['name' => 'Atelier', "type_tag_code" => 'TYPE']);
+        Tag::create(['name' => 'Multi-scenar', "type_tag_code" => 'TYPE']);
+
         $table->each(function (Table $item, int $key, ) use ($tags,$triggerwarning) {
             // ...
             $item->tags()->attach($tags->random(rand(0,15)));
