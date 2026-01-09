@@ -43,9 +43,9 @@
             @if($types->isNotEmpty())
                 <div class="form-group">
                     <label for="type_table">Type de table : </label>
-                    <select name="type_table">
+                    <select wire:model="form.type"  name="type_table">
                         @foreach($types as $type)
-                            <option value="{{$type->code}}" >{{$type->name}}</option>
+                            <option value="{{$type->id}}" >{{$type->name}}</option>
 
                         @endforeach
                     </select>

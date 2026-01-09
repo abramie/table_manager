@@ -30,7 +30,7 @@
                             @endforeach
                         </p>
                     @endif
-
+            @endif
 
 
                 <p class="card-text">

@@ -95,7 +95,7 @@ class Table extends Model
     public function tags(): MorphToMany
     {
         //return $this->belongsToMany(Tag::class);
-        return $this->morphToMany(Tag::class, 'taggable');
+        return $this->morphToMany(Tag::class, 'taggable')->orderBy('tags.type_tag_code', 'desc');
     }
 
     public function triggerwarnings(): MorphToMany

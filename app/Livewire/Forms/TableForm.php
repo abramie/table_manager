@@ -63,21 +63,21 @@ class TableForm extends Form
     public function update($name)
     {
         $this->validate();
-        if($name == "inscrits" ){
-            $this->table->inscrits()->sync($this->inscrits);
-        }elseif ($name == "tags_selected" || $name == "triggerwarnings"){
-            $tags = array_merge($this->tags_selected , $this->triggerwarnings, );
-            if($this->type){
-                $tags[] = $this->type;
-            }
-
-            $this->table->tags()->sync($tags);
-        }elseif ($name == "jeu"){
-            $this->table->jeu()->associate($this->jeu);
-
-        }else{
-            $this->table->update($this->only([$name]));
-        }
+//        if($name == "inscrits" ){
+//            $this->table->inscrits()->sync($this->inscrits);
+//        }elseif ($name == "tags_selected" || $name == "triggerwarnings"){
+//            $tags = array_merge($this->tags_selected , $this->triggerwarnings, );
+//            if($this->type){
+//                $tags[] = $this->type;
+//            }
+//
+//            $this->table->tags()->sync($tags);
+//        }elseif ($name == "jeu"){
+//            $this->table->jeu()->associate($this->jeu);
+//
+//        }else{
+//            $this->table->update($this->only([$name]));
+//        }
 //        $this->reset();
     }
 
@@ -120,6 +120,7 @@ Log::debug("on va valider");
         }
 
         $tags = array_merge($this->tags_selected , $this->triggerwarnings, );
+
         if($this->type){
             $tags[] = $this->type;
         }
