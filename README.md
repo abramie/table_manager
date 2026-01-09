@@ -14,6 +14,12 @@ composer require doctrine/dbal //Pour permettre d'update du sqlite
 
 npm run build 
 
-php artisan migrate
+php artisan migrate 
 
- php artisan storage:link (Pour permettre l'upload de fichiers et tous ça)
+Pour données de test : php artisan migrate:fresh --seed
+
+php artisan storage:link (Pour permettre l'upload de fichiers et tous ça)
+
+php artisan key:generate
+
+Il faut créer le .env, ajouter un mdp admin (celui par default du compte admin) 
