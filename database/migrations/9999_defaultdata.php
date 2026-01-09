@@ -40,6 +40,9 @@ return new class extends Migration
         TypeTag::create(['name' => 'Type', 'code' => 'TYPE', 'bs_class' => 'badge bg-primary']);
 
 
+        
+
+        \App\Models\StatusTable::create(['name' => 'Public', 'code' => 'PUB']);
 
         if (DB::table('evenements')->count() == 0 && config('app.env') == "local"){
 

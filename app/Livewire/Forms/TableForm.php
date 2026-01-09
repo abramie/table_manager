@@ -7,6 +7,7 @@ use App\Models\Profile;
 use App\Models\Table;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
@@ -37,7 +38,7 @@ class TableForm extends Form
     public float $max_duree = 0;
 
     public $tags_selected = [];
-    public $triggerwarnings;
+    public $triggerwarnings = [];
     public $type;
     public $creneau;
     public function setTable(Table $table)
@@ -55,19 +56,19 @@ class TableForm extends Form
 
     public function update($name)
     {
-        $this->validate();
-        if($name == "inscrits" ){
-            $this->table->inscrits()->sync($this->inscrits);
-        }elseif ($name == "tags_selected"){
-            $this->table->tags()->sync($this->tags_selected);
-        }elseif ($name == "jeu"){
-            $this->table->jeu()->associate($this->jeu);
-        }elseif($name == "triggerwarnings"){
-            $this->table->triggerwarnings()->sync($this->triggerwarnings);
-        }else{
-            $this->table->update($this->only([$name]));
-        }
-        $this->reset();
+//        $this->validate();
+//        if($name == "inscrits" ){
+//            $this->table->inscrits()->sync($this->inscrits);
+//        }elseif ($name == "tags_selected"){
+//            $this->table->tags()->sync($this->tags_selected);
+//        }elseif ($name == "jeu"){
+//            $this->table->jeu()->associate($this->jeu);
+//        }elseif($name == "triggerwarnings"){
+//            $this->table->triggerwarnings()->sync($this->triggerwarnings);
+//        }else{
+//            $this->table->update($this->only([$name]));
+//        }
+//        $this->reset();
     }
 
     public function store(){
@@ -87,8 +88,9 @@ class TableForm extends Form
 
 
         $this->date_debut =  $this->debut_table ? $this->creneau->debut_creneau->setTimeFromTimeString($this->debut_table) : null;
-
+Log::debug("on va valider");
         $this->validate();
+        Log::debug("on a valider");
         $this->table->description = $this->table_description;
         $this->table->nb_joueur_min = $this->nb_joueur_min;
         $this->table->nb_joueur_max = $this->nb_joueur_max;
@@ -97,8 +99,7 @@ class TableForm extends Form
         $this->table->nom = $this->nom;
         $this->table->mj = $this->mj->id;
         $this->table->jeu_id = Jeu::where('nom', '=', $this->jeu)->first()?->id;
-        $this->table->status = "published";
-
+        $this->table->status_table_code = "PUB";
         $this->creneau->tables()->save($this->table);
 
         //En vrai pour les inscrits, ajouter une fonction, ça devrait pas marcher comme ça ...
@@ -107,10 +108,22 @@ class TableForm extends Form
             $this->table->inscrits()->sync($inscrits_id);
         }
 
-        $tags = $this->tags_selected + $this->triggerwarnings + $this->type;
+        $tags = array_merge($this->tags_selected , $this->triggerwarnings, );
+        if($this->type){
+            $tags[] = $this->type;
+        }
+
         $this->table->tags()->sync($tags);
         $this->table->jeu()->associate($this->jeu);
 
+        if($this->table->mjs == Auth::user()->currentProfile){
+            $desincription = $this->creneau->desinscrit_user(Auth::user()->currentProfile);
+        }else{
+            $desincription = 0;
+        }
+        \Illuminate\Support\Facades\Log::debug("after desins");
+        return $desincription;
+        return 0;
     }
 
     public function rules(): array

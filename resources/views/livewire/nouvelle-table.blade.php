@@ -213,7 +213,7 @@
 
                         <input type="text" wire:model="new_tw" wire:keydown.enter.prevent="addNewProfile()"/>
                         {{$new_tw}}
-                        <a href="#" wire:click.prevent="addNewProfile()">Ajouter le TW </a>
+                        <a href="#" wire:click.prevent="addNewProfile()">Ajouter le Profile </a>
                     </div>
                 </div>
             @endcan

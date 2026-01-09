@@ -18,8 +18,9 @@ return new class extends Migration
             $table->timestamps();
 
 
-            $table->foreignIdFor(\App\Models\Jeu::class)->nullable()->constrained('jeux')->cascadeOnDelete();
+            $table->foreignIdFor(\App\Models\Jeu::class)->nullable()->constrained('jeux');
             $table->foreignId('mj')->nullable()->constrained(table: 'profiles')->nullOnDelete();
+            $table->string('status_table_code');
 
             $table->string('nom');
             $table->longText('description')->nullable();
@@ -31,7 +32,8 @@ return new class extends Migration
             $table->dateTime('debut_table');
             $table->boolean('inscription_restrainte')->default('1');
             $table->double('max_preinscription')->default(0);
-            $table->string('status')->default('published');
+
+            $table->foreign('status_table_code')->references('code')->on('status_tables');
             $table->softDeletes();
 
 

@@ -16,8 +16,10 @@ use App\Models\Table;
 use App\Models\Tag;
 use App\Models\Triggerwarning;
 use App\Models\Profile;
+use App\Models\types\TypeInscription;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Database\RecordNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -49,6 +51,9 @@ class TableController extends Controller
 
         $table->duree = $creneau->duree;
         $table->debut_table = $creneau->debut_creneau;
+        $table->creneau()->associate($creneau);
+
+
         return view('table.createTest', ['table' => $table,'evenement' => $evenement,
             'creneau' => $creneau,'descriptions' => $descriptions]);
 
@@ -250,10 +255,18 @@ class TableController extends Controller
 
         }
 
-        $table->inscrits()->detach($profile);
 
-        return redirect()->back()
-            ->with('success', $success_message);
+
+        try{
+            $inscription = $table->inscriptions()->whereRelation('profile', 'profile_id', $profile)->firstOrFail();
+            $inscription->type_inscription()->associate(TypeInscription::findCode('DES-INS'));
+            return redirect()->back()
+                ->with('success', $success_message);
+        }catch(RecordNotFoundException $e){
+            return redirect()->back()
+                ->with('error', "Oh no, la personne n'était pas inscrite ???");
+        }
+
 
 
 

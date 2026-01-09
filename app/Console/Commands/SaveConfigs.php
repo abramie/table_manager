@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Description;
 use App\Models\Settings;
+use App\Models\StatusTable;
 use App\Models\Tag;
 use App\Models\types\TypeInscription;
 use App\Models\types\TypeTag;
@@ -39,6 +40,7 @@ class SaveConfigs extends Command
             'settings' => Settings::select(['name','value', 'description'])->get(),
             'descriptions' => Description::select(['name', 'description'])->get(),
             'type_inscriptions' => TypeInscription::select(['name','code', 'bs_class', 'prend_une_place'])->get(),
+            'status_tables' => StatusTable::select(['name','code', 'bs_class', 'indicateur_nom', 'afficher_public', 'inscription_possible'])->get(),
         ]);
 
         $fileContent = $configs->toJson(JSON_PRETTY_PRINT);

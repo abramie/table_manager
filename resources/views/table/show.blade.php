@@ -69,8 +69,8 @@
             @endif</span>
 
         <ul class="list-group list-group-flush">
-            @foreach($table->inscrits as $user)
-                <li class="list-group-item">{{$user->name}}</li>
+            @foreach($table->inscriptions as $inscrit)
+                <li class="list-group-item {{$inscrit->type_inscription->bs_class}}">{{$inscrit->profile->name}}</li>
             @endforeach
         </ul>
     </div>

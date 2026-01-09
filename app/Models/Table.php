@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -55,6 +56,9 @@ class Table extends Model
     public function creneaus(): BelongsTo {
         return $this->belongsTo(Creneau::class, 'creneau_id');
     }
+    public function creneau(): BelongsTo {
+        return $this->belongsTo(Creneau::class, 'creneau_id');
+    }
 
     public function jeu(): BelongsTo {
         return $this->belongsTo(Jeu::class, 'jeu_id');
@@ -69,6 +73,15 @@ class Table extends Model
 
     public function inscritsPrenantUnePlace() : BelongsToMany{
         return $this->inscrits()->join('type_inscriptions', 'type_inscriptions.id', '=', 'inscrits.type_inscription_id')
+            ->where('type_inscriptions.prend_une_place', '=', true);
+    }
+
+    public function inscriptions() : HasMany{
+        return $this->hasMany(Inscrit::class, 'table_id');
+    }
+
+    public function inscriptionsPrenantUnePlaces() : HasMany{
+        return $this->hasMany(Inscrit::class, 'table_id')->join('type_inscriptions', 'type_inscriptions.id', '=', 'inscrits.type_inscription_id')
             ->where('type_inscriptions.prend_une_place', '=', true);
     }
 

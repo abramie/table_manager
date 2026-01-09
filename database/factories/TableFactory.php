@@ -35,6 +35,7 @@ class TableFactory extends Factory
             'mj' => Profile::factory()->mj(),
             'creneau_id' => Creneau::factory(),
             'jeu_id' => Jeu::factory(),
+            'status_table_code' => 'PUB',
         ];
     }
 
@@ -62,6 +63,12 @@ class TableFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'sans_table' => true,
+        ]);
+    }
+
+    public function status_table(String $status){
+        return $this->state(fn (array $attributes) => [
+            'status_table_code' => $status,
         ]);
     }
 

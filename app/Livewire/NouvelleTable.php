@@ -131,13 +131,10 @@ class NouvelleTable extends Component
 
     public function save(){
         //Créer la table and everything
-        $this->form->store();
-        if($this->form->table->mjs == Auth::user()->currentProfile){
-            $desincription = $this->form->table->creneaus->desinscrit_user(Auth::user()->currentProfile);
-        }else{
-            $desincription = 0;
-        }
-        return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $this->form->table->creneaus->evenement,'creneau' => $this->form->table->creneaus])
+        $desincription = $this->form->store();
+        \Illuminate\Support\Facades\Log::debug("after store");
+
+        return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $this->form->table->creneau->evenement,'creneau' => $this->form->table->creneau])
             ->with('success', "La table a bien été ajouté." . ($desincription>0 ? "Et vous avez était desinscrit de vos tables" : "" ));
     }
 

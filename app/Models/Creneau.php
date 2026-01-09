@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
+use App\Models\types\TypeInscription;
 use Auth;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\RecordNotFoundException;
 
 class Creneau extends Model
 {
@@ -78,7 +81,19 @@ class Creneau extends Model
         $values = 0;
         foreach ($this->tables as $table) {
             if($table->inscription_restrainte || $table->sans_table)
-                $values += $table->inscrits()->detach($profile);
+
+                try {
+                    \Illuminate\Support\Facades\Log::debug("on va desinscrire");
+                    $inscription = $table->inscriptions()->where('profile_id', $profile)->firstOrFail();
+                    \Illuminate\Support\Facades\Log::debug("inscription trouvé!  ");
+
+                    $inscription->type_inscription()->associate(TypeInscription::findCode('DES-INS'));
+                    $values += 1;
+                }catch(ModelNotFoundException $e){
+                    \Illuminate\Support\Facades\Log::debug("Pas d'inscrit sur cette table :(   ");
+                }
+
+
         }
 
         return $values;

@@ -53,8 +53,8 @@
                 </p>
             </div>
             <div class="col">
-                <a class="btn btn-link bt-xs" data-toggle="collapse" href="#collapseListInscrits{{$table->id}}"
-                   role="button" aria-expanded="false" aria-controls="collapse">
+                <a class="btn btn-link bt-xs" data-bs-toggle="collapse" href="#collapseListInscrits{{$table->id}}"
+                   role="button" aria-expanded="false" aria-controls="collapseListInscrits{{$table->id}}">
                     Inscrits : {{$table->nb_inscrits()}}
                     @if(!$isSansTable)
                         / {{$table->nb_joueur_max}}
@@ -63,9 +63,9 @@
                 </a>
                 <div class="collapse" id="collapseListInscrits{{$table->id}}">
                     <div class="d-flex flex-wrap">
-                        @foreach($table->inscrits as $inscrit)
-                            <div class="p-2 px-3 border border-solid border-zinc-950 m-1">
-                                {{$inscrit->name}}
+                        @foreach($table->inscriptionsPrenantUnePlaces as $inscrit)
+                            <div class="p-2 px-3 border border-solid border-zinc-950 m-1 {{$inscrit->type_inscription?->bs_class}}">
+                                {{$inscrit->profile->name}}
                             </div>
                         @endforeach
                     </div>

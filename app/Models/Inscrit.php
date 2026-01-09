@@ -10,8 +10,16 @@ class Inscrit extends Model
 {
     //
 
-
+    protected $table = 'inscrits';
     public function type_inscription() : BelongsTo{
         return $this->belongsTo(TypeInscription::class);
+    }
+
+    public function profile() : BelongsTo{
+        return $this->belongsTo(Profile::class);
+    }
+
+    public function table() : BelongsTo{
+        return $this->belongsTo(Table::class);
     }
 }
