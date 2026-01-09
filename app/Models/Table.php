@@ -101,12 +101,13 @@ class Table extends Model
     public function triggerwarnings(): MorphToMany
     {
         //return $this->belongsToMany(Tag::class);
-        return $this->morphToMany(Tag::class, 'taggable')->where('type_tag_code', 'TW');
+        return $this->morphToMany(Tag::class, 'taggable')->where('tags.type_tag_code', 'TW');
+
     }
 
     public function types(): MorphToMany
     {
         //return $this->belongsToMany(Tag::class);
-        return $this->morphToMany(Tag::class, 'taggable')->wherePivot('type_tag_code', 'TYPE');
+        return $this->morphToMany(Tag::class, 'taggable')->wherePivot('tags.type_tag_code', 'TYPE');
     }
 }

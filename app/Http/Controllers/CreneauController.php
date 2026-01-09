@@ -65,7 +65,7 @@ class CreneauController extends Controller
     public function edit(Evenement $evenement,Creneau $creneau){
 
         $descriptions = Description::whereIn('name',  ['max_tables','nb_inscription_online_max','sans_table_toggle' ])->get();
-
+        dump($creneau->nb_inscription_online_max);
         return view('creneau.edit', [
             'creneau' => $creneau,
             'descriptions' => $descriptions,
@@ -77,6 +77,7 @@ class CreneauController extends Controller
      */
     public function update(Evenement $evenement,Creneau $creneau,FormCreneauRequest $request){
         $validated = $request->validated();
+
 
         if($validated["sans_table"] != $creneau->sans_table){
             if($validated["sans_table"]){

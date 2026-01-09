@@ -21,7 +21,7 @@
             </form>
         @else
             @php
-                $status_inscription = $table->creneaus->peutInscrire(Auth::user()?->currentProfile, $table);
+                $status_inscription = $table->creneau->peutInscrire(Auth::user()?->currentProfile, $table);
                 $message_button = match($status_inscription){
                     1 => "Inscription à la table",
 

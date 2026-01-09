@@ -16,7 +16,7 @@ return new class extends Migration
         DB::table('settings')->insert(
             array(
                 'name' => 'nom_trigger',
-                'value' => 'Triggers Warnings',
+                'value' => 'Avertissement de contenu',
                 'description' => "Nom utiliser pour les triggers warnings"
             )
         );

@@ -133,6 +133,7 @@ class Creneau extends Model
             elseif(!$inscription_ouverte){
                 $status_inscription = -2;
             }elseif(!$table->sans_table &&  $table->max_preinscription <= $table->nb_inscrits() ){
+
                 $status_inscription = -3;
             }elseif($table->nb_joueur_max <=$table->nb_inscrits() ){
                 $status_inscription = -4;

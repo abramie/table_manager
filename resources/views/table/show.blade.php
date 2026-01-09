@@ -17,23 +17,17 @@
         <h5 class="card-subtitle mb-2 text-body-secondary">MJ : {{$table->mjs->name}}
 
         </h5>
+
         @if(!$table->tags->isEmpty())
             <p>
             Tags :
             @foreach($table->tags as $tag )
-                <span class="{{\App\Models\types\TypeTag::findCode('BASE')->bs_class}}">{{$tag->nom}}</span>
+                <span class="{{$tag->typeTag->bs_class}}">{{$tag->name}}</span>
+
             @endforeach
             </p>
         @endif
 
-        @if(!$table->triggerwarnings->isEmpty())
-            <p>
-          {{$settings->firstWhere('name','nom_trigger')->value}} :
-            @foreach($table->triggerwarnings as $tw )
-                <span class="{{\App\Models\types\TypeTag::findCode('TW')->bs_class}}">{{$tw->nom}}</span>
-            @endforeach
-            </p>
-        @endif
     @endif
     <p>
 

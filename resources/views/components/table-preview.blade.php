@@ -25,24 +25,13 @@
 
                     @if(!$table->tags->isEmpty())
                         <p>
-                            Tags :
                             @foreach($table->tags as $tag )
-                                <span class=" card-text badge-pill {{\App\Models\types\TypeTag::findCode('BASE')->bs_class}}">{{$tag->name}}</span>
-                            @endforeach
-                        </p>
-
-                    @endif
-
-                    @if(!$table->triggerwarnings->isEmpty())
-                        <p>
-                            {{$settings->firstWhere('name','nom_trigger')->value}} :
-
-                            @foreach($table->triggerwarnings as $tw )
-                                <span class="{{\App\Models\types\TypeTag::findCode('TW')->bs_class}}">{{$tw->name}}</span>
+                                <span title="" class="{{$tag->typeTag->bs_class}}">{{$tag->name}}</span>
                             @endforeach
                         </p>
                     @endif
-                @endif
+
+
 
                 <p class="card-text">
                     @if(strlen($table->description) < 1000)

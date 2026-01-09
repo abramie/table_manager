@@ -3,5 +3,5 @@
 @section('title', 'Modification de la table')
 
 @section('content')
-    @include('table.form')
+    <livewire:nouvelle-table :table="$table" :creneau="$creneau"/>
 @endsection

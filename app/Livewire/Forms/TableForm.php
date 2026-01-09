@@ -52,22 +52,32 @@ class TableForm extends Form
         $this->duree = $table->duree;
         $this->max_duree = floatval($this->creneau->duree);
         $this->inscrits = $table->inscrits()->pluck('name');
+        $this->table_description = $table->description;
+
+        $this->triggerwarnings = $table->triggerwarnings()->pluck('id')->toArray();
+        $this->tags_selected = $table->tags->pluck('id')->toArray();
+
+        $this->type = $table->types->pluck('id')->first();
     }
 
     public function update($name)
     {
-//        $this->validate();
-//        if($name == "inscrits" ){
-//            $this->table->inscrits()->sync($this->inscrits);
-//        }elseif ($name == "tags_selected"){
-//            $this->table->tags()->sync($this->tags_selected);
-//        }elseif ($name == "jeu"){
-//            $this->table->jeu()->associate($this->jeu);
-//        }elseif($name == "triggerwarnings"){
-//            $this->table->triggerwarnings()->sync($this->triggerwarnings);
-//        }else{
-//            $this->table->update($this->only([$name]));
-//        }
+        $this->validate();
+        if($name == "inscrits" ){
+            $this->table->inscrits()->sync($this->inscrits);
+        }elseif ($name == "tags_selected" || $name == "triggerwarnings"){
+            $tags = array_merge($this->tags_selected , $this->triggerwarnings, );
+            if($this->type){
+                $tags[] = $this->type;
+            }
+
+            $this->table->tags()->sync($tags);
+        }elseif ($name == "jeu"){
+            $this->table->jeu()->associate($this->jeu);
+
+        }else{
+            $this->table->update($this->only([$name]));
+        }
 //        $this->reset();
     }
 
@@ -99,9 +109,10 @@ Log::debug("on va valider");
         $this->table->nom = $this->nom;
         $this->table->mj = $this->mj->id;
         $this->table->jeu_id = Jeu::where('nom', '=', $this->jeu)->first()?->id;
+        $this->table->max_preinscription = $this->max_preinscription;
         $this->table->status_table_code = "PUB";
-        $this->creneau->tables()->save($this->table);
-
+        //$this->creneau->tables()->save($this->table);
+        $this->table->save();
         //En vrai pour les inscrits, ajouter une fonction, ça devrait pas marcher comme ça ...
         if($this->inscrits) {
             $inscrits_id = Profile::whereIn('name', $this->inscrits)->pluck('id')->toArray();

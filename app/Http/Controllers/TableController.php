@@ -104,15 +104,9 @@ class TableController extends Controller
 
 
 
-        return view('table.edit', [
-            'table' => $table,
-            'evenement' => $evenement,
-            'creneau' => $creneau,
-            'creneaux' => Creneau::get(),
-            'triggerwarnings' => Triggerwarning::select('id', 'nom')->get(),
-            'tags' => Tag::select('id', 'nom')->get(),
-            'descriptions' => $descriptions
-        ]);
+
+        return view('table.edit', ['table' => $table,'evenement' => $evenement,
+            'creneau' => $creneau,'descriptions' => $descriptions]);
     }
 
     /*
