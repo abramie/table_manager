@@ -41,6 +41,7 @@ class Log extends Model
         }
         $log->loggable()->associate($objet);
         $log->type_log()->associate(TypeLog::findCode($code));
+        \Illuminate\Support\Facades\Log::info($log->type_log->name . $log->details . "par user : " . $profile?->name );
         //Ajouter type log
         if($save)$log->save();
         return $log;

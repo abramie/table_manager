@@ -89,7 +89,7 @@ class NouvelleTable extends Component
 
     public function addNewTw(){
 
-        $newTag = $this->pull('newTw');
+        $newTag = $this->pull('new_tw');
 
         if($newTag){
             if($tag = Tag::where('name', $newTag)->first()){

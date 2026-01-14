@@ -54,7 +54,7 @@ class TableController extends Controller
         $table->creneau()->associate($creneau);
 
 
-        return view('table.createTest', ['table' => $table,'evenement' => $evenement,
+        return view('table.create', ['table' => $table,'evenement' => $evenement,
             'creneau' => $creneau,'descriptions' => $descriptions]);
 
     }
