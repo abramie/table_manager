@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Forms;
 
+use App\Models\Creneau;
 use App\Models\Jeu;
 use App\Models\Profile;
 use App\Models\Table;
@@ -15,8 +16,8 @@ use Livewire\Form;
 class TableForm extends Form
 {
     //
-    public ?Table $table;
-
+    public ?Creneau $creneau;
+    public $table;
     public $mj; //Profile
     public $mj_name;
     #[Validate]
@@ -40,7 +41,7 @@ class TableForm extends Form
     public $tags_selected = [];
     public $triggerwarnings = [];
     public $type;
-    public $creneau;
+
     public function setTable(Table $table)
     {
         $this->table = $table;
@@ -56,7 +57,6 @@ class TableForm extends Form
 
         $this->triggerwarnings = $table->triggerwarnings()->pluck('id')->toArray();
         $this->tags_selected = $table->tags->pluck('id')->toArray();
-
         $this->type = $table->types->pluck('id')->first();
     }
 
@@ -96,7 +96,6 @@ class TableForm extends Form
         }
 
 
-
         $this->date_debut =  $this->debut_table ? $this->creneau->debut_creneau->setTimeFromTimeString($this->debut_table) : null;
 Log::debug("on va valider");
         $this->validate();
@@ -111,6 +110,7 @@ Log::debug("on va valider");
         $this->table->jeu_id = Jeu::where('nom', '=', $this->jeu)->first()?->id;
         $this->table->max_preinscription = $this->max_preinscription;
         $this->table->status_table_code = "PUB";
+        $this->table->creneau()->associate($this->creneau);
         //$this->creneau->tables()->save($this->table);
         $this->table->save();
         //En vrai pour les inscrits, ajouter une fonction, ça devrait pas marcher comme ça ...
