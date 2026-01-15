@@ -14,6 +14,7 @@ class TypeTag extends Model
         'name',
         'code',
         'bs_class',
+        'order'
     ];
 
     static public function findCode($code){

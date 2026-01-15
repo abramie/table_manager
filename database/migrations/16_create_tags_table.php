@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('type_tag_code');
             $table->foreign('type_tag_code')->references('code')->on('type_tags');
             $table->foreignId('created_by')->default(1)->constrained('comptes');
+            $table->integer('order')->default(9999);
         });
         Schema::create('taggables',function (Blueprint $table) {
             $table->foreignIdFor(\App\Models\Tag::class)->constrained();

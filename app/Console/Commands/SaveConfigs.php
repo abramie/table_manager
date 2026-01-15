@@ -35,8 +35,8 @@ class SaveConfigs extends Command
     {
         //
         $configs  =collect([
-            'type_tags' => TypeTag::select(['name','code', 'bs_class', 'id'])->get(),
-            'tags' => Tag::select(['nom','type_tag_code'])->get(),
+            'type_tags' => TypeTag::select(['name','code', 'bs_class', 'id', 'order'])->get(),
+            'tags' => Tag::select(['nom','type_tag_code', 'order'])->get(),
             'settings' => Settings::select(['name','value', 'description'])->get(),
             'descriptions' => Description::select(['name', 'description'])->get(),
             'type_inscriptions' => TypeInscription::select(['name','code', 'bs_class', 'prend_une_place'])->get(),

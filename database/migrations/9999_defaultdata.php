@@ -35,12 +35,12 @@ return new class extends Migration
         TypeInscription::create(['name' => 'Pré-Inscrit', 'code' => 'PRE-INS', 'bs_class' => 'fst-italic', 'prend_une_place' => true]);
         TypeInscription::create(['name' => 'Désinscrit', 'code' => 'DES-INS', 'bs_class' => 'text-decoration-line-through', 'prend_une_place' => false]);
 
-        TypeTag::create(['name' => 'Commun', 'code' => 'BASE', 'bs_class' => 'badge bg-secondary']);
-        TypeTag::create(['name' => 'TW', 'code' => 'TW', 'bs_class' => 'badge bg-danger']);
-        TypeTag::create(['name' => 'Type', 'code' => 'TYPE', 'bs_class' => 'badge bg-primary']);
+        TypeTag::create(['name' => 'Commun', 'code' => 'BASE', 'bs_class' => 'badge bg-secondary', 'order' => 3]);
+        TypeTag::create(['name' => 'TW', 'code' => 'TW', 'bs_class' => 'badge bg-danger', 'order' => 2]);
+        TypeTag::create(['name' => 'Type', 'code' => 'TYPE', 'bs_class' => 'badge bg-primary', 'order' => 1]);
 
 
-        
+
 
         \App\Models\StatusTable::create(['name' => 'Public', 'code' => 'PUB']);
 

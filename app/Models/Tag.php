@@ -16,6 +16,7 @@ class Tag extends Model
     protected $fillable = [
         'name',
         'type_tag_code',
+        'order',
     ];
 
     public function tables(): MorphToMany
@@ -32,5 +33,7 @@ class Tag extends Model
     {
         return $this->morphToMany(Log::class, 'loggable');
     }
+
+
 
 }
