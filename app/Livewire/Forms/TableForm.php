@@ -6,6 +6,7 @@ use App\Models\Creneau;
 use App\Models\Jeu;
 use App\Models\Profile;
 use App\Models\Table;
+use App\Models\Tag;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -57,7 +58,7 @@ class TableForm extends Form
 
         $this->triggerwarnings = $table->triggerwarnings()->pluck('id')->toArray();
         $this->tags_selected = $table->tags->pluck('id')->toArray();
-        $this->type = $table->types->pluck('id')->first();
+        $this->type = $table->types->pluck('id')->first() ?? Tag::where('type_tag_code', 'TYPE')->orderBy('order')->first()->id;
     }
 
     public function update($name)
