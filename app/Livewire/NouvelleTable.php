@@ -54,9 +54,14 @@ class NouvelleTable extends Component
     public function render()
     {
 
-        $tags = Tag::query()->get();
-        $tws = Tag::where('tags.type_tag_code', '=', 'TW')->get();
-        $types = Tag::where('tags.type_tag_code', '=', 'TYPE')->get();
+        $tags = Tag::query()->leftJoin('type_tags', 'type_tags.code', '=', 'tags.type_tag_code')
+            ->select('tags.name as tag_name', 'type_tags.name as tag_type_name', 'tags.id as tag_id' )
+
+            ->orderBy('type_tags.order', 'desc')
+            ->orderBy('tags.order', 'asc')
+            ->get();
+        $tws = Tag::where('tags.type_tag_code', '=', 'TW')->orderBy('tags.order', 'asc')->get();
+        $types = Tag::where('tags.type_tag_code', '=', 'TYPE')->orderBy('tags.order', 'asc')->get();
         $profiles = Profile::get();
         $type_inscriptions = TypeInscription::get();
         return view('livewire.nouvelle-table')->with(['tags'=> $tags,'tws'=>$tws, 'types' => $types, "profiles" => $profiles, "type_inscriptions" => $type_inscriptions]);

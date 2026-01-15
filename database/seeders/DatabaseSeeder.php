@@ -300,8 +300,8 @@ class DatabaseSeeder extends Seeder
         $triggerwarning = Tag::factory(15)->tw()->create();
 
         Tag::create(['name' => 'Campagne', "type_tag_code" => 'TYPE', 'order' => 3]);
-        Tag::create(['name' => 'One-shot', "type_tag_code" => 'TYPE', 'order' => 4]);
-        Tag::create(['name' => 'Atelier', "type_tag_code" => 'TYPE', 'order' => 1]);
+        Tag::create(['name' => 'One-shot', "type_tag_code" => 'TYPE', 'order' => 1]);
+        Tag::create(['name' => 'Atelier', "type_tag_code" => 'TYPE', 'order' => 4]);
         Tag::create(['name' => 'Multi-scenar', "type_tag_code" => 'TYPE', 'order' => 2]);
 
         $table->each(function (Table $item, int $key, ) use ($tags,$triggerwarning) {

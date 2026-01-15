@@ -79,12 +79,11 @@
                 </div>
             </div>
 
-
 {{--            Toute la partie Tags --}}
             @foreach ($tags as $tag)
                 @php
-                    $tag->label = $tag->name;
-                    $tag->value = $tag->id;
+                    $tag->label = $tag->tag_name;
+                    $tag->value = $tag->tag_id;
                 @endphp
             @endforeach
             <div class="form-group">
