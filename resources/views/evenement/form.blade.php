@@ -74,17 +74,20 @@
 Ouverture d'inscription x <days/heures> avant <Debut event, debut creneau, debut table>
 Fermeture d'inscription x <days/heures> avant <Debut event, debut creneau, debut table>
 --}}
-    <div class="form-group">
-        <div class="input-group date">
-            <label for="date_debut">Date de debut de l'evenement</label>
-            <input type="datetime-local" class="form-control @error("date_debut") is-invalid @enderror"  id="date_debut" name="date_debut" value="{{old('date_debut', $evenement->date_debut)}}">
-            @error("date_debut")
-            <div class="invalid-feedback">
-                {{ $message }}
-            </div>
-            @enderror
-        </div>
-    </div>
+{{--    <div class="form-group">--}}
+{{--        <div class="input-group date">--}}
+{{--            <label for="date_debut">Date de debut de l'evenement</label>--}}
+{{--            <input type="datetime-local" class="form-control @error("date_debut") is-invalid @enderror"  id="date_debut" name="date_debut" value="{{old('date_debut', $evenement->date_debut)}}">--}}
+{{--            @error("date_debut")--}}
+{{--            <div class="invalid-feedback">--}}
+{{--                {{ $message }}--}}
+{{--            </div>--}}
+{{--            @enderror--}}
+{{--        </div>--}}
+
+
+{{--    </div>--}}
+
     <div>
         <div class="form-group" >
             <div class="input-group date" id="affichage_evenement_div">
