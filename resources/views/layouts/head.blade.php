@@ -17,7 +17,7 @@
 
     <link rel="shortcut icon" href="{{ asset('logo_guilde.png') }}" >
 
-    @vite(['resources/css/app.scss', 'resources/js/app.js'])
+    @vite(['resources/css/app.scss', 'resources/js/app.js', 'resources/css/theme.scss'])
 </head>
 
 @include('layouts.nav')

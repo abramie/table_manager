@@ -1,4 +1,4 @@
-<div>
+<div >
     {{-- Recuperer via methode magique, a besoin de $table--}}
     @if( !Auth::check()|| $table->mjs->id != Auth::user()?->currentProfile->id)
         @php
@@ -14,7 +14,7 @@
                 @csrf
                 <div class="input-group mb-3">
                     <div class="input-group-append">
-                        <button class="btn btn-outline-secondary btn-danger btn-lg" type="submit">Desinscription
+                        <button class="btn  btn-outline-secondary btn-danger btn-lg" type="submit">Desinscription
                         </button>
                     </div>
                 </div>
@@ -39,7 +39,7 @@
                     @csrf
                     <div class="input-group mb-3">
                         <div class="input-group-append">
-                            <button class="btn btn-outline-secondary btn-default" type="submit">
+                            <button class="btn-inscription btn-inscription-primary" type="submit">
                                 {{$message_button}}
 
                             </button>
@@ -49,7 +49,7 @@
             @else
                 <div class="input-group mb-3">
                     <div class="input-group-append">
-                        <button class="btn btn-outline-secondary btn-light" type="submit"
+                        <button class="btn-inscription btn-inscription-red" type="submit"
                                 disabled>{{$message_button}}
                         </button>
                     </div>

@@ -14,7 +14,8 @@
         </button>
     </p>
     @if(!$isSansTable)
-        <h5 class="card-subtitle mb-2 text-body-secondary">MJ : {{$table->mjs->name}}
+        <h5 class="card-subtitle mb-2 text-body-secondary">
+            MJ : {{$table->mjs->name}}
 
         </h5>
 

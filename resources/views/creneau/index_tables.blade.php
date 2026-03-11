@@ -36,12 +36,11 @@
         $date_creneau->setTimezone('UTC');
     $showMinute = $date_creneau->minute >0 ? ($date_creneau->minute > 9 ?$date_creneau->minute  : '0' . $date_creneau->minute ) : '';
     @endphp
-    <div>
+    <div class="creneau-time">
         Date : Le {{$date_creneau->dayName}} {{$date_creneau->day}} à
         {{$date_creneau->hour}}h{{ $showMinute }}
-
     </div>
-    <div>
+    <div class="creneau-time">
         Horaires : {{$creneau->debut_creneau->toTimeString('minute')}}
         -> {{$creneau->debut_creneau->addHour($creneau->duree)->toTimeString('minute')}}
     </div>
@@ -67,13 +66,17 @@
 
     @endforeach
 
-    @can('ajout_tables')
-        <p>
-            <button class="btn btn-lg btn-info pull-right" type="button"
-                    onclick="window.location='{{ route("events.one.creneau.tables.add",['evenement'=> $evenement, 'creneau' => $creneau]) }}'">
-                ajout d'une table
-            </button>
-        </p>
-    @endcan
+    <div class="programme-grid">
+
+
+        @can('ajout_tables')
+            <p>
+                <button class="btn btn-lg btn-info pull-right" type="button"
+                        onclick="window.location='{{ route("events.one.creneau.tables.add",['evenement'=> $evenement, 'creneau' => $creneau]) }}'">
+                    ajout d'une table
+                </button>
+            </p>
+        @endcan
+    </div>
     {{ $tables->links() }}
 @endsection
