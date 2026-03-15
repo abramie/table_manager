@@ -16,16 +16,16 @@
                     @csrf
 
                     <div class="card-body">
-                        <h5 class="card-title">
-                            <label for="name">Pseudo*</label>
+                        <h5 >
+                            <label class="label-text" for="name">Pseudo*</label>
                             <input type="text" name="name" value="{{$profile->name}}" class="form-control">
                         </h5>
-                        <label for="name">Email</label>
+                        <label class="label-text" for="email">Email</label>
                         <input type="text" name="email" value="{{$profile->email}}" class="form-control">
-                        <label for="name">Tag discord</label>
+                        <label class="label-text" for="discord_tag">Tag discord</label>
                         <input type="text" name="discord_tag" value="{{$profile->discord_tag}}" class="form-control">
 
-                        <button class="btn btn-primary" type="submit">Mettre à jour</button>
+                        <button class="btn btn-primary mt-2" type="submit">Mettre à jour</button>
 
                     </div>
                     <div class="card-footer  @if($compte->currentProfile()->select('name')->first()->name == $profile->name) bg-success @endif " >
@@ -43,16 +43,19 @@
         <form method="POST" action="{{route('profile.store', [$compte])}}" enctype="multipart/form-data">
             @csrf
             <div class="card text-center">
-                <div class="card-header">
+                <div class="card-title">
                     Ajouter un profil
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">
+                    <h5 >
+                        <label class="label-text" for="name">Pseudo</label>
                         <input name="name" type="text" value="" class="form-control">
                     </h5>
+                    <label class="label-text" for="email">Email</label>
                     <input name="email" type="text" value="" class="form-control">
+                    <label class="label-text" for="discord_tag">Tag discord</label>
                     <input name="discord_tag" type="text" value="" class="form-control">
-                    <button class="btn btn-primary" type="submit">Ajouter le profil</button>
+                    <button class="btn btn-primary mt-2" type="submit">Ajouter le profil</button>
                 </div>
 
             </div>
