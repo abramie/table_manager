@@ -46,22 +46,32 @@ class FormEventRequest extends FormRequest
     protected function prepareForValidation()
     {
         $settings = Settings::whereIn('name',  ['ouverture_inscriptions_avant_date','fermeture_inscriptions_avant_date' ,'visibiliter_avant_date'])->get();
-        $date_debut = Carbon::create($this->date_debut);
 
-        $ouverture_inscription = $this->ouverture_inscription ?Carbon::create($this->ouverture_inscription) : $date_debut->copy()->subDays( $settings->firstWhere('name', 'ouverture_inscriptions_avant_date')->value);
-        $fermeture_inscription = $this->fermeture_inscription ?Carbon::create($this->fermeture_inscription ):$date_debut->copy()->subDays($settings->firstWhere('name', 'fermeture_inscriptions_avant_date')->value);
-        $affichage_evenement = $this->affichage_evenement ?Carbon::create($this->affichage_evenement ):$date_debut->copy()->subDays($settings->firstWhere('name', 'visibiliter_avant_date')->value);
-        //Produit un slug valide en cas d'absence.
+        if($this->date_debut){
+            $date_debut = Carbon::createFromFormat("d/m/Y H:i", $this->date_debut);
+            $ouverture_inscription = $this->ouverture_inscription ?Carbon::create($this->ouverture_inscription) : $date_debut->copy()->subDays( $settings->firstWhere('name', 'ouverture_inscriptions_avant_date')->value);
+            $fermeture_inscription = $this->fermeture_inscription ?Carbon::create($this->fermeture_inscription ):$date_debut->copy()->subDays($settings->firstWhere('name', 'fermeture_inscriptions_avant_date')->value);
+            $affichage_evenement = $this->affichage_evenement ?Carbon::create($this->affichage_evenement ):$date_debut->copy()->subDays($settings->firstWhere('name', 'visibiliter_avant_date')->value);
+            $this->merge([
+                'slug' => $this->input('slug') ?: Str::slug($this->input('nom_evenement')),
+                'max_tables' => floatval($this->max_tables),
+                'nb_inscription_online_max' => floatval($this->nb_inscription_online_max),
+                'date_debut' => $date_debut,
+                'ouverture_inscription' => $ouverture_inscription,
+                'fermeture_inscription' => $fermeture_inscription,
+                'affichage_evenement' => $affichage_evenement,
+            ]);
+        }else{
+            $this->merge([
+                'slug' => $this->input('slug') ?: Str::slug($this->input('nom_evenement')),
+                'max_tables' => floatval($this->max_tables),
+                'nb_inscription_online_max' => floatval($this->nb_inscription_online_max),
+            ]);
+        }
 
-        $this->merge([
-            'slug' => $this->input('slug') ?: Str::slug($this->input('nom_evenement')),
-            'max_tables' => floatval($this->max_tables),
-            'nb_inscription_online_max' => floatval($this->nb_inscription_online_max),
-            'date_debut' => $date_debut,
-            'ouverture_inscription' => $ouverture_inscription,
-            'fermeture_inscription' => $fermeture_inscription,
-            'affichage_evenement' => $affichage_evenement,
-        ]);
+         //Produit un slug valide en cas d'absence.
+
+
 
 
 

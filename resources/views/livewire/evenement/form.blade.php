@@ -95,21 +95,32 @@
                         noCalendar: false,
                         dateFormat: "d/m/Y H:i",
                         time_24hr: true
-                        }'>
+                        }' id="date_debut">
 
         </x-date-picker>
 
         <div>
             <div class="form-group" >
                 <div class="input-group date" id="affichage_evenement_div">
-                    <label for="affichage_evenement">Date d'affichage de l'evenement / ajout des tables</label>
-                    <input type="datetime-local" class="form-control @error("affichage_evenement") is-invalid @enderror"  id="affichage_evenement" name="affichage_evenement"value="{{old('affichage_evenement', $evenement->affichage_evenement)}}">
+
+                    <x-date-picker label="Date d'affichage de l'evenement / ajout des tables"
+                                   wire:model="affichage_evenement" options='{enableTime: true,
+                        noCalendar: false,
+                        dateFormat: "d/m/Y H:i",
+                        time_24hr: true
+                        }' id="affichage_evenement"
+                       value="{{old('affichage_evenement', $evenement->affichage_evenement)}}"
+                    >
+
+                    </x-date-picker>
                     @error("affichage_evenement")
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
                     @enderror
                 </div>
+
+
 
                 <label for="toggle-affichage_evenement"  class="form-check-label">Choisir une date manuelle d'affichage de l'evenement</label>
                 <input type="checkbox" @checked(old('toggle-affichage_evenement'))   aria-expanded="false" aria-controls="moreabout" class="form-check-input" id="toggle-affichage_evenement" name="toggle-affichage_evenement" value="no">

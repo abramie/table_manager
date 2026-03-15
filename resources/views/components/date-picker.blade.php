@@ -2,9 +2,9 @@
 
 <div x-data="datepicker($wire.entangle('{{ $attributes->wire('model')->value }}'), {{$options}})" class="relative">
     <div class="flex flex-col">
-        <label>{{$label}}</label>
+        <label for="{{$id}}">{{$label}}</label>
         <div class="flex items-center gap-2">
-            <input type="text" x-ref="myDatepicker" x-model="value">
+            <input id="{{$id}}" name="{{$id}}" type="text" x-ref="myDatepicker" x-model="value">
 {{--            <span class="cursor-pointer underline" x-on:click="reset">--}}
 {{--                Reset--}}
 {{--            </span>--}}
