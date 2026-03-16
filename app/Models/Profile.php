@@ -27,7 +27,8 @@ class Profile extends Model
     protected $fillable = [
         'name',
         'email',
-        'order'
+        'order',
+        'discord_tag'
     ];
 
 

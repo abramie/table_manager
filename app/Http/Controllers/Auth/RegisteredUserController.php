@@ -36,6 +36,7 @@ class RegisteredUserController extends Controller
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.Compte::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             "name" =>['required', 'string'],
+
         ]);
 
         $compte = Compte::create([
