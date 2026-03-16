@@ -95,7 +95,9 @@
                         noCalendar: false,
                         dateFormat: "d/m/Y H:i",
                         time_24hr: true
-                        }' id="date_debut">
+                        }' id="date_debut"
+                       value="{{old('date_debut',$evenement->date_debut ?? Carbon\Carbon::now()->format('d/m/Y H:i'))  }}"
+                        >
 
         </x-date-picker>
 
@@ -109,7 +111,7 @@
                         dateFormat: "d/m/Y H:i",
                         time_24hr: true
                         }' id="affichage_evenement"
-                       value="{{old('affichage_evenement', $evenement->affichage_evenement)}}"
+
                     >
 
                     </x-date-picker>

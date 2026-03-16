@@ -4,7 +4,7 @@
     <div class="flex flex-col">
         <label for="{{$id}}">{{$label}}</label>
         <div class="flex items-center gap-2">
-            <input id="{{$id}}" name="{{$id}}" type="text" x-ref="myDatepicker" x-model="value">
+            <input id="{{$id}}" name="{{$id}}" type="text" x-ref="myDatepicker" x-model="value"  >
 {{--            <span class="cursor-pointer underline" x-on:click="reset">--}}
 {{--                Reset--}}
 {{--            </span>--}}
@@ -22,7 +22,8 @@
                 options: options,
                 value: model,
                 init(){
-                    this.pickr = flatpickr(this.$refs.myDatepicker, options)
+                    this.pickr = flatpickr(this.$refs.myDatepicker, options);
+
                     this.$watch('value', function(newValue){
                         this.pickr.setDate(newValue);
                     }.bind(this));

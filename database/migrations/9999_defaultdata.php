@@ -44,32 +44,18 @@ return new class extends Migration
 
         \App\Models\StatusTable::create(['name' => 'Public', 'code' => 'PUB']);
 
-        if (DB::table('evenements')->count() == 0 && config('app.env') == "local"){
-
-
-        }elseif (config('app.env') == "production" && DB::table('comptes')->count() == 0 ){
+        if(DB::table('comptes')->count() == 0) {
             $admin = Compte::create([
                 'email' => "admin@som.fr",
                 'password' => Hash::make(config('app.admin_password')),
             ]);
             $admin->assignRole('admin');
+        }
+        if (DB::table('evenements')->count() == 0 && config('app.env') == "local"){
 
-            DB::table('triggerwarnings')->insert(
-                array(
-                    'name' => 'mort',
-                )
-            );
 
-            DB::table('tags')->insert(
-                array(
-                    'name' => 'horreur',
-                )
-            );
-            DB::table('tags')->insert(
-                array(
-                    'name' => 'magie',
-                )
-            );
+        }elseif (config('app.env') == "production" && DB::table('comptes')->count() == 0 ){
+
 
 
 
