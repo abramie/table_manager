@@ -11,7 +11,7 @@
         @csrf
         <div class="input-group mb-3">
             <div class="input-group-append">
-                <button class="btn btn-outline-secondary btn-danger" type="submit">Ne plus etre MJ</button>
+                <button class="btn btn-warning" type="submit">Ne plus etre MJ</button>
             </div>
         </div>
     </form>
@@ -27,7 +27,7 @@
             @csrf
             <div class="input-group mb-3">
                 <div class="input-group-append">
-                    <button class="btn btn-outline-secondary btn-success" type="submit">Devenir MJ</button>
+                    <button class="btn btn-validate" type="submit">Devenir MJ</button>
                 </div>
             </div>
         </form>
