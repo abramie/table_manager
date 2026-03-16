@@ -144,7 +144,9 @@
                         noCalendar: true,
                         dateFormat: "H:i",
                         time_24hr: true
-                        }'>
+                        }'
+                        id="debut_table"
+        >
 
         </x-date-picker>
             @error("form.date_debut")

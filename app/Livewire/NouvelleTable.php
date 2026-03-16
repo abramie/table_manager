@@ -9,8 +9,10 @@ use App\Models\Profile;
 use App\Models\Tag;
 use App\Models\Triggerwarning;
 use App\Models\types\TypeInscription;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\ItemNotFoundException;
 use Livewire\Component;
 
 class NouvelleTable extends Component
@@ -45,7 +47,12 @@ class NouvelleTable extends Component
     public function mount($table, $creneau){
         $this->table = $table;
         $this->form->mj_name = $table->mj?->name ?? Auth::user()->mainProfile->name;
-        $this->jeu = Jeu::get()->first()->nom;
+        try{
+            $this->jeu = Jeu::get()->firstOrFail()->nom;
+        }catch (ItemNotFoundException $e){
+            $this->jeu = Jeu::create(['nom' => "", 'description' => ""]);
+        }
+
         $this->form->creneau = $creneau;
         $this->form->setTable($this->table);
 

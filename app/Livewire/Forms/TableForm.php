@@ -58,7 +58,7 @@ class TableForm extends Form
 
         $this->triggerwarnings = $table->triggerwarnings()->pluck('id')->toArray();
         $this->tags_selected = $table->tags->pluck('id')->toArray();
-        $this->type = $table->types->pluck('id')->first() ?? Tag::where('type_tag_code', 'TYPE')->orderBy('order')->first()->id;
+        $this->type = $table->types->pluck('id')->first() ?? Tag::where('type_tag_code', 'TYPE')->orderBy('order')->first()?->id;
     }
 
     public function update($name)
