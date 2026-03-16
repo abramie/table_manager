@@ -1,7 +1,7 @@
 
 @extends('layouts.master')
 
-@section('title', "connexion")
+@section('title', "Creation de compte")
 @section('content')
 
     <div class="d-flex flex-wrap">
