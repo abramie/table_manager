@@ -1,4 +1,11 @@
-<x-guest-layout>
+
+@extends('layouts.master')
+
+@section('title', "connexion")
+@section('content')
+
+    <div class="d-flex flex-wrap">
+
     <form method="POST" action="{{ route('register') }}">
         @csrf
 
@@ -57,4 +64,4 @@
             </div>
         </div>
     </form>
-</x-guest-layout>
+@endsection
