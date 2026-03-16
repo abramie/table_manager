@@ -45,7 +45,7 @@ return new class extends Migration
         \App\Models\StatusTable::create(['name' => 'Public', 'code' => 'PUB']);
 
         if(DB::table('comptes')->count() == 0) {
-            $admin = Compte::create([
+            $admin = Compte::factory()->createProfile()->create([
                 'email' => "admin@som.fr",
                 'password' => Hash::make(config('app.admin_password')),
             ]);
