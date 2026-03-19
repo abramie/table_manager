@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Settings;
 use Illuminate\Database\Seeder;
 
 use App\Models\Compte;
@@ -24,6 +25,69 @@ class InitialDataSeeder extends Seeder
             'password' => Hash::make(config('app.admin_password')),
         ]);
         $admin->assignRole('admin');
+
+
+        Settings::create(
+            array(
+                'name' => 'max_tables',
+                'value' => '8',
+                'description' => "Valeur pas default du nombre de table maximum pour un creneau, peut etre remplacer TODO"
+            )
+        );
+
+        Settings::create(
+            array(
+                'name' => 'nb_inscription_online_max',
+                'value' => '15',
+                'description' => "Valeur pas default du nombre d'inscription en ligne maximum pour une table, peut etre remplacer TODO"
+            )
+        );
+
+        Settings::create(
+            array(
+                'name' => 'trigger_warnings',
+                'value' => 'true',
+                'description' => "Definit si les champs trigger warnings sont gerer sur le site. true/false TODO"
+            )
+        );
+
+        Settings::create(
+            array(
+                'name' => 'fermeture_inscriptions_avant_date',
+                'value' => '4',
+                'description' => "Definit le nombre de jour precedent un evenement par defaut avant la fermeture des inscriptions"
+            )
+        );
+        Settings::create(
+            array(
+                'name' => 'ouverture_inscriptions_avant_date',
+                'value' => '30',
+                'description' => "Definit le nombre de jour precedent un evenement par defaut avant qu'il soit possible de s'inscrire sur les tables"
+            )
+        );
+        Settings::create(
+            array(
+                'name' => 'visibiliter_avant_date',
+                'value' => '30',
+                'description' => "Definit le nombre de jour precedent un evenement par defaut avant qu'il soit visible dans la liste"
+            )
+        );
+
+        Settings::create(
+            array(
+                'name' => 'nom_trigger',
+                'value' => 'Avertissement de contenu',
+                'description' => "Nom utiliser pour les triggers warnings"
+            )
+        );
+
+        Settings::create(
+            array(
+                'name' => 'autorise_mj_max_preinscription',
+                'value' => 'True',
+                'description' => "Definit si les MJ peuvent choisir le nombre de pré inscription (TODO)"
+            )
+        );
 
 
         TypeLog::create(['name' => 'Default', 'code' => 'DEFAULT']);
@@ -53,6 +117,7 @@ class InitialDataSeeder extends Seeder
 
 
         \App\Models\StatusTable::create(['name' => 'Public', 'code' => 'PUB']);
+
 
 
 
