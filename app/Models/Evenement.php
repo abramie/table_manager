@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -25,6 +26,15 @@ class Evenement extends Model
         'fermeture_inscription',
         'description',
     ];
+
+    /**
+     * The model's default values for attributes.
+     *
+     * @var array
+     */
+//    protected $attributes = [
+//        'date_debut' => Carbon::now()->format('d/m/Y H:i'),
+//    ];
 
 
     /**
