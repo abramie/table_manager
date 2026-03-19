@@ -17,6 +17,9 @@
     @foreach($evenements as $evenement)
         <x-event-preview :evenement="$evenement" />
     @endforeach
+    @if($evenements->isEmpty())
+        <h2>Pas d'événements ouvert pour l'instant.</h2>
+    @endif
 
     {{ $evenements->links() }}
 @endsection

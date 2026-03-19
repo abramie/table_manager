@@ -14,7 +14,7 @@ composer require doctrine/dbal //Pour permettre d'update du sqlite
 
 npm run build 
 
-php artisan migrate 
+asweb php artisan migrate:fresh --seed --seeder=InitialDataSeeder
 
 Pour données de test : php artisan migrate:fresh --seed
 
