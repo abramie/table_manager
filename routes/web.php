@@ -34,6 +34,13 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/tutoriel', function () {
+    if(config('app.external_tutorial')){
+        return redirect(config('app.external_tutorial'));
+    }else{
+        return view('tutoriel');
+    }
+})->name('tutoriel');
 Route::prefix('/{compte}')->middleware('auth')->group(function () {
 
     Route::prefix('/profile')->name('profile.')->group(function () {

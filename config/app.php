@@ -213,4 +213,6 @@ return [
     ])->toArray(),
 
     'admin_password' => env('ADMIN_PASSWORD', "admin"),
+
+    'external_tutorial' =>env('EXTERNAL_TUTORIAL', null),
 ];

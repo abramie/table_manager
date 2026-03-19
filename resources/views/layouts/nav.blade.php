@@ -14,6 +14,8 @@
 
 
                 <x-navigation-item routeName="events.index" >Index event</x-navigation-item>
+
+                <x-navigation-item routeName="tutoriel" >Tutoriel d'inscription</x-navigation-item>
                 {{--
                 <li class="nav-item">
                     <a class="nav-link {{ Str::contains(url()->current(), 'som') ? 'active' : '' }}"  href="{{route("events.one.show", ['evenement'=> \App\Models\Evenement::all()->where('slug','=', "som-24")[1]])}}">Som-24</a>
@@ -23,8 +25,9 @@
                     <x-navigation-item routeName="admin.index" contain="admin" >Admin</x-navigation-item>
                 @endrole
 
+                @can('ajout_tags')
                 <x-navigation-item routeName="tags.index" contain="tags" >Tags</x-navigation-item>
-
+                @endcan
 
                 @role('joueur')
                     <x-navigation-item routeName="profile.show" :parameter="[$authCompte]" contain="joueur" >Profiles</x-navigation-item>
