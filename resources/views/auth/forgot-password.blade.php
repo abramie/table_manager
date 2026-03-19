@@ -1,4 +1,7 @@
-<x-guest-layout>
+@extends('layouts.master')
+
+@section('title', "connexion")
+@section('content')
 
 
     <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
@@ -28,4 +31,4 @@
     <p>
        Si vous ne recevez pas le mail (ça peut prendre un peu de temps, et va definitivement arriver dans les spams)
         , envoyer moi un mail à jeremy.rousseau@monbacasable.fr et je vous enverrais le lien directement. </p>
-</x-guest-layout>
+@endsection
