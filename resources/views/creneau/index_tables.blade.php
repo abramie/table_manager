@@ -21,14 +21,14 @@
 
 
     @if($evenement->creneaus()->count()>1)
-        <h1>{{$evenement->nom_evenement}} : {{$creneau->nom}}</h1>
+        <h1><a href="{{route('events.one.show', $evenement)}}"> {{$evenement->nom_evenement}} : {{$creneau->nom}} </a></h1>
         <p>
             <button class="btn btn-xs btn-info " type="button"
                     onclick="window.location='{{ route("events.one.show",['evenement'=> $evenement]) }}'">
                 {{$evenement->nom_evenement}}</button>
         </p>
     @else
-        <h1>{{$evenement->nom_evenement}} </h1>
+        <h1><a href="{{route('events.one.show', $evenement)}}"> {{$evenement->nom_evenement}} </a> </h1>
     @endif
 
     @php
