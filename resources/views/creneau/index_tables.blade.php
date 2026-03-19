@@ -17,6 +17,14 @@
                 Delete
             </button>
         </td>
+
+        <td>
+            <button class="btn btn-xs btn-info " type="button"
+                    onclick="window.location='{{ route("events.one.add",['evenement'=> $evenement]) }}'">
+                Ajout d'un creneau
+            </button>
+        </td>
+
     @endcan
 
 
@@ -28,7 +36,7 @@
                 {{$evenement->nom_evenement}}</button>
         </p>
     @else
-        <h1><a href="{{route('events.one.show', $evenement)}}"> {{$evenement->nom_evenement}} </a> </h1>
+        <h1> {{$evenement->nom_evenement}}  </h1>
     @endif
 
     @php
