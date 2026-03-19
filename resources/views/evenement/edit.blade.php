@@ -3,5 +3,6 @@
 @section('title', 'Modifier un evenement')
 
 @section('content')
-    @include('evenement.form')
+    <livewire:evenement.form :evenement="$evenement" :settings="$settings" />
+{{--    @include('evenement.form')--}}
 @endsection

@@ -11,6 +11,7 @@ class Form extends Component
 {
 
     public $evenement;
+
     public $settings = [];
     public $debut_evenement;
     public bool $toggle_affichage_evenement;

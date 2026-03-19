@@ -3,11 +3,13 @@
 
     <form action="" method="post" class="vstack gap-2" enctype="multipart/form-data">
         @csrf
+@dump($errors)
+
 
         <div class="form-group">
             <label for="title">Titre</label>
-            <input type="text" class="form-control @error("nom_evenement") is-invalid @enderror" id="nom_evenement" name="nom_evenement" value="{{ old('nom_evenement', $evenement->nom_evenement) }}">
-            @error("title")
+            <input type="text" class="form-control @error("nom_evenement") is-invalid @enderror" id="nom_evenement" name="nom_evenement" value="{{ old('nom_evenement', $this->evenement->nom_evenement) }}">
+            @error("nom_evenement")
             <div class="invalid-feedback">
                 {{ $message }}
             </div>
@@ -15,12 +17,8 @@
         </div>
         <div class="form-group">
             <label for="slug">Slug</label>
-            <input type="text" class="form-control @error("slug") is-invalid @enderror" id="slug" name="slug" value="{{ old('slug', $evenement->slug) }}">
-            @error("slug")
-            <div class="invalid-feedback">
-                {{ $message }}
-            </div>
-            @enderror
+            <input type="text" class="form-control" id="slug" name="slug" value="{{ old('slug', $evenement->slug) }}">
+
         </div>
 
         <div class="mb-3">
@@ -90,8 +88,10 @@
 
 
         {{--    </div>--}}
+{{--class=" @error("date_debut") is-invalid @enderror"--}}
+        <x-date-picker label="Début de l'événement"
 
-        <x-date-picker label="Début de l'événement" wire:model="debut_evenement" options='{enableTime: true,
+                       wire:model="debut_evenement" options='{enableTime: true,
                         noCalendar: false,
                         dateFormat: "d/m/Y H:i",
                         time_24hr: true
@@ -100,7 +100,11 @@
                         >
 
         </x-date-picker>
-
+        @error("date_debut")
+        <div class="text-danger">
+            {{ $message }}
+        </div>
+        @enderror
         <div>
             <div class="form-group" >
                 <label for="toggle-affichage_evenement"  class="form-check-label">Choisir une date manuelle d'affichage de l'evenement</label>
@@ -120,7 +124,7 @@
 
                     </x-date-picker>
                     @error("affichage_evenement")
-                    <div class="invalid-feedback">
+                    <div class="text-danger">
                         {{ $message }}
                     </div>
                     @enderror
@@ -151,7 +155,7 @@
 
                     </x-date-picker>
                     @error("ouverture_inscription")
-                    <div class="invalid-feedback">
+                    <div class="text-danger">
                         {{ $message }}
                     </div>
                     @enderror
@@ -176,7 +180,7 @@
 
                     </x-date-picker>
                      @error("fermeture_inscription")
-                    <div class="invalid-feedback">
+                    <div class="text-danger">
                         {{ $message }}
                     </div>
                     @enderror

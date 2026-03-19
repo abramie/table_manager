@@ -57,7 +57,7 @@ class EventController extends Controller
 
     public function edit(Evenement $evenement){
         //return "formulaire edit d'evenement";
-        $settings = Settings::whereIn('name',  ['max_tables','nb_inscription_online_max' ])->get();
+        $settings = Settings::whereIn('name',  ['max_tables','nb_inscription_online_max','ouverture_inscriptions_avant_date','fermeture_inscriptions_avant_date' ,'visibiliter_avant_date'])->get();
         return view('evenement.edit', [
             'evenement' => $evenement,
             'settings' => $settings

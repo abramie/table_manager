@@ -216,5 +216,7 @@
     "Ensure your account is using a long, random password to stay secure.": "Utilisez un mot de passe sécuriser",
     "new_mail_verif": "Un nouvel email de verification à été envoyer à votre adresse",
     "Current Password": "Mot de passe actuel",
-    "New Password": "Nouveau mot de passe"
+    "New Password": "Nouveau mot de passe",
+    "Event name required": "Le titre de l'événement est obligatoire",
+    "The event must begin before today": "L'événement doit commencer après aujourd'hui."
 }

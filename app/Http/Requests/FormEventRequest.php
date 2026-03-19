@@ -76,4 +76,12 @@ class FormEventRequest extends FormRequest
 
 
     }
+
+    public function messages(): array{
+        return [
+            'nom_evenement.required' => __('Event name required'),
+            'date_debut.after' => __('The event must begin before today')
+
+        ];
+    }
 }
