@@ -21,9 +21,10 @@ class Form extends Component
     public $fermeture_inscription;
     public $ouverture_inscription;
     public function mount(Evenement $evenement = new Evenement(), $settings){
+
         $this->evenement = $evenement;
         $this->settings = $settings;
-        $this->debut_evenement = old('debut_evenement', $evenement->date_debut->format("d/m/Y H:i") );
+        $this->debut_evenement = old('debut_evenement', ($evenement->date_debut ??  Carbon::now())->format("d/m/Y H:i") );
 
         try{
             $this->affichage_evenement = old('affichage_evenement', Carbon::createFromFormat("d/m/Y H:i",$this->debut_evenement )->subDays($settings->where('name', 'visibiliter_avant_date')->firstOrFail()->value)->format("d/m/Y H:i") );

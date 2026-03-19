@@ -21,14 +21,16 @@
                 $date = $evenement->date_debut;
                  $showMinute = $date->minute > 0 ? ($date->minute > 9 ?$date->minute  : '0' . $date->minute ) : '';
             @endphp
-            @if($evenement->image)
-                <div class="col-md-4">
+
+            <div class="col-md-4">
+                @if($evenement->image)
                     <a href="{{$route}}">
                     <img src="{{asset("storage/images/".$evenement->image?->title)}}" alt="description" width="300"
                          height="250" class="img-thumbnail rounded-start"/>
                     </a>
-                </div>
-            @endif
+                @endif
+            </div>
+
             <div class="col-md-8">
                 <h2 class="card-title"><a href="{{$route}}"> @if(!$affiche)
                         Previsionnel
@@ -36,8 +38,9 @@
                         @if($evenement->archivage)
                             (Archiver)
                         @endif
-                        {{$evenement->nom_evenement}}</a></h2>
-
+                        {{$evenement->nom_evenement}}</a>
+                </h2>
+                <h4 class="creneau-time  ">{{$evenement->showDate()}} à partir de {{$date->hour}}h{{$showMinute}}</h4>
                 @can('ajout_events')
                     <div class="pull-end">
                         <button class="btn btn-xs btn-danger " type="button"
@@ -62,7 +65,7 @@
                     </div>
                         {{--https://getbootstrap.com/docs/4.2/components/dropdowns/  Pour les boutons, voir split button --}}
                 @endcan
-                <h4 class="card-subtitle mb-2 text-body-secondary">{{$evenement->showDate()}} à partir de {{$date->hour}}h{{$showMinute}}</h4>
+
 
                 <p class="card-text">
                     @if(strlen($evenement->description) < 300)

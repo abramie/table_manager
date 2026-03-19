@@ -4,6 +4,9 @@
     .mj{font-size:14px;color:var(--teal);margin-bottom:4px}
 
 }
+.creneau-time{font-family:var(--font-heading);font-size:14px;color:var(--gold);text-align:center;min-width:100px;padding:8px 12px;background:rgba(212,168,67,0.08);border-radius:8px}
+
+
 .table-preview{background:var(--dark-card);border-radius:16px;padding:36px 28px;border:1px solid rgba(46,139,139,0.1);transition:all var(--transition);position:relative;overflow:hidden}
 .table-preview::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--card-accent,var(--teal)),transparent);opacity:0;transition:opacity var(--transition)}
 .table-preview:hover{transform:translateY(-6px);box-shadow:0 12px 40px rgba(0,0,0,0.3)}
