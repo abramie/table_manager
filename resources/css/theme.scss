@@ -82,6 +82,9 @@ body{font-family:var(--font-body);background:var(--dark);color:var(--cream);line
 .label-text{font-size:15px;color:var(--text-light);line-height:1.7;text-align: left;}
 //CSS vitrine SOM 26
 
+.footer{background:var(--dark-teal);border-top:1px solid rgba(46,139,139,0.1);padding:36px 24px}
+.footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+
 :root {
     --teal:#2E8B8B; --teal-dark:#1A5C5C; --teal-deep:#0F3D3D; --dark-teal:#0D2B2B;
     --orange:#E07A30; --orange-light:#F2994A; --red:#B8293A; --green:#4A8B5E;
@@ -250,8 +253,8 @@ a{color:var(--gold);text-decoration:none;transition:color var(--transition)} a:h
 .toast-info{background:var(--teal-dark);color:var(--cream);border:1px solid rgba(46,139,139,0.3)}
 
 /* FOOTER */
-.footer{background:var(--dark-teal);border-top:1px solid rgba(46,139,139,0.1);padding:36px 24px}
-.footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+//.footer{background:var(--dark-teal);border-top:1px solid rgba(46,139,139,0.1);padding:36px 24px}
+//.footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
 .footer-brand{font-family:var(--font-display);font-size:15px;color:var(--gold)}
 .footer-sub{font-size:13px;color:var(--text-muted);margin-top:4px}
 .footer-right{font-size:13px;color:rgba(122,153,153,0.6)}
