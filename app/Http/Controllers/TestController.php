@@ -15,7 +15,7 @@ class TestController extends Controller
 
     public function mail(){
 
-        dd(Mail::to(Auth::user())->send(new MailTest()));
+        dd(Mail::to(Auth::user()->email)->send(new MailTest()));
         return "ok mail envoyer";
     }
     public function add(){
