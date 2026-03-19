@@ -41,7 +41,7 @@ class EventController extends Controller
     public function add(){
         $evenement = new Evenement();
         $evenement->nom_evenement = "le nom de l'evenement";
-        $settings = Settings::whereIn('name',  ['max_tables','nb_inscription_online_max' ])->get();
+        $settings = Settings::whereIn('name',  ['max_tables','nb_inscription_online_max','ouverture_inscriptions_avant_date','fermeture_inscriptions_avant_date' ,'visibiliter_avant_date'])->get();
         //dd($settings);
         //$max_tables = $settings->firstWhere('value', 'like','8');
 
