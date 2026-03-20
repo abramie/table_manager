@@ -49,6 +49,7 @@ Route::prefix('/{compte}')->middleware('auth')->group(function () {
             Route::get('/optionMJ', [MJPageController::class, 'show'])->name("mj");
             Route::get('/optionJoueur', [JoueursPageController::class, 'show'])->name("joueur");
             Route::get('/change', [ProfileController::class, 'change'])->name('change');
+            Route::get('/delete', [ProfileController::class, 'delete'])->name('delete');
             Route::post('/update', [ProfileController::class, 'update'])->name('update');
         });
 

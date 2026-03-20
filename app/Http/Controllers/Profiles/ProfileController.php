@@ -45,4 +45,9 @@ class ProfileController extends Controller
         return redirect()->route('profile.show', ['compte' => $compte]);
     }
 
+    public function delete(Compte $compte, Profile $profile){
+
+        $profile->delete();
+        return redirect()->route('profile.show', ['compte' => $compte]);
+    }
 }

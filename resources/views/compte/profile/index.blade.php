@@ -9,7 +9,8 @@
     <div class="d-flex flex-wrap">
 
         @foreach($profiles as $profile)
-            <div class="card text-center">
+
+            <div class="card text-center @if($compte->currentProfile()->select('name')->first()->name == $profile->name) border-success @endif ">
 
                 <form method="POST" action="{{route('profile.update', [$compte, $profile])}}"
                       enctype="multipart/form-data">
@@ -28,15 +29,26 @@
                         <button class="btn btn-primary mt-2" type="submit">Mettre à jour</button>
 
                     </div>
-                    <div class="card-footer  @if($compte->currentProfile()->select('name')->first()->name == $profile->name) bg-success @endif " >
 
+                    <div class="card-footer" >
                         @if($compte->currentProfile()->select('name')->first()->name != $profile->name)
-                            <a href="{{route('profile.change', [$compte,$profile])}}" class="btn btn-primary">Selectionner comme actif</a>
+                        <a href="{{route('profile.change', [$compte,$profile])}}" class="btn btn-validate">Rendre actif</a>
+                        <a href="{{route('profile.delete', [$compte,$profile])}}" class="btn btn-warning">Supprimer</a>
                         @else
-                            <span class="badge badge-sucess">Actif</span>
+                            <h2 class="profile-card-actif-title">Actif</h2>--}}
                         @endif
                     </div>
+
+{{--                    @if($compte->currentProfile()->select('name')->first()->name == $profile->name)--}}
+{{--                        <div class="" >--}}
+
+{{--
+
+{{--                        </div>--}}
+{{--                    @endif--}}
                 </form>
+
+
             </div>
 
         @endforeach
