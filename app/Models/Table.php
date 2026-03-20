@@ -38,7 +38,8 @@ class Table extends Model
         'inscription_restrainte',
         'max_preinscription',
         'open_preinscription',
-        'status'
+        'status',
+        'status_table_code'
     ];
 
 

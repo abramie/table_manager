@@ -66,7 +66,7 @@ class TableController extends Controller
 
         $table = Table::create($request->validated());
         $creneau->tables()->save($table);
-        $table->inscrits()->sync($request->validated('inscrits'));
+        $table->inscrits()->syncWithPivotValues($request->validated('inscrits') ,[ 'type_inscription_id' => TypeInscription::findCode('INS')->id]);
         $table->tags()->sync($request->validated('tags'));
         //Desinscrit le mj de toute les tables où il est inscrit si il ouvre une table.
         if($request->validated('mj') == Auth::user()->currentProfile->id){
@@ -118,8 +118,7 @@ class TableController extends Controller
         $table->tags()->sync($request->validated('tags'));
 
         if($request->validated('inscrits'))
-            $table->inscrits()->sync($request->validated('inscrits'));
-
+            $table->inscrits()->syncWithPivotValues($request->validated('inscrits') ,[ 'type_inscription_id' => TypeInscription::findCode('INS')->id]);
         return redirect()->route('events.one.creneau.table.show', ['evenement' => $evenement,'creneau' => $creneau,'table'=> $table])
             ->with('success', "Le table a bien été modifier");
         //return redirect()->route('events.one.creneau.table.show', ['evenement' => $evenement,'creneau' => $creneau->id,'table'=> $table])->with('success', "Le table a bien été modifier");
@@ -152,7 +151,8 @@ class TableController extends Controller
                 return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement, 'creneau' => $creneau])
                     ->with('echec', "Vous êtes deja inscrit sur une table ");
             } elseif ($table->sans_table) {
-                $table->inscrits()->attach($profile);
+                $table->inscrits()->withPivotValue('type_inscription_id',TypeInscription::findCode('INS')->id)->attach($profile);
+
                 return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement, 'creneau' => $creneau])
                     ->with('success', "Inscription en \"" . $table->nom);
             } elseif ($table->mjs == $profile) {
@@ -165,7 +165,7 @@ class TableController extends Controller
                 return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement, 'creneau' => $creneau])
                     ->with('echec', "Ce creneau impose une limite au nombre de personnes pouvant s'inscrire via la platforme à une table.Cette limite est de : " . $maxInscription);
             } elseif ($table->inscrits->count() < $table->nb_joueur_max) {
-                $table->inscrits()->attach($profile);
+                $table->inscrits()->withPivotValue('type_inscription_id',TypeInscription::findCode('INS')->id)->attach($profile);;
 
                 //Ajouter email desinscription si pas de Compte
                 if($profile->compte()->doesntExist()){
