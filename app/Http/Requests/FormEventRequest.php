@@ -47,6 +47,7 @@ class FormEventRequest extends FormRequest
     {
         $settings = Settings::whereIn('name',  ['ouverture_inscriptions_avant_date','fermeture_inscriptions_avant_date' ,'visibiliter_avant_date'])->get();
 
+
         if($this->date_debut){
             $date_debut = Carbon::createFromFormat("d/m/Y H:i", $this->date_debut);
             $ouverture_inscription = $this->ouverture_inscription ?Carbon::createFromFormat("d/m/Y H:i",$this->ouverture_inscription) : $date_debut->copy()->subDays( $settings->firstWhere('name', 'ouverture_inscriptions_avant_date')->value);

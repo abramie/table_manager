@@ -27,9 +27,9 @@ class Form extends Component
         $this->debut_evenement = old('debut_evenement', ($evenement->date_debut ??  Carbon::now())->format("d/m/Y H:i") );
 
         try{
-            $this->affichage_evenement = old('affichage_evenement', Carbon::createFromFormat("d/m/Y H:i",$this->debut_evenement )->subDays($settings->where('name', 'visibiliter_avant_date')->firstOrFail()->value)->format("d/m/Y H:i") );
-            $this->fermeture_inscription = old('fermeture_inscription', Carbon::createFromFormat("d/m/Y H:i",$this->debut_evenement )->subDays($settings->where('name', 'fermeture_inscriptions_avant_date')->firstOrFail()->value )->format("d/m/Y H:i"));
-            $this->ouverture_inscription = old('ouverture_inscription', Carbon::createFromFormat("d/m/Y H:i",$this->debut_evenement )->subDays( $settings->where('name', 'ouverture_inscriptions_avant_date')->firstOrFail()->value )->format("d/m/Y H:i"));
+            $this->affichage_evenement = old('affichage_evenement',($evenement->affichage_evenement ?? Carbon::createFromFormat("d/m/Y H:i",$this->debut_evenement )->subDays($settings->where('name', 'visibiliter_avant_date')->firstOrFail()->value))->format("d/m/Y H:i") );
+            $this->fermeture_inscription = old('fermeture_inscription',($evenement->fermeture_inscription ?? Carbon::createFromFormat("d/m/Y H:i",$this->debut_evenement )->subDays($settings->where('name', 'fermeture_inscriptions_avant_date')->firstOrFail()->value ))->format("d/m/Y H:i"));
+            $this->ouverture_inscription = old('ouverture_inscription', ($evenement->ouverture_inscription ?? Carbon::createFromFormat("d/m/Y H:i",$this->debut_evenement )->subDays( $settings->where('name', 'ouverture_inscriptions_avant_date')->firstOrFail()->value ))->format("d/m/Y H:i"));
 
         }catch (ItemNotFoundException $e)
         {
