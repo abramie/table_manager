@@ -24,11 +24,11 @@ return new class extends Migration
 
             $table->string('nom');
             $table->longText('description')->nullable();
-            $table->longText('tw')->nullable();
             $table->float('duree')->default('4');
             $table->double('nb_joueur_min')->default('2');
             $table->double('nb_joueur_max')->default('4');
             $table->boolean('sans_table')->default('0');
+            $table->boolean('benevolat')->default('0');
             $table->dateTime('debut_table');
             $table->boolean('inscription_restrainte')->default('1');
             $table->double('max_preinscription')->default(0);

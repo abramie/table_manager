@@ -21,7 +21,7 @@ class CreneauController extends Controller
         $settings = Settings::whereIn('name',  ['nom_trigger'])->get();
         return view('creneau.index_tables', [
             'creneau' => $creneau,
-            'tables' => $creneau->tables()->with('tags')->orderByDesc("sans_table")->paginate(10),
+            'tables' => $creneau->tables()->with('tags')->orderByDesc("sans_table")->orderBy("benevolat")->paginate(10),
             'evenement' => $evenement,
             'settings' => $settings,
         ]);
@@ -51,7 +51,7 @@ class CreneauController extends Controller
         $validated = $request->validated();
         $creneau = Creneau::create($validated);
         if($validated["sans_table"]){
-            $this->add_sans_table($creneau);
+            $this->add_sans_table($creneau,$request->input()['sans_table_name']);
         }else{
             $this->remove_sans_table($creneau);
         }
@@ -98,12 +98,13 @@ class CreneauController extends Controller
             "nom" => $nom,
             "description" => $description,
             "duree" => $creneau->duree,
-            "nb_joueur_mini" => 0,
+            "nb_joueur_min" => 0,
             "nb_joueur_max" => 50,
             "mj" => Profile::first()->id,
             "sans_table" => 1,
             "inscription_restrainte" => 0,
             "debut_table" => $creneau->debut_creneau,
+            "status_table_code" => "PUB"
         ]);
 
     }
