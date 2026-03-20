@@ -10,6 +10,7 @@ use App\Models\Profile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class ProfileController extends Controller
 {
@@ -48,6 +49,6 @@ class ProfileController extends Controller
     public function delete(Compte $compte, Profile $profile){
 
         $profile->delete();
-        return redirect()->route('profile.show', ['compte' => $compte]);
+        return redirect()->route('profile.show', ['compte' => $compte])->with('success', "Le profile a bien était supprimer");;
     }
 }

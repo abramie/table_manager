@@ -29,7 +29,10 @@ Route::get('/', function () {
     return redirect('/events');
 });
 
-Route::get('/test/mail', [\App\Http\Controllers\TestController::class, 'mail'])->name('test.mail');
+//Route::get('/test/mail', [\App\Http\Controllers\TestController::class, 'mail'])->name('test.mail');
+Route::get('/test/bubble', [\App\Http\Controllers\TestController::class, 'bubble'])->name('test.bubble');
+
+Route::view('/todo', 'todo')->name('todo');
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
