@@ -42,7 +42,7 @@ return [
             'username' => env('MAIL_USERNAME'),
             'password' => env('MAIL_PASSWORD'),
             'timeout' => null,
-            'local_domain' => env('APP_URL'),
+            'local_domain' => env('MAIL_LOCAL_DOMAIN'),
 
             'auth_mode'  => env('MAIL_AUTHMODE', null),
             'verify_peer' => false,
