@@ -60,6 +60,7 @@
                         @foreach($table->inscriptionsPrenantUnePlaces as $inscrit)
                             <div class="joueur-inscrit p-2 px-3 border border-solid border-zinc-950 m-1 {{$inscrit->type_inscription?->bs_class}}">
                                 {{$inscrit->profile->name}}
+                                @dump($inscrit)
                             </div>
                         @endforeach
                     </div>

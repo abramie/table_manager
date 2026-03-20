@@ -14,9 +14,11 @@ return new class extends Migration
     {
         //
         Schema::create('inscrits',function (Blueprint $table) {
+            $table->id();
             $table->foreignIdFor(\App\Models\Profile::class)->constrained();
             $table->foreignIdFor(\App\Models\Table::class)->constrained();
             $table->foreignId('type_inscription_id')->constrained('type_inscriptions');
+            $table->timestamps();
             $table->softDeletes();
         });
 

@@ -7,6 +7,7 @@ use App\Models\Jeu;
 use App\Models\Profile;
 use App\Models\Table;
 use App\Models\Tag;
+use App\Models\types\TypeInscription;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -117,7 +118,7 @@ Log::debug("on va valider");
         //En vrai pour les inscrits, ajouter une fonction, ça devrait pas marcher comme ça ...
         if($this->inscrits) {
             $inscrits_id = Profile::whereIn('name', $this->inscrits)->pluck('id')->toArray();
-            $this->table->inscrits()->sync($inscrits_id);
+            $this->table->inscrits()->syncWithPivotValues($inscrits_id ,[ 'type_inscription_id' => TypeInscription::findCode('INS')->id]);
         }
 
         $tags = array_merge($this->tags_selected , $this->triggerwarnings, );

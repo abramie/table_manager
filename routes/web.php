@@ -166,7 +166,7 @@ Route::prefix('/events')->name('events.')->group(function () {
                 Route::post('/attempt/inscription/profil', [TableController::class, 'inscriptionProfil'])->name('inscriptionProfil');
 
                 Route::post('/desinscription', [TableController::class, 'desinscription_table'])->name('desinscription')->middleware('auth');
-                Route::post('/desinscription/{profile?}', [TableController::class, 'desinscription_table'])->name('desinscription')->middleware('auth')->middleware('permission:manage_tables_all');
+                Route::post('/desinscription_user/{profile}', [TableController::class, 'desinscription_user_from_table'])->name('desinscription')->middleware('auth')->middleware('permission:manage_tables_all');
             });
         });
     });

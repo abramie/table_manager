@@ -10,6 +10,7 @@ use App\Models\Compte;
 use App\Models\Creneau;
 use App\Models\Description;
 use App\Models\Evenement;
+use App\Models\Inscrit;
 use App\Models\Jeu;
 use App\Models\Settings;
 use App\Models\Table;
@@ -19,6 +20,7 @@ use App\Models\Profile;
 use App\Models\types\TypeInscription;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\RecordNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -238,31 +240,38 @@ class TableController extends Controller
 
         }
     }
-    public function desinscription_table(Evenement $evenement, Creneau $creneau, Table $table, Profile $profile , InscriptionTableRequest $request){
-        //Do the attach
 
-        if($profile->getConnectionName() ==null){
-            $profile = Auth::user()->currentProfile;
-            $success_message = "Vous vous êtes bien désinscrit de la table : ".$table->nom;
+        public function desinscription_user_from_table(Evenement $evenement, Creneau $creneau, Table $table, Profile $profile = new Profile() , InscriptionTableRequest $request){
+
+        if($profile == Auth::user()->currentProfile){
+                $success_message = "Vous vous êtes bien désinscrit de la table : ".$table->nom;
         }else{
             $success_message = "L'utilisateur {$profile->name} a bien été désinscrit de la table : ".$table->nom;
 
         }
+//        dump($profile);
+//        dump($table->inscriptions);
+//dd($table->inscriptions()->where( 'profile_id', "=", $profile->id)->get());
+            try{
+                $inscription = $table->inscriptions()->where( 'profile_id', "=", $profile->id)->firstOrFail();
 
+                $inscription->type_inscription()->associate(TypeInscription::findCode('DES-INS'));
 
+                $inscription->save();
+                return redirect()->route('events.one.creneau.tablesindex', [$evenement, $creneau])->with('success', $success_message);
+                return redirect()->back()
+                    ->with('success', $success_message);
+            }catch(ModelNotFoundException $e){
 
-        try{
-            $inscription = $table->inscriptions()->whereRelation('profile', 'profile_id', $profile)->firstOrFail();
-            $inscription->type_inscription()->associate(TypeInscription::findCode('DES-INS'));
-            return redirect()->back()
-                ->with('success', $success_message);
-        }catch(RecordNotFoundException $e){
-            return redirect()->back()
-                ->with('error', "Oh no, la personne n'était pas inscrite ???");
+                return redirect()->back()
+                    ->with('error', "Oh no, la personne n'était pas inscrite ???");
+            }
         }
+    public function desinscription_table(Evenement $evenement, Creneau $creneau, Table $table,InscriptionTableRequest $request){
+        //Do the attach
 
-
-
+        $profile = Auth::user()->currentProfile;
+        return $this->desinscription_user_from_table($evenement, $creneau, $table,$profile, request: $request);
 
     }
 
