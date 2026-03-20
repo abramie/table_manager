@@ -44,7 +44,7 @@ return [
             'timeout' => null,
             'local_domain' => env('APP_URL'),
 
-            //'auth_mode'  => null,
+            'auth_mode'  => env('MAIL_AUTHMODE', null),
             'verify_peer' => false,
         ],
 
