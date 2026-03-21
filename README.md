@@ -23,3 +23,5 @@ php artisan storage:link (Pour permettre l'upload de fichiers et tous ça)
 php artisan key:generate
 
 Il faut créer le .env, ajouter un mdp admin (celui par default du compte admin) 
+
+
