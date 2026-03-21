@@ -7,7 +7,7 @@
             $fermeture_inscription =$table->creneaus->evenement->fermeture_inscription;
             $inscription_fermee = $fermeture_inscription->isPast();
         @endphp
-        @if(Auth::check() && $table->inscrits->contains(Auth::user()->currentProfile))
+        @if(Auth::check() && $table->inscritsPrenantUnePlace->contains(Auth::user()->currentProfile))
             <form
                 action="{{route('events.one.creneau.table.desinscription',['evenement'=> $table->creneaus->evenement, 'creneau' => $table->creneaus, 'table'=> $table ])}}"
                 method="post">

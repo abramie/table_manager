@@ -148,12 +148,19 @@ class TableController extends Controller
             }
             //dd($table->inscrits);
             //Verifie dans le creneau de la table si l'utilisateur est inscrit sur une des tables existante, à l'exception de la table "sans table"
-            if (($table->sans_table && $table->inscrits->contains($profile))
-                || $creneau->tables()->with('inscrits')->where("inscription_restrainte", "=", "1")->get()->pluck('inscrits')->flatten()->contains('id', $profile->id)) {
+            if (($table->sans_table && $table->inscritsPrenantUnePlace->contains($profile))
+                || $creneau->tables()->with('inscritsPrenantUnePlace')->where("inscription_restrainte", "=", "1")->get()->pluck('inscrits')->flatten()->contains('id', $profile->id)) {
                 return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement, 'creneau' => $creneau])
                     ->with('echec', "Vous êtes deja inscrit sur une table ");
             } elseif ($table->sans_table) {
-                $table->inscrits()->withPivotValue('type_inscription_id',TypeInscription::findCode('INS')->id)->attach($profile);
+                try{
+
+                    $inscription = $table->inscriptions()->where( 'profile_id', "=", $profile->id)->firstOrFail();
+                    $inscription->type_inscription()->associate(TypeInscription::findCode('INS'));
+                    $inscription->save();
+                }catch(ModelNotFoundException $e ){
+                    $table->inscrits()->withPivotValue('type_inscription_id',TypeInscription::findCode('INS')->id)->attach($profile);
+                }
 
                 return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement, 'creneau' => $creneau])
                     ->with('success', "Inscription en \"" . $table->nom);
@@ -167,7 +174,14 @@ class TableController extends Controller
                 return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement, 'creneau' => $creneau])
                     ->with('echec', "Ce creneau impose une limite au nombre de personnes pouvant s'inscrire via la platforme à une table.Cette limite est de : " . $maxInscription);
             } elseif ($table->inscrits->count() < $table->nb_joueur_max) {
-                $table->inscrits()->withPivotValue('type_inscription_id',TypeInscription::findCode('INS')->id)->attach($profile);;
+
+                try{
+                    $inscription = $table->inscriptions()->where( 'profile_id', "=", $profile->id)->firstOrFail();
+                    $inscription->type_inscription()->associate(TypeInscription::findCode('INS'));
+                    $inscription->save();
+                }catch(ModelNotFoundException $e ){
+                    $table->inscrits()->withPivotValue('type_inscription_id',TypeInscription::findCode('INS')->id)->attach($profile);
+                }
 
                 //Ajouter email desinscription si pas de Compte
                 if($profile->compte()->doesntExist()){
@@ -175,8 +189,23 @@ class TableController extends Controller
                 }
 
                 //Desinscrit de sans table uniquement si on s'inscrit sur une table restreinte (une vrai table et pas du bénévolat ou qqch)
-                if ($table->inscription_restrainte)
-                    $creneau->tables()->where("sans_table", "=", "1")->get()->first()?->inscrits()->detach($profile);
+                if ($table->inscription_restrainte) {
+
+
+                       try{
+                           $sanstable = $creneau->tables()->where("sans_table", "=", "1")->get()->firstOrFail();
+                           $inscription = $sanstable->inscriptions()->where('profile_id', "=", $profile->id)->firstOrFail();
+
+                           $inscription->type_inscription()->associate(TypeInscription::findCode('DES-INS'));
+
+                           $inscription->save();
+                       }catch(ModelNotFoundException $e ){
+
+                       }
+
+
+                }
+
                 return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement, 'creneau' => $creneau])
                     ->with('success', "Inscription validée sur la table \"" . $table->nom);
             } else {
