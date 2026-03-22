@@ -47,7 +47,7 @@
                 </p>
             </div>
             <div class="col">
-                <a class="btn btn-link bt-xs card-btn" data-bs-toggle="collapse" href="#collapseListInscrits{{$table->id}}"
+                <a class="btn btn-link bt-xs btn-inscrits" data-bs-toggle="collapse" href="#collapseListInscrits{{$table->id}}"
                    role="button" aria-expanded="false" aria-controls="collapseListInscrits{{$table->id}}">
                     Inscrits : {{$table->nb_inscrits()}}
                     @if(!$isSansTable)

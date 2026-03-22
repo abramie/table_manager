@@ -1,16 +1,17 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light nav">
+<nav class="navbar navbar-expand-lg nav">
     @php
         $authCompte = Auth::user();
         $currentProfile = $authCompte?->currentProfile;
     @endphp
-    <div class="container-fluid nav-inner">
 
+    <div class="container-fluid ">
         <a class="navbar-brand" href="{{ route("events.index") }}">Retour à l'accueil</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarIdContent" aria-controls="navbarIdContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-links">
+
+        <div class="collapse navbar-collapse " id="navbarIdContent">
+            <ul class="navbar-nav mr-auto mb-2 mb-lg-0 col">
 
 
                 <x-navigation-item routeName="events.index" >Index event</x-navigation-item>
@@ -37,7 +38,7 @@
                     <x-navigation-item routeName="profile.mj" :parameter="['compte' => $authCompte, 'profile' => $currentProfile]" contain="mj" >MJ</x-navigation-item>
                 @endrole
             </ul>
-            <div class="">
+            <div class="col-md-auto">
                 @auth()
                     <div class="nav-item">
                         <a href="{{route("compte.edit", $authCompte)}}" class="nav-user-name"> {{ $currentProfile ? $currentProfile->name : "Compte"}}</a>
@@ -60,7 +61,6 @@
                 @endguest
             </div>
 
-
         </div>
-    </div>
+        </div>
 </nav>

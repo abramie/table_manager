@@ -1,4 +1,4 @@
-<footer  class="bottom text-center footer">
+<footer  class="bottom text-center footer fixed-bottom">
     <div class="footer-inner">Si vous rencontrez un bug, ou que vous avez une idée d'amelioration rendez vous sur :
         <a  class="link-danger" href="https://github.com/abramie/table_manager/issues" target="_blank">La page github, pour ajouter un ticket</a>
     </div>

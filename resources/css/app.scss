@@ -1,3 +1,97 @@
-// Bootstrap
-@import 'bootstrap/scss/bootstrap';
+:root {
+    --teal:#2E8B8B; --teal-dark:#1A5C5C; --teal-deep:#0F3D3D; --dark-teal:#0D2B2B;
+    --orange:#E07A30; --orange-light:#F2994A; --red:#B8293A; --green:#4A8B5E;
+    --gold:#D4A843; --cream:#FDF8F0; --parchment:#F5EDE0;
+    --som-dark:#1A1A2E; --dark-card:#22223A;
+    --text-muted:#7A9999; --text-light:#BCC8C8; --text-on-light:#4A4A4A;
+    --font-display:'Cinzel Decorative',serif; --font-heading:'Cinzel',serif; --font-body:'Lora',serif;
+    --transition:0.3s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+// Custom.scss
+@import './theme';
+// Option B: Include parts of Bootstrap
+
+// 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
+@import "../../node_modules/bootstrap/scss/functions";
+
+
+
+// 2. Include any default variable overrides here
+$som-dark: #1A1A2E;
+$gold: #D4A843;
+$cream: #FDF8F0;
+$orange: #E07A30;
+$card-title-color: $cream;
+$link-decoration: none;
+$link-color: $gold;
+
+$link-hover-color: $orange;
+
+$navbar-light-active-color: white;
+$navbar-light-color: white;
+$nav-link-color: $cream;
+$nav-link-active-bg:white;
+$nav-link-active-color:$gold;
+//a{color:var(--gold);text-decoration:none;transition:color var(--transition)} a:hover{color:var(--orange)}
+// 3. Include remainder of required Bootstrap stylesheets
+@import "../../node_modules/bootstrap/scss/variables";
+
+// 4. Include any default map overrides here
+$enable-dark-mode: true;
+$body-bg: $som-dark;
+$headings-color: $gold;
+$body-color: $cream;
+
+
+
+$card-bg: var(--dark-card);
+// 5. Include remainder of required parts
+@import "../../node_modules/bootstrap/scss/maps";
+@import "../../node_modules/bootstrap/scss/mixins";
+@import "../../node_modules/bootstrap/scss/root";
+
+// 6. Optionally include any other parts as needed
+@import "../../node_modules/bootstrap/scss/grid";
+
+@import "../../node_modules/bootstrap/scss/navbar";
+
+@import "../../node_modules/bootstrap/scss/badge";
+@import "../../node_modules/bootstrap/scss/buttons";
+@import "../../node_modules/bootstrap/scss/card";
+@import "../../node_modules/bootstrap/scss/button-group";
+@import "../../node_modules/bootstrap/scss/containers";
+@import "../../node_modules/bootstrap/scss/transitions";
+
+
+@import "../../node_modules/bootstrap/scss/utilities";
+@import "../../node_modules/bootstrap/scss/reboot";
+@import "../../node_modules/bootstrap/scss/type";
+@import "../../node_modules/bootstrap/scss/images";
+
+@import "../../node_modules/bootstrap/scss/helpers";
+
+// 7. Optionally include utilities API last to generate classes based on the Sass map in `_utilities.scss`
+@import "../../node_modules/bootstrap/scss/utilities/api";
+
+// 8. Add additional custom code here
+//@import "../../node_modules/bootstrap/scss/bootstrap";
+//@import './theme';
+$bd-violet: #7321f4;
+.btn-inscrits {
+    --bs-btn-color: var(--card-accent,var(--teal));
+    --bs-btn-bg: transparent;
+    --bs-btn-border-color: var(--card-accent,var(--teal));
+    --bs-btn-hover-color: var(--dark);
+    --bs-btn-hover-bg: var(--card-accent,var(--teal));
+    --bs-btn-font-family: var(--font-heading);
+    --bs-btn-font-size: 12px;
+    --bs-btn-padding-y: 10px;
+    --bs-btn-padding-x: 24px;
+    --bs-btn-border-radius: 8px;
+    --bs-btn-border: 1.5px solid;
+
+}
+
+
+
 

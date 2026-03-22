@@ -27,12 +27,12 @@ if($originalOrder){
     </a>
 @elseif(Str::contains($is, 'parent'))
     {{--Lien de navigation sans le li (pour le parent d'un dropdown, ou autre) --}}
-    <a {{$attributes->class(['nav-link', $active])}}  href="{{ $route }}">
+    <a {{$attributes->class(['som-nav-link', $active])}}  href="{{ $route }}">
         {{$slot->isNotEmpty() ?  $slot : last(explode('.',$routeName))}}
     </a>
 @elseif(Str::contains($is, 'list-group'))
     <li class="nav-item list-group-item list-group-item-action {{$active}}">
-        <a {{$attributes->class(['nav-link', $active])}}  href="{{ $route }}">
+        <a {{$attributes->class(['som-nav-link', $active])}}  href="{{ $route }}">
             {{$slot->isNotEmpty() ?  $slot : last(explode('.',$routeName))}}
         </a>
     </li>
