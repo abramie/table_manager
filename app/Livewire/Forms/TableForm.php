@@ -21,6 +21,8 @@ class TableForm extends Form
     public ?Creneau $creneau;
     public $table;
     public $mj; //Profile
+    public $debut_creneau;
+    public $fin_creneau;
     public $mj_name;
     #[Validate]
     public $nom;
@@ -30,6 +32,7 @@ class TableForm extends Form
     public $duree;
     public $debut_table;
     public $date_debut;
+    public $date_fin;
     public $max_preinscription;
     #[Validate]
     public $nb_joueur_max;
@@ -60,6 +63,8 @@ class TableForm extends Form
         $this->triggerwarnings = $table->triggerwarnings()->pluck('id')->toArray();
         $this->tags_selected = $table->tags->pluck('id')->toArray();
         $this->type = $table->types->pluck('id')->first() ?? Tag::where('type_tag_code', 'TYPE')->orderBy('order')->first()?->id;
+        $this->debut_creneau = $this->creneau->debut_creneau;
+        $this->fin_creneau = $this->creneau->debut_creneau->copy()->addHours($this->creneau->duree);
     }
 
     public function update($name)
@@ -99,7 +104,9 @@ class TableForm extends Form
 
 
         $this->date_debut =  $this->debut_table ? $this->creneau->debut_creneau->setTimeFromTimeString($this->debut_table) : null;
-Log::debug("on va valider");
+
+        $this->date_fin =  $this->date_debut->copy()->addHours( (int)$this->duree);
+        Log::debug("on va valider");
         $this->validate();
         Log::debug("on a valider");
         $this->table->description = $this->table_description;
@@ -151,13 +158,14 @@ Log::debug("on va valider");
             'duree' => ['regex:/^[0-9]+$/' , 'lte:max_duree'],
             'nb_joueur_min' => ['regex:/^[0-9]+$/', 'min:1' ],
             'nb_joueur_max' => ['regex:/^[0-9]+$/', 'min:1', 'gte:nb_joueur_min' ],
-            'table_description' => ['min:4'],
+            'table_description' => ['min:1'],
             'tags_selected' => ['array'],
 //            'tags_selected' => ['array', 'exists:tags,id'],
             'triggerwarnings' => ['array'],
             'type' => [],
             'mj' => ['required'],
-            'date_debut' => ['required', 'date', 'after_or_equal:debut_creneau'],
+            'date_debut' => ['required', 'date', 'after_or_equal:debut_creneau', 'before_or_equal:fin_creneau'],
+            'date_fin' => ['before_or_equal:fin_creneau'],
             //'inscrits' => ['array', 'exists:profiles,id'],
             'max_preinscription' => ['required','regex:/^[0-9]+$/'],
             //Ajout verification clef etrangere que l'event existe bien ?
@@ -170,7 +178,9 @@ Log::debug("on va valider");
     public function messages(): array
     {
         return [
-            'table_description.min' => "La table doit avoir une description."
+            'table_description.min' => "La table doit avoir une description.",
+            'date_debut.before_or_equal' => "La table doit commencer pendant le creneau",
+            'date_fin.before_or_equal' => "La table doit se terminer avant la fin du creneau",
         ];
     }
 

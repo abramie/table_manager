@@ -150,7 +150,10 @@
 
         </x-date-picker>
             @error("form.date_debut")
-            <span class="error">{{ $message }}</span>
+                <span class="error">{{ $message }}</span>
+            @enderror
+            @error("form.date_fin")
+                <span class="error">{{ $message }}</span>
             @enderror
 {{--Ajouter min Time et maxTime au picker https://flatpickr.js.org/examples/#time-picker--}}
 
