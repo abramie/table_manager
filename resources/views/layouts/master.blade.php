@@ -11,6 +11,9 @@
 
 
 <body>
+@session('toast')
+
+
 <div class="toast-container som-toast-container">
 
     @foreach(session()->pull('toast') as $t)
@@ -23,7 +26,7 @@
 
     @endforeach
 </div>
-
+@endsession
 @if(session()->has('success'))
     <div class="error">Il y a une erreur de toasts à corriger sur cette page</div>
 @endif
