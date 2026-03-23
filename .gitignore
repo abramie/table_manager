@@ -16,9 +16,5 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
-<<<<<<< HEAD
-/package-lock.json
-=======
 composer.lock
 package-lock.json
->>>>>>> c2b4e15 (locks)
