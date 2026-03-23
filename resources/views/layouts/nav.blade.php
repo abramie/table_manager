@@ -38,11 +38,11 @@
                 @endcan
 
                 @role('joueur')
-                    <x-navigation-item routeName="profile.show" :parameter="[$authCompte]" contain="joueur" >Profiles</x-navigation-item>
+                    <x-navigation-item routeName="profile.show" :parameter="[$authCompte]"  >Profiles</x-navigation-item>
                 @endrole
 
                 @role('mj')
-                    <x-navigation-item routeName="profile.mj" :parameter="['compte' => $authCompte, 'profile' => $currentProfile]" contain="mj" >MJ</x-navigation-item>
+                    <x-navigation-item routeName="profile.mj" :parameter="['compte' => $authCompte, 'profile' => $currentProfile]"  >MJ</x-navigation-item>
                 @endrole
             </ul>
             <div class="navbar-end-space col-auto">
@@ -67,6 +67,11 @@
                     </div>
                 @endguest
             </div>
+
+            <div class="w-100"></div>
+
+                @yield('navigation_bonus')
+
 
         </div>
         </div>

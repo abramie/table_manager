@@ -53,7 +53,7 @@ $nav-link-color: $cream;
 $nav-link-active-bg:white;
 
 
-$navbar-brand-margin-end:1rem;
+//$navbar-brand-margin-end:1rem;
 $navbar-brand-font-size:2rem;
 //$navbar-padding-y: 0rem;
 .navbar-brand{
@@ -62,7 +62,7 @@ $navbar-brand-font-size:2rem;
     padding:0 24px;
     height: 50px;
     width: 100px;
-    vertical-align: top;
+    vertical-align: middle;
 }
 .navbar-brand img{
     vertical-align: top;
@@ -74,9 +74,7 @@ $navbar-brand-font-size:2rem;
 
 $navbar-light-toggler-border-color: $cream;
 $navbar-light-toggler-icon-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='#FDF8F0' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-.navbar-toggler-icon{
-    color: $cream;
-}
+
 //$navbar-light-toggler-icon-bg: $cream;
 //.nav-links{display:flex;gap:6px;list-style:none;align-items:center}
 //.nav{top:0;left:0;right:0;z-index:1000;backdrop-filter:blur(12px);border-bottom:1px solid rgba(46,139,139,0.15);transition:all var(--transition)}

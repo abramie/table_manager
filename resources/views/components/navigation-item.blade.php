@@ -39,7 +39,7 @@ if($originalOrder){
 @else
     {{--Lien de navigation classique--}}
     <li class="nav-item {{$active}}">
-        <a {{$attributes->class(['nav-link', $active])}}  href="{{ $route }}">
+        <a {{$attributes->class(['nav-link', $active])}} @if($active)aria-current="page"@endif href="{{ $route }}">
             {{$slot->isNotEmpty() ?  $slot : last(explode('.',$routeName))}}
         </a>
     </li>

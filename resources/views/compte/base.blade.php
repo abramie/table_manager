@@ -1,26 +1,21 @@
 @extends('layouts.master')
+
+
 @section('navigation_bonus')
+    @php
+        $authCompte = Auth::user();
+        $currentProfile = $authCompte?->currentProfile;
+    @endphp
+    <ul class="navbar-nav navbar-inner col">
+    <x-navigation-item routeName="compte.edit" contain="compte" :parameter="['compte' => $authCompte]" >Edit</x-navigation-item>
+    @role('joueur')
+        <x-navigation-item routeName="profile.show" :parameter="[$authCompte]"  >Profiles</x-navigation-item>
+    @endrole
+    @if($compte->hasProfile())
+        <x-navigation-item routeName="profile.mj" :parameter="['compte' => $authCompte, 'profile' => $currentProfile]"  >MJ</x-navigation-item>
+    @endif
+    </ul>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route("compte.edit",$compte)}}">Edit</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route("profile.show", $compte)}}">Profiles</a>
-                </li>
-
-                @if($compte->hasProfile())
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route("profile.mj",["compte" => $compte, "profile" => $compte->currentProfile])}}">MJ</a>
-                    </li>
-                @endif
-            </ul>
-        </div>
-    </nav>
 @endsection
 
 @section('content')
