@@ -1,17 +1,24 @@
-<nav class="navbar navbar-expand-lg nav">
+<nav class="navbar navbar-expand-lg">
     @php
         $authCompte = Auth::user();
         $currentProfile = $authCompte?->currentProfile;
     @endphp
 
-    <div class="container-fluid ">
-        <a class="navbar-brand" href="{{ route("events.index") }}">Retour à l'accueil</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarIdContent" aria-controls="navbarIdContent" aria-expanded="false" aria-label="Toggle navigation">
+    <div class="container-fluid">
+{{--        <a class="navbar-brand" href="{{ route("events.index") }}">{{config('app.name')}}</a>--}}
+        <div class="navbar-brand ">
+            <img class="" src="{{config('app.logo_brand')}}"
+                 alt="{{config('app.logo_alt')}}"
+
+            />
+        </div>
+
+        <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarIdContent" aria-controls="navbarIdContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse " id="navbarIdContent">
-            <ul class="navbar-nav mr-auto mb-2 mb-lg-0 col">
+        <div class="collapse navbar-collapse row" id="navbarIdContent">
+            <ul class="navbar-nav navbar-inner col">
 
 
                 <x-navigation-item routeName="events.index" >Index event</x-navigation-item>
@@ -38,12 +45,12 @@
                     <x-navigation-item routeName="profile.mj" :parameter="['compte' => $authCompte, 'profile' => $currentProfile]" contain="mj" >MJ</x-navigation-item>
                 @endrole
             </ul>
-            <div class="col-md-auto">
+            <div class="navbar-end-space col-auto">
                 @auth()
-                    <div class="nav-item">
+                    <div class="nav-item px-1">
                         <a href="{{route("compte.edit", $authCompte)}}" class="nav-user-name"> {{ $currentProfile ? $currentProfile->name : "Compte"}}</a>
                     </div>
-                    <div class="nav-item">
+                    <div class="nav-item px-1">
                     <form action="{{route('logout')}}" method="post">
 
                         @csrf

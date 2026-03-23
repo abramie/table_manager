@@ -215,4 +215,6 @@ return [
     'admin_password' => env('ADMIN_PASSWORD', "admin"),
 
     'external_tutorial' =>env('EXTERNAL_TUTORIAL', null),
+    'logo_brand' => env('BRAND_IMG_LINK',asset('storage/logo.png')),
+    'logo_alt' => env('BRAND_IMG_ALT', ''),
 ];

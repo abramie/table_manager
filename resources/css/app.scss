@@ -19,20 +19,67 @@
 // 2. Include any default variable overrides here
 $som-dark: #1A1A2E;
 $gold: #D4A843;
+$bg-active-link: rgba(212,168,67,0.08);
 $cream: #FDF8F0;
 $orange: #E07A30;
 $card-title-color: $cream;
+
+
 $link-decoration: none;
 $link-color: $gold;
 
 $link-hover-color: $orange;
 
-$navbar-light-active-color: white;
+
+
+//$nav-link-active-color:$gold;
+$navbar-padding-x: 40px;
+$navbar-padding-y: 0.2rem;
+//$navbar-light-toggler-icon-bg: linear-gradient(180deg,rgba(13,43,43,0.95),rgba(15,61,61,0.9));
+//$navbar-light-color: linear-gradient(180deg,rgba(13,43,43,0.95),rgba(15,61,61,0.9));
+$navbar-light-active-color: $gold;
 $navbar-light-color: white;
+//$navbar-brand-height: 2rem;
+.navbar{
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(46,139,139,0.15);
+    transition:all var(--transition);
+    background:linear-gradient(180deg,rgba(13,43,43,0.95),rgba(15,61,61,0.9));
+    //height: 100px;
+}
+
+$nav-link-padding-y: 1.5rem;
 $nav-link-color: $cream;
 $nav-link-active-bg:white;
-$nav-link-active-color:$gold;
 
+
+$navbar-brand-margin-end:1rem;
+$navbar-brand-font-size:2rem;
+//$navbar-padding-y: 0rem;
+.navbar-brand{
+    font-family:var(--font-display);
+    letter-spacing:1px;
+    padding:0 24px;
+    height: 50px;
+    width: 100px;
+    vertical-align: top;
+}
+.navbar-brand img{
+    vertical-align: top;
+    max-height:100%;
+    width: auto;
+}
+
+
+
+$navbar-light-toggler-border-color: $cream;
+$navbar-light-toggler-icon-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='#FDF8F0' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+.navbar-toggler-icon{
+    color: $cream;
+}
+//$navbar-light-toggler-icon-bg: $cream;
+//.nav-links{display:flex;gap:6px;list-style:none;align-items:center}
+//.nav{top:0;left:0;right:0;z-index:1000;backdrop-filter:blur(12px);border-bottom:1px solid rgba(46,139,139,0.15);transition:all var(--transition)}
 
 $toast-border-radius: 10px;
 $toast-font-size: 16px;
@@ -49,10 +96,47 @@ $enable-dark-mode: true;
 $body-bg: $som-dark;
 //$headings-color: $gold;
 $body-color: $cream;
-
-
-
 $card-bg: var(--dark-card);
+
+//.navbar-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:70px}
+
+
+.navbar-inner, .navbar-end-space{
+    display:flex;
+    gap:6px;
+    list-style:none;
+    padding:0 24px;
+    //height: 50px;
+}
+.navbar-inner a{
+    font-family:var(--font-heading);
+    font-size:11px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--cream);
+    padding:8px 12px;
+    border-radius:6px;
+    transition:all var(--transition)
+}
+.navbar-inner a:hover,.navbar-inner a.active{color:var(--gold);background:$bg-active-link}
+
+
+.nav-user-btn{
+    font-family:var(--font-heading);
+    font-size:10px;
+    letter-spacing:1px;
+    padding:6px 14px;
+    border-radius:6px;
+    border:1px solid rgba(224,122,48,0.4);
+    background:transparent;
+    color:var(--orange);
+    cursor:pointer;
+    transition:all var(--transition);
+    text-transform:uppercase
+}
+.nav-user-btn:hover{background:var(--orange);color:#fff}
+.nav-user-btn.logout{border-color:rgba(184,41,58,0.4);color:var(--red)} .nav-user-btn.logout:hover{background:var(--red);color:#fff}
+
 // 5. Include remainder of required parts
 @import "../../node_modules/bootstrap/scss/maps";
 @import "../../node_modules/bootstrap/scss/mixins";
@@ -100,7 +184,6 @@ $bd-violet: #7321f4;
     --bs-btn-border: 1.5px solid;
 
 }
-
 
 
 
