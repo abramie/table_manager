@@ -85,6 +85,10 @@ $toast-max-width: 350px;
 $toast-padding-x: 12px;
 $toast-padding-y: 12px;
 $toast-spacing:5px;
+
+
+.label-text{font-size:15px;color:var(--text-light);line-height:1.7;text-align: left;}
+.profile-card-actif-title{font-size:25px;color:var(--bs-green);line-height:1.7;text-align: center;font-weight: bold }
     //a{color:var(--gold);text-decoration:none;transition:color var(--transition)} a:hover{color:var(--orange)}
 // 3. Include remainder of required Bootstrap stylesheets
 @import "../../node_modules/bootstrap/scss/variables";
@@ -94,7 +98,7 @@ $enable-dark-mode: true;
 $body-bg: $som-dark;
 //$headings-color: $gold;
 $body-color: $cream;
-$card-bg: var(--dark-card);
+
 
 //.navbar-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:70px}
 
@@ -134,6 +138,22 @@ $card-bg: var(--dark-card);
 }
 .nav-user-btn:hover{background:var(--orange);color:#fff}
 .nav-user-btn.logout{border-color:rgba(184,41,58,0.4);color:var(--red)} .nav-user-btn.logout:hover{background:var(--red);color:#fff}
+
+
+$card-bg: var(--dark-card);
+
+.card{
+
+    border-radius:16px;
+    padding:36px 28px;
+    //text-align:center;
+    //border:1px solid rgba(46,139,139,0.1);
+    //transition:all var(--transition);
+    //position:relative;
+    //overflow:hidden
+}
+//.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--card-accent,var(--teal)),transparent);opacity:0;transition:opacity var(--transition)}
+.card:hover{transform:translateY(-6px);box-shadow:0 12px 40px rgba(0,0,0,0.3)} .card:hover::before{opacity:1}
 
 // 5. Include remainder of required parts
 @import "../../node_modules/bootstrap/scss/maps";
