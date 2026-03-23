@@ -6,6 +6,7 @@ use App\Http\Requests\FormUpdateRoleRequest;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Compte;
 use App\Models\Profile;
+use App\Services\Services;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -44,8 +45,9 @@ class CompteController extends Controller
         }
 
         $request->user()->save();
+        Services::toast()->info(__('Compte mis à jour'));
 
-        return Redirect::route('compte.edit')->with('status', 'compte-updated');
+        return Redirect::route('compte.edit');
     }
 
     /**

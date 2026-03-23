@@ -19,6 +19,7 @@ use App\Models\Triggerwarning;
 use App\Models\Profile;
 use App\Models\types\TypeInscription;
 use App\Providers\RouteServiceProvider;
+use App\Services\Services;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\RecordNotFoundException;
@@ -88,9 +89,9 @@ class TableController extends Controller
             }
         }
 
-
+        Services::toast()->success(__("La table a bien été ajouté." ). ($desincription>0 ? __("Et vous avez était desinscrit de vos tables") : "" ));
         return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau->id])
-            ->with('success', "La table a bien été ajouté." . ($desincription>0 ? "Et vous avez était desinscrit de vos tables" : "" ));
+            ;
     }
 
 
@@ -99,8 +100,10 @@ class TableController extends Controller
         if(!(auth()->user()?->can('manage_tables_all') ||
             (auth()->user()?->can('manage_tables_own') &&  $table->mjs == auth()->user()->currentProfile)
         )){
+            Services::toast()->error(__("Vous n'avez pas l'autorisation de modifier cette table" ));
+
             return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau->id])
-                ->with('echec', "Vous n'avez pas l'autorisation de modifier cette table");
+                ;
         }
         $descriptions = Description::whereIn('name',  ['trigger_warnings' ])->get();
 
@@ -121,20 +124,23 @@ class TableController extends Controller
 
         if($request->validated('inscrits'))
             $table->inscrits()->syncWithPivotValues($request->validated('inscrits') ,[ 'type_inscription_id' => TypeInscription::findCode('INS')->id]);
+        Services::toast()->error(__("La table a bien été modifier"));
         return redirect()->route('events.one.creneau.table.show', ['evenement' => $evenement,'creneau' => $creneau,'table'=> $table])
-            ->with('success', "Le table a bien été modifier");
+            ;
         //return redirect()->route('events.one.creneau.table.show', ['evenement' => $evenement,'creneau' => $creneau->id,'table'=> $table])->with('success', "Le table a bien été modifier");
     }
 
     public function delete(Evenement $evenement,Creneau $creneau,Table $table){
         if(!(auth()->user() && (auth()->user()?->can('manage_tables_all') ||
                 (auth()->user()?->can('manage_tables_own')&&  $table->mjs->name ==auth()->user()->currentProfile->name)))){
+            Services::toast()->error(__("Vous n'avez pas l'autorisation de modifier cette table "));
             return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau])
-                ->with('echec', "Vous n'avez pas l'autorisation de modifier cette table");
+                ;
         }
         $table->delete();
+        Services::toast()->success(__("La table a bien été supprimé"));
         return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau])
-            ->with('success', "La table a bien été supprimé");
+            ;
     }
 
 
@@ -150,8 +156,9 @@ class TableController extends Controller
             //Verifie dans le creneau de la table si l'utilisateur est inscrit sur une des tables existante, à l'exception de la table "sans table"
             if (($table->sans_table && $table->inscritsPrenantUnePlace->contains($profile))
                 || $creneau->tables()->with('inscritsPrenantUnePlace')->where("inscription_restrainte", "=", "1")->get()->pluck('inscrits')->flatten()->contains('id', $profile->id)) {
+                Services::toast()->error(__("Vous êtes deja inscrit sur une table "));
                 return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement, 'creneau' => $creneau])
-                    ->with('echec', "Vous êtes deja inscrit sur une table ");
+                    ;
             } elseif ($table->sans_table) {
                 try{
 
@@ -161,18 +168,20 @@ class TableController extends Controller
                 }catch(ModelNotFoundException $e ){
                     $table->inscrits()->withPivotValue('type_inscription_id',TypeInscription::findCode('INS')->id)->attach($profile);
                 }
-
+                Services::toast()->success(__("Inscription en \"" . $table->nom));
                 return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement, 'creneau' => $creneau])
                     ->with('success', "Inscription en \"" . $table->nom);
             } elseif ($table->mjs == $profile) {
+                Services::toast()->error(__("Tu ne peut pas t'inscrire sur ta propre table, comment tu es arrivé là ??? "));
                 return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement, 'creneau' => $creneau])
-                    ->with('echec', "Tu ne peut pas t'inscrire sur ta propre table, comment tu es arrivé là ??? ");
+                    ;
             } elseif ($creneau->tables()->with('mjs')->where("inscription_restrainte", "=", "1")->get()->pluck('mjs')->flatten()->contains('id', $profile->id)) {
+                Services::toast()->error(__("Tu es MJ sur ce creneau, tu ne peux pas t'inscrire"));
                 return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement, 'creneau' => $creneau])
-                    ->with('echec', "Tu es MJ sur ce creneau, tu ne peux pas t'inscrire");
+                    ;
             } elseif (!$table->sans_table && $table->inscrits->count() > $maxInscription) {
-                return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement, 'creneau' => $creneau])
-                    ->with('echec', "Ce creneau impose une limite au nombre de personnes pouvant s'inscrire via la platforme à une table.Cette limite est de : " . $maxInscription);
+                Services::toast()->error(__("Ce creneau impose une limite au nombre de personnes pouvant s'inscrire via la platforme à une table.Cette limite est de : " ). $maxInscription);
+                return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement, 'creneau' => $creneau]);
             } elseif ($table->inscrits->count() < $table->nb_joueur_max) {
 
                 try{
@@ -205,12 +214,13 @@ class TableController extends Controller
 
 
                 }
-
+                Services::toast()->success(__("Inscription validée sur la table ". $table->nom));
                 return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement, 'creneau' => $creneau])
-                    ->with('success', "Inscription validée sur la table \"" . $table->nom);
+                   ;
             } else {
+                Services::toast()->error(__("La table n'a plus de place  "));
                 return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement, 'creneau' => $creneau])
-                    ->with('echec', "La table n'a plus de place ");
+                    ;
             }
         }else{
             //Si on tente de s'inscrire sans être connecter ?
@@ -255,8 +265,8 @@ class TableController extends Controller
     public function inscriptionProfil(ProfilRequest $request, Evenement $evenement, Creneau $creneau, Table $table){
 
         if(Profile::where('name', '=', $request->name)->whereHas('compte')->exists()){
-            return redirect()->back()
-                ->with('echec', "Ce pseudo est déjà utilisé ");
+            Services::toast()->error(__("Ce pseudo est déjà utilisé "));
+            return redirect()->back();
         }else{
             if(Profile::where('name', '=', $request->name)->doesntExist()){
                 $profile = Profile::create($request->validated());
@@ -287,13 +297,12 @@ class TableController extends Controller
                 $inscription->type_inscription()->associate(TypeInscription::findCode('DES-INS'));
 
                 $inscription->save();
-                return redirect()->route('events.one.creneau.tablesindex', [$evenement, $creneau])->with('success', $success_message);
-                return redirect()->back()
-                    ->with('success', $success_message);
-            }catch(ModelNotFoundException $e){
+                Services::toast()->success($success_message);
+                return redirect()->route('events.one.creneau.tablesindex', [$evenement, $creneau]);
 
-                return redirect()->back()
-                    ->with('error', "Oh no, la personne n'était pas inscrite ???");
+            }catch(ModelNotFoundException $e){
+                Services::toast()->error(__("Oh no, la personne n'était pas inscrite ???"));
+                return redirect()->back();
             }
         }
     public function desinscription_table(Evenement $evenement, Creneau $creneau, Table $table,InscriptionTableRequest $request){

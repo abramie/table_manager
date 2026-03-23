@@ -219,5 +219,11 @@
     "New Password": "Nouveau mot de passe",
     "Event name required": "Le titre de l'événement est obligatoire",
     "The event must begin before today": "L'événement doit commencer après aujourd'hui.",
-    "Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.": "Mot de passe oublier ? Pas de soucis, renseignez votre adresse email et nous vous enverrons un lien de reinitialisation pour que vous puissiez en choisir un nouveau"
+    "Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.": "Mot de passe oublier ? Pas de soucis, renseignez votre adresse email et nous vous enverrons un lien de reinitialisation pour que vous puissiez en choisir un nouveau",
+
+    "success": "succès",
+    "error": "erreur",
+    "info": "info",
+    "warning": "attention"
+
 }

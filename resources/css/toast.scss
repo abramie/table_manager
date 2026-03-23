@@ -1,5 +1,4 @@
 /* Container & Positioning */
-.toast-container { position: fixed; z-index: 9999; padding: 20px; display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 450px; pointer-events: none; }
 [data-position="tr"] { top: 0; right: 0; align-items: flex-end; }
 [data-position="tc"] { top: 0; left: 50%; transform: translateX(-50%); align-items: center; }
 [data-position="tl"] { top: 0; left: 0; align-items: flex-start; }
@@ -9,7 +8,7 @@
 
 .som-toast {
     position: relative; overflow: hidden; display: flex; gap: 12px; min-width: 320px;
-    padding: 16px; border-radius: 12px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+    padding: 16px;
     pointer-events: auto;
 }
 
@@ -42,16 +41,6 @@
     z-index: 3000;
     display: flex;
     flex-direction: column;
-    gap: 8px
-}
-
-.som-toast {
-    padding: 14px 20px;
-    border-radius: 10px;
-    font-size: 16px;
-    max-width: 360px;
-    animation: fadeInUp 0.3s ease;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.3)
 }
 
 .som-toast-success {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\FormTableRequest;
 use App\Models\Settings;
 use App\Models\Tag;
+use App\Services\Services;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
@@ -29,8 +30,9 @@ class SettingsController extends Controller
 
 
         $setting->fill($request->all())->save();
+        Services::toast()->success(__("Le settings a bien était modifier"));
         return redirect()->back()
-            ->with('success', "Le settings a bien était modifier");
+            ;
     }
 
     public function index(){

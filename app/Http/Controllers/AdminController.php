@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\types\TypeInscription;
+use App\Services\Services;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -19,8 +20,8 @@ class AdminController extends Controller
 
 
         $type_inscription->fill($request->all())->save();
-        return redirect()->back()
-            ->with('success', "Le settings a bien était modifier");
+        Services::toast()->success(__('Le settings a bien était modifier'));
+        return redirect()->back();
     }
 
 

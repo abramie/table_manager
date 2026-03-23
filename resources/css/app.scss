@@ -32,14 +32,22 @@ $navbar-light-color: white;
 $nav-link-color: $cream;
 $nav-link-active-bg:white;
 $nav-link-active-color:$gold;
-//a{color:var(--gold);text-decoration:none;transition:color var(--transition)} a:hover{color:var(--orange)}
+
+
+$toast-border-radius: 10px;
+$toast-font-size: 16px;
+$toast-max-width: 350px;
+$toast-padding-x: 12px;
+$toast-padding-y: 12px;
+$toast-spacing:5px;
+    //a{color:var(--gold);text-decoration:none;transition:color var(--transition)} a:hover{color:var(--orange)}
 // 3. Include remainder of required Bootstrap stylesheets
 @import "../../node_modules/bootstrap/scss/variables";
 
 // 4. Include any default map overrides here
 $enable-dark-mode: true;
 $body-bg: $som-dark;
-$headings-color: $gold;
+//$headings-color: $gold;
 $body-color: $cream;
 
 
@@ -61,6 +69,7 @@ $card-bg: var(--dark-card);
 @import "../../node_modules/bootstrap/scss/button-group";
 @import "../../node_modules/bootstrap/scss/containers";
 @import "../../node_modules/bootstrap/scss/transitions";
+@import "../../node_modules/bootstrap/scss/toasts";
 
 
 @import "../../node_modules/bootstrap/scss/utilities";

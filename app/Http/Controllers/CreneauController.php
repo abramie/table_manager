@@ -9,6 +9,7 @@ use App\Models\Description;
 use App\Models\Evenement;
 use App\Models\Settings;
 use App\Models\Profile;
+use App\Services\Services;
 use Illuminate\Http\Request;
 
 class CreneauController extends Controller
@@ -57,8 +58,9 @@ class CreneauController extends Controller
         }
         $evenement->creneaus()->save($creneau);
 
+        Services::toast()->success(__('Le creneau a bien été ajouté'));
         return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau->id])
-            ->with('success', "Le creneau a bien été ajouté");
+            ;
     }
 
 
@@ -88,9 +90,9 @@ class CreneauController extends Controller
         }
         $creneau->update($validated);
 
-
+        Services::toast()->success(__('Le creneau a bien été modifier'));
         return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement,'creneau' => $creneau->id])
-            ->with('success', "Le creneau a bien été modifier");
+            ;
     }
 
     private function add_sans_table(Creneau $creneau, $nom = "sans-tables", $description ="S'inscrire ici pour annoncer sa venue, sans s'attacher à une table"){
@@ -114,8 +116,9 @@ class CreneauController extends Controller
 
     public function delete(Evenement $evenement,Creneau $creneau){
         $creneau->delete();
+        Services::toast()->success(__("Le creneau a bien été supprimer"));
         return redirect()->route('events.one.show', ['evenement' => $evenement])
-            ->with('success', "Le creneau a bien été supprimé");
+            ;
     }
 
     public function todo (Evenement $evenement, Creneau $creneau, Request $request){

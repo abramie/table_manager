@@ -7,6 +7,7 @@ use App\Http\Requests\FormUpdateRoleRequest;
 use App\Http\Requests\ProfilRequest;
 use App\Models\Compte;
 use App\Models\Profile;
+use App\Services\Services;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
@@ -49,6 +50,8 @@ class ProfileController extends Controller
     public function delete(Compte $compte, Profile $profile){
 
         $profile->delete();
-        return redirect()->route('profile.show', ['compte' => $compte])->with('success', "Le profile a bien était supprimer");;
+        Services::toast()->success(__("Le profile a bien était supprimer"));
+
+        return redirect()->route('profile.show', ['compte' => $compte]);
     }
 }

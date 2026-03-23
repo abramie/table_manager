@@ -9,6 +9,7 @@ use App\Models\Image;
 use App\Models\Settings;
 use App\Models\Table;
 use App\Models\Profile;
+use App\Services\Services;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -57,15 +58,17 @@ class GestionDeletedController extends Controller
         $model = $this->identify($type,$id);
        // dd($model);
         $model->restore();
+        Services::toast()->success(__("Le ".$type." a bien été restorer"));
         return redirect()->route('admin.deleted.'. lcfirst( $type))
-            ->with('success', "Le ".$type." a bien été restorer");
+            ;
     }
 
     public function delete($type, $id) {
         $model = $this->identify($type,$id);
         $model->forceDelete();
+        Services::toast()->success(__("Le ".$type." a bien été supprimer"));
         return redirect()->route('admin.deleted.'. lcfirst( $type))
-            ->with('success', "Le ".$type." a bien été supprimé");
+           ;
     }
 
     private function identify($type, $id){

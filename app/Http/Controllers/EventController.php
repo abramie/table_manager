@@ -8,6 +8,7 @@ use App\Models\Creneau;
 use App\Models\Evenement;
 use App\Models\Image;
 use App\Models\Settings;
+use App\Services\Services;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Carbon;
@@ -91,9 +92,9 @@ class EventController extends Controller
             $evenement->image()->save($save);
 
         }
-
+        Services::toast()->success(__("L'évenement a bien été ajouté"));
         return redirect()->route('events.one.show', ['evenement' => $evenement->slug])
-            ->with('success', "L'evenement a bien été ajouté");
+            ;
     }
 
     /*
@@ -120,35 +121,40 @@ class EventController extends Controller
         }
 
 
-
+        Services::toast()->success(__("L'évenement a bien été editer"));
         return redirect()->route('events.one.show', ['evenement' => $evenement->slug])
-            ->with('success', "L'evenement a bien été editer");
+            ;
     }
 
     public function delete(Evenement $evenement){
         $evenement->delete();
+        Services::toast()->success(__("L'évenement a bien été supprimer"));
         return redirect()->route('events.index')
-            ->with('success', "L'event a bien été supprimé");
+            ;
     }
 
     public function archive(Evenement $evenement){
         $evenement->archivage = now();
         if($evenement->save()){
-            return redirect()->route('events.index')
-                ->with('success', "L'event a bien été archiver");
+            Services::toast()->success(__("L'évenement a bien été archiver"));
+
+        }else{
+            Services::toast()->error(__("Une erreur est survenue"));
         }
         return redirect()->route('events.index')
-            ->with('error', "Oh no");
+            ;
     }
 
     public function unarchive(Evenement $evenement){
         $evenement->archivage = null;
         if($evenement->save()){
-            return redirect()->route('events.index')
-                ->with('success', "L'event a bien été reactiver");
+            Services::toast()->success(__("L'évenement a bien été reactiver"));
+
+        }else{
+            Services::toast()->error(__("Une erreur est survenue"));
         }
         return redirect()->route('events.index')
-            ->with('error', "Oh no");
+           ;
 
     }
 }
