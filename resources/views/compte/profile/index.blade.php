@@ -15,7 +15,7 @@
                 <form method="POST" action="{{route('profile.update', [$compte, $profile])}}"
                       enctype="multipart/form-data">
                     @csrf
-                    <div class="card w-200 text-center me-2 @if($compte->currentProfile()->select('name')->first()->name == $profile->name) border-success @endif ">
+                    <div class="card w-200 text-center p-4 me-2 @if($compte->currentProfile()->select('name')->first()->name == $profile->name) border-success @endif ">
                         <div class="card-title">
                             {{$profile->name}}
                         </div>
@@ -71,7 +71,7 @@
         @endforeach
         <form method="POST" action="{{route('profile.store', [$compte])}}" enctype="multipart/form-data">
             @csrf
-            <div class="card w-200 text-center me-2">
+            <div class="card w-200 text-center me-2 p-4">
                 <div class="card-title">
                     Ajouter un profil
                 </div>
