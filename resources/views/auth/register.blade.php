@@ -4,64 +4,67 @@
 @section('title', "Creation de compte")
 @section('content')
 
-    <div class="d-flex flex-wrap">
 
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
+    <div class="position-relative auth-form">
+        <div class="d-flex border-1 auth-form position-absolute start-50  translate-middle-x rounded">
+            <form method="POST" action="{{ route('register') }}">
+                @csrf
 
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Pseudo')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                <!-- Name -->
+                <div class="form-group m-2">
+                    <x-input-label for="name" :value="__('Pseudo')" />
+                    <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+                    <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                </div>
+
+                <!-- Email Address -->
+                <div class="form-group m-2">
+                    <x-input-label for="email" :value="__('Email')" />
+                    <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
+                    <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                </div>
+
+                <!-- Password -->
+                <div class="form-group m-2">
+                    <x-input-label for="password" :value="__('Password')" />
+
+                    <x-text-input id="password" class="block mt-1 w-full"
+                                    type="password"
+                                    name="password"
+                                    required autocomplete="new-password" />
+
+                    <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="form-group m-2">
+                    <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+
+                    <x-text-input id="password_confirmation" class="block mt-1 w-full"
+                                    type="password"
+                                    name="password_confirmation" required autocomplete="new-password" />
+
+                    <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+                </div>
+
+                <div class="form-group row align-items-end m-2">
+                    <div  class="col">
+                        <x-secondary-button class="btn ms-4" type="button" onclick="window.location='{{ url()->previous() }}'">
+                            Retour
+                        </x-secondary-button>
+                    </div>
+                    <div  class="col">
+                        <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
+                            {{ __('Already registered?') }}
+                        </a>
+                    </div>
+                    <div  class="col">
+                        <x-primary-button class="ms-4">
+                            {{ __('Register') }}
+                        </x-primary-button>
+                    </div>
+                </div>
+            </form>
         </div>
-
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="form-group row align-items-end">
-            <div  class="col">
-                <x-secondary-button class="btn ms-4" type="button" onclick="window.location='{{ url()->previous() }}'">
-                    Retour
-                </x-secondary-button>
-            </div>
-            <div  class="col">
-                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
-                </a>
-            </div>
-            <div  class="col">
-                <x-primary-button class="ms-4">
-                    {{ __('Register') }}
-                </x-primary-button>
-            </div>
-        </div>
-    </form>
+    </div>
 @endsection
