@@ -40,7 +40,7 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <button class="btn btn-primary mt-2" type="submit">Mettre à jour</button>
+                                <button class="som-btn som-btn-primary mt-2" type="submit">Mettre à jour</button>
                             </div>
 
 
@@ -96,7 +96,7 @@
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <button class="btn btn-primary mt-2" type="submit">Ajouter le profil</button>
+                        <button class="som-btn som-btn-primary mt-2" type="submit">Ajouter le profil</button>
                     </div>
 
 

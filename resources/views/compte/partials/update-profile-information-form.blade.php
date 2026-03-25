@@ -4,12 +4,13 @@
         @csrf
     </form>
 
+
     <form method="post" action="{{ route('compte.update', $compte) }}" class="mt-6 space-y-6">
         @csrf
         @method('patch')
 
 
-        <div>
+        <div class="mt-4 form-group row m-2">
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $compte->email)" required autocomplete="username" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
@@ -34,7 +35,9 @@
         </div>
 
         <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
+            <button class="som-btn som-btn-validate">
+                {{ __('Save') }}
+            </button>
 
             @if (session('status') === 'compte-updated')
                 <p
@@ -47,4 +50,5 @@
             @endif
         </div>
     </form>
+
 </section>

@@ -16,22 +16,30 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-">
-                <div class="max-w-xl">
+
+            <div class="card w-200 text-center p-4 me-2 ">
+                <h2 class="section-title">
+                    {{ __('Change email address') }}
+                </h2>
+                <div class="card-body p-2">
                     @include('compte.partials.update-profile-information-form')
                 </div>
             </div>
 
-            <div class="p-4 sm:p-8 ">
-                <div class="max-w-xl">
+            <div class="card w-200 text-center p-4 me-2 ">
+                <h2 class="section-title">
+                    {{ __('Update Password') }}
+                </h2>
                     @include('compte.partials.update-password-form')
                 </div>
             </div>
 
-            <div class="p-4 sm:p-8">
-                <div class="max-w-xl">
-                    @include('compte.partials.delete-user-form')
-                </div>
+            <div class="card w-200 text-center p-4 me-2 ">
+                <h2 class="section-title">
+                    {{ __('Delete Account') }}
+                </h2>
+                @include('compte.partials.delete-user-form')
+
             </div>
         </div>
     </div>
