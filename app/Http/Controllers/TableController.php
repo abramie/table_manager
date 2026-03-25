@@ -145,7 +145,6 @@ class TableController extends Controller
 
 
     public function inscription_table(Evenement $evenement,Creneau $creneau,Table $table, Profile|null $profile = null){
-        //Do the attach
         $maxInscription =  $table->max_preinscription;
 
         if(Auth::check() || $profile ) {
@@ -154,8 +153,13 @@ class TableController extends Controller
             }
             //dd($table->inscrits);
             //Verifie dans le creneau de la table si l'utilisateur est inscrit sur une des tables existante, à l'exception de la table "sans table"
-            if (($table->sans_table && $table->inscritsPrenantUnePlace->contains($profile))
-                || $creneau->tables()->with('inscritsPrenantUnePlace')->where("inscription_restrainte", "=", "1")->get()->pluck('inscrits')->flatten()->contains('id', $profile->id)) {
+            //dd($creneau->tables()->whereRelation('inscritsPrenantUnePlace')->where("inscription_restrainte", "=", "1")->get()->pluck('inscrits'));
+            if ($creneau->tables()->with('mjs')->where("inscription_restrainte", "=", "1")->get()->pluck('mjs')->flatten()->contains('id', $profile->id)) {
+                Services::toast()->error(__("Tu es MJ sur ce creneau, tu ne peux pas t'inscrire"));
+                return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement, 'creneau' => $creneau])
+                    ;
+            }elseif (($table->sans_table && $table->inscritsPrenantUnePlace->contains($profile))
+                || $creneau->tables()->with('inscritsPrenantUnePlace')->where("inscription_restrainte", "=", "1")->get()->pluck('inscrits_prenant_une_place')->flatten()->contains('id', $profile->id)) {
                 Services::toast()->error(__("Vous êtes deja inscrit sur une table "));
                 return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement, 'creneau' => $creneau])
                     ;
@@ -169,17 +173,12 @@ class TableController extends Controller
                     $table->inscrits()->withPivotValue('type_inscription_id',TypeInscription::findCode('INS')->id)->attach($profile);
                 }
                 Services::toast()->success(__("Inscription en \"" . $table->nom));
-                return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement, 'creneau' => $creneau])
-                    ->with('success', "Inscription en \"" . $table->nom);
+                return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement, 'creneau' => $creneau]);
             } elseif ($table->mjs == $profile) {
                 Services::toast()->error(__("Tu ne peut pas t'inscrire sur ta propre table, comment tu es arrivé là ??? "));
                 return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement, 'creneau' => $creneau])
                     ;
-            } elseif ($creneau->tables()->with('mjs')->where("inscription_restrainte", "=", "1")->get()->pluck('mjs')->flatten()->contains('id', $profile->id)) {
-                Services::toast()->error(__("Tu es MJ sur ce creneau, tu ne peux pas t'inscrire"));
-                return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement, 'creneau' => $creneau])
-                    ;
-            } elseif (!$table->sans_table && $table->inscrits->count() > $maxInscription) {
+            }  elseif (!$table->sans_table && $table->inscrits->count() > $maxInscription) {
                 Services::toast()->error(__("Ce creneau impose une limite au nombre de personnes pouvant s'inscrire via la platforme à une table.Cette limite est de : " ). $maxInscription);
                 return redirect()->route('events.one.creneau.tablesindex', ['evenement' => $evenement, 'creneau' => $creneau]);
             } elseif ($table->inscrits->count() < $table->nb_joueur_max) {
