@@ -10,7 +10,7 @@
 
 
 
-<body>
+<body class="d-flex flex-column min-vh-100">
 @session('toast')
 
 
@@ -35,7 +35,7 @@
 
 
 
-<div class="container mt-4">
+<div class="container mt-4 flex-grow-1">
     @yield('content')
 
 </div>
@@ -43,8 +43,8 @@
 </body>
 @livewireScripts
 @stack('scripts')
-@include('layouts.foot')
 
+@include('layouts.foot')
 
 <script>
 
